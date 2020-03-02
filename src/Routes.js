@@ -14,7 +14,7 @@ import MovieDetails from './components/movieDetails/MovieDetails';
 // PCMP Routes
 
 const Routes = () => (
-    <BrowserRouter>
+    <BrowserRouter basename={process.env.PUBLIC_URL}>
         <Appbar />
         <div style={{ position: 'absolute',  }}>
 

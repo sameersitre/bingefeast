@@ -9,8 +9,8 @@ import DetailView from '@material-ui/icons/ShoppingCart';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
- import Dialog from '@material-ui/core/Dialog';
- 
+import Dialog from '@material-ui/core/Dialog';
+
 import CloseIcon from '@material-ui/icons/Close';
 import Slide from '@material-ui/core/Slide';
 import CartList from '../cartList/CartList';
@@ -35,6 +35,8 @@ function Transition(props) {
 class Appbar extends Component {
   state = {
     setDialog: false,
+    barColor: false,
+
   }
   static getDerivedStateFromProps(nextProps, prevState) {
     if (nextProps.user.user_cart) {
@@ -43,7 +45,20 @@ class Appbar extends Component {
       }
     }
   }
-  
+  componentDidMount() {
+    window.addEventListener('scroll', this.onScroll, false);
+  }
+  onScroll = () => {
+    if (window.scrollY > 60) {
+      this.setState({ barColor: true })
+      console.log(window.scrollY)
+    }
+    if (window.scrollY < 60) {
+      this.setState({ barColor: false })
+    }
+
+
+  }
   handleClickOpen = () => {
     this.setState({ setDialog: true })
   };
@@ -55,7 +70,13 @@ class Appbar extends Component {
     const { classes } = this.props;
     return (
       <div className={classes.grow} >
-        <AppBar style={{ position: 'fixed', backgroundColor: '#000000' }}>
+        <AppBar style={{
+          position: 'fixed',
+          background: 'linear-gradient(to bottom, transparent 0%, black 85%)',
+          backgroundColor: (window.scrollY > 60) ? '#000000' : (window.scrollY < 60) && 'none'
+        }
+
+        }>
           <Dialog
             fullScreen
             open={this.state.setDialog}
@@ -63,15 +84,15 @@ class Appbar extends Component {
             TransitionComponent={Transition}
             className={classes.dialogWidth}
           >
-              <IconButton
-                edge="start"
-                color="inherit"
-                onClick={this.handleClose}
-                aria-label="close"
-                style={{position: 'fixed', zIndex: 1, backgroundColor: 'white', marginLeft: -45 }}
-              >
-                <CloseIcon />
-              </IconButton>
+            <IconButton
+              edge="start"
+              color="inherit"
+              onClick={this.handleClose}
+              aria-label="close"
+              style={{ position: 'fixed', zIndex: 1, backgroundColor: 'white', marginLeft: -45 }}
+            >
+              <CloseIcon />
+            </IconButton>
 
             <CartList
               allList={this.state.userCart}

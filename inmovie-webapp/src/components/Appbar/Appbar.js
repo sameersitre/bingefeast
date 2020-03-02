@@ -23,6 +23,7 @@ const styles = theme => ({
     [theme.breakpoints.up('sm')]: {
       display: 'block',
     },
+    color:'#FFFFFF'
   },
   dialogWidth: {
     width: '40%', marginLeft: 'auto', marginRight: 0
@@ -72,8 +73,8 @@ class Appbar extends Component {
       <div className={classes.grow} >
         <AppBar style={{
           position: 'fixed',
-          background: 'linear-gradient(to bottom, transparent 0%, black 85%)',
-          backgroundColor: (window.scrollY > 60) ? '#000000' : (window.scrollY < 60) && 'none'
+          background: 'linear-gradient(to top, transparent 0%, black 85%)',
+          backgroundColor: (window.scrollY > 100) ? '#000000' : (window.scrollY < 100) && 'none'
         }
 
         }>
@@ -100,9 +101,12 @@ class Appbar extends Component {
           </Dialog>
 
           <Toolbar>
-            <Typography className={classes.title} variant="h6" noWrap>
+            <IconButton href='/' >
+               <Typography className={classes.title} variant="h6" noWrap  >
               IN MOVIE
           </Typography>
+            </IconButton>
+           
             <div className={classes.grow} />
             <div  >
               <IconButton aria-label="show 17 new notifications" color="inherit" onClick={this.handleClickOpen} >

@@ -124,7 +124,7 @@ class Appbar extends Component {
 
             <div className={classes.grow} />
 
-            {window.location.pathname==='/'? <FilterChips/>:null}
+            {window.location.pathname==='/' || window.location.pathname==='/inMovie-webapp/'? <FilterChips/>:null}
             
           </Toolbar>
         </AppBar>

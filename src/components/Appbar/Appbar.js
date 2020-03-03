@@ -47,6 +47,7 @@ class Appbar extends Component {
   }
   componentDidMount() {
     window.addEventListener('scroll', this.onScroll, false);
+  console.log(window.location.href)  
   }
   onScroll = () => {
     if (window.scrollY > 60) {
@@ -122,7 +123,9 @@ class Appbar extends Component {
             </IconButton>
 
             <div className={classes.grow} />
-             <FilterChips/>
+
+            {window.location.pathname==='/'? <FilterChips/>:null}
+            
           </Toolbar>
         </AppBar>
       </div>

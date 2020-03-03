@@ -42,11 +42,8 @@ class SideDetails extends Component {
             let propGenres = this.state.movieData.genre_ids
             let genreStrings = []
             propGenres.forEach((value) => {
-                // console.log(value)
                 for (let j = 0; j < genres.length; j++) {
-                    console.log(genres)
                     if (value === genres[j].id) {
-                        console.log(genres[j].name)
                         genreStrings.push(genres[j].name)
                     }
                 }

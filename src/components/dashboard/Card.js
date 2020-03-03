@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
@@ -54,9 +56,9 @@ class MediaCard extends Component {
                 movieData: nextProps.movieData,
                 genres: nextProps.user.Genres
             }
-        } 
+        }
     }
-    
+
     componentDidMount() {
         this.getGenre()
     }
@@ -69,9 +71,7 @@ class MediaCard extends Component {
             propGenres.forEach((value) => {
                 // console.log(value)
                 for (let j = 0; j < genres.length; j++) {
-                    console.log(genres)
                     if (value === genres[j].id) {
-                        console.log(genres[j].name)
                         genreStrings.push(genres[j].name)
                     }
                 }
@@ -79,15 +79,16 @@ class MediaCard extends Component {
             this.setState({ genreStrings: genreStrings })
         }
     }
-
+    
     _addCartClick = () => {
+        
         // gets cart list from redux and updates the cart
-        localStorage.setItem('selectedMovieDetails',JSON.stringify(this.state.movieData))
+        localStorage.setItem('selectedMovieDetails', JSON.stringify(this.state.movieData))
         this.props.history.push({
             pathname: `/movieDetails`,
             //search: '?the=search',
             movieData: this.state.movieData
-          })
+        })
     }
 
     render() {
@@ -115,17 +116,17 @@ class MediaCard extends Component {
                                 style={{ width: 270, height: 50 }}>
 
                                 {this.state.genreStrings.map((value, i) =>
-                                    <Chip 
-                                    key={i}
-                                     size="small" 
-                                     label={value}
-                                     style={{color:'#000000',backgroundColor:'#6A6A6A'}}
-                                      component="a" href="#chip" clickable />
+                                    <Chip
+                                        key={i}
+                                        size="small"
+                                        label={value}
+                                        style={{ color: '#000000', backgroundColor: '#6A6A6A' }}
+                                        component="a" href="#chip" clickable />
                                 )}
                             </div>
                         </div>
                     </div>
- 
+
                     <div style={{
                         zIndex: 2,
                         position: 'absolute',
@@ -143,12 +144,14 @@ class MediaCard extends Component {
                         >  Details
                         </Button>
                     </div>
-               </CardContent>
+                </CardContent>
             </Card>
         );
     }
 }
-
+// MediaCard.propTypes = {
+//     history: React.PropTypes.object.isRequired
+// }
 
 const mapStateToProps = state => ({
     user: state.user

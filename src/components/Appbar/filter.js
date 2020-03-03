@@ -6,6 +6,8 @@ import Chip from '@material-ui/core/Chip';
 import Paper from '@material-ui/core/Paper';
 import TagFacesIcon from '@material-ui/icons/TagFaces';
 import FilterListIcon from '@material-ui/icons/FilterList';
+import {  filterMovieData } from '../../containers/actions/userActions';
+
 const styles = (theme) => ({
     root: {
         display: 'flex',
@@ -72,12 +74,17 @@ class ChipsArray extends Component {
         this.setState({ allGenres: allGenres, selectedGenres: [] })
     }
 
-    filterClick = () => {
+    filterIconClick = () => {
         this.setState({
             allGenresEnabled: !this.state.allGenresEnabled
         })
     }
-
+    filterClick = () => {
+        this.setState({
+            allGenresEnabled: !this.state.allGenresEnabled
+        })
+        this.props.filterMovieData(this.state.selectedGenres)
+    }
 
 
     render() {
@@ -92,7 +99,7 @@ class ChipsArray extends Component {
                         icon={<FilterListIcon style={{ marginRight: -13 }} />}
                         className={classes.chip}
                         style={{ display: 'flex', marginLeft: 5 }}
-                        onClick={() => this.filterClick()}
+                        onClick={() => this.filterIconClick()}
                     />
                     {this.state.selectedGenres && this.state.selectedGenres.map(data => {
                         let icon;
@@ -108,21 +115,26 @@ class ChipsArray extends Component {
 
                     {this.state.selectedGenres.length > 0
                         ?
-                        <Chip
-                            size="small" clickable label='CLEAR'
-                            className={classes.chip}
-                            style={{ borderTopRightRadius: 5, borderBottomRightRadius: 5 }}
-                            onClick={() => this.handleClear()}
-                        />
+
+                        <div>
+                            <Chip
+                                size="small" clickable label='CLEAR'
+                                className={classes.chip}
+                                style={{ borderTopRightRadius: 5, borderBottomRightRadius: 5 }}
+                                onClick={() => this.handleClear()}
+                            />
+
+                            <Chip
+                                size="small" clickable label='FILTER'
+                                className={classes.chip}
+                                style={{ borderTopLeftRadius: 5, borderBottomLeftRadius: 5 }}
+                                onClick={() => this.filterClick()}
+                            />
+                        </div>
                         : null
                     }
 
-                    <Chip
-                        size="small" clickable label='FILTER'
-                        className={classes.chip}
-                        style={{ borderTopLeftRadius: 5, borderBottomLeftRadius: 5 }}
-                        onClick={() => this.filterClick()}
-                    />
+
                 </Paper>
 
                 {this.state.allGenresEnabled
@@ -156,4 +168,4 @@ class ChipsArray extends Component {
 const mapStateToProps = state => ({
     user: state.user
 });
-export default withStyles(styles)(connect(mapStateToProps)(withRouter(ChipsArray)));
+export default withStyles(styles)(connect(mapStateToProps, {filterMovieData})(withRouter(ChipsArray)));

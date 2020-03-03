@@ -32,6 +32,8 @@ class MovieDetails extends Component {
 
     componentDidMount() {
         window.scrollTo(0, 0)
+        console.log(window.location.pathname)  
+
     }
     render() {
 

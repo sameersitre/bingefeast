@@ -22,7 +22,7 @@ export const updateMovieData = data => async (dispatch) => {
   let posterAddedData = [];
 
   // const promise0 =  new Promise((resolve, reject) => {
-  await axios.get('https://api.themoviedb.org/3/trending/movie/week?api_key=a2d451cdbcf87912820b3b17b82514c3')
+  await axios.get('https://api.themoviedb.org/3/trending/movie/day?api_key=a2d451cdbcf87912820b3b17b82514c3')
     .then(res => {
       // responseData = response.data.results
       dispatch({

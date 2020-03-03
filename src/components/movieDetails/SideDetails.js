@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withStyles } from '@material-ui/core/styles';
 import Chip from '@material-ui/core/Chip';
-
+import moment from 'moment';
 import Typography from '@material-ui/core/Typography';
 const styles = (theme) => ({
     root: {
@@ -12,6 +12,7 @@ const styles = (theme) => ({
     chipView: {
         display: 'flex',
         justifyContent: 'flex-start',
+        width: 400, height: 50,
         flexWrap: 'wrap',
         '& > *': {
             margin: theme.spacing(0.3),
@@ -66,20 +67,30 @@ class SideDetails extends Component {
                 <div
                     style={{
                         display: 'flex', color: '#FFFFFF',
-                        flexDirection: 'column', width:600
+                        flexDirection: 'column', width: 600
                     }}>
-                    <Typography variant="body2"  >
-                        Ratings: {`${this.state.movieData.vote_average} (${this.state.movieData.vote_count})`}
-                    </Typography>
-                    <div style={{ display: 'flex', flexDirection: 'row', marginTop: 10 }}   >
-                        {/* <Typography variant="subtitle2" style={{marginTop:5}}  >
-                                Genre:
-                                 </Typography> */}
-                        <div className={classes.chipView}
-                            style={{ width: 270, height: 50 }}>
+                    <div style={{display:'flex', flexDirection: 'row' }} >
 
+
+                        <Typography variant="body2"  >
+                            {`${this.state.movieData.vote_average} (${this.state.movieData.vote_count})` }&nbsp;|&nbsp;
+                        </Typography>
+                        <Typography variant="body2"  >
+                             {moment(this.state.movieData.release_date).format('LL')} (USA)
+                        </Typography>
+                    </div>
+                    <div style={{ display: 'flex', flexDirection: 'row', marginTop: 10 }}   >
+
+                        <div className={classes.chipView} >
                             {this.state.genreStrings.map((value, i) =>
-                                <Chip key={i} size="small" label={value} component="a" href="#chip" clickable />
+                                <Chip
+                                    key={i}
+                                    size="small"
+                                    label={value}
+                                    component="a"
+                                    variant="outlined"
+                                    style={{ color: '#FFFFFF', backgroundColor: '#5A5A5A' }}
+                                    href="#chip" clickable />
                             )}
                         </div>
                     </div>

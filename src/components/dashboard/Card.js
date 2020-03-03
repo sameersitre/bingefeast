@@ -26,7 +26,6 @@ const styles = (theme) => ({
         display: 'flex',
         flexDirection: 'column',
         position: 'relative',
-        // alignItems: 'center'
     },
     media: {
         height: 350,
@@ -47,7 +46,6 @@ class MediaCard extends Component {
         this.state = {
             genreStrings: [],
         }
-
     }
 
     static getDerivedStateFromProps(nextProps, prevState) {
@@ -56,12 +54,9 @@ class MediaCard extends Component {
                 movieData: nextProps.movieData,
                 genres: nextProps.user.Genres
             }
-
-        }
-        // if (nextProps.user.Genres) {
-        //     return { genres: nextProps.user.Genres }
-        // }
+        } 
     }
+    
     componentDidMount() {
         this.getGenre()
     }
@@ -95,7 +90,6 @@ class MediaCard extends Component {
           })
     }
 
-
     render() {
         const { classes } = this.props;
         return (
@@ -121,7 +115,12 @@ class MediaCard extends Component {
                                 style={{ width: 270, height: 50 }}>
 
                                 {this.state.genreStrings.map((value, i) =>
-                                    <Chip key={i} size="small" label={value} component="a" href="#chip" clickable />
+                                    <Chip 
+                                    key={i}
+                                     size="small" 
+                                     label={value}
+                                     style={{color:'#000000',backgroundColor:'#6A6A6A'}}
+                                      component="a" href="#chip" clickable />
                                 )}
                             </div>
                         </div>
@@ -129,7 +128,6 @@ class MediaCard extends Component {
  
                     <div style={{
                         zIndex: 2,
-                      
                         position: 'absolute',
                         flexDirection: 'column',
                         alignItems: 'center',
@@ -155,9 +153,6 @@ class MediaCard extends Component {
 const mapStateToProps = state => ({
     user: state.user
 });
-
-//export default withStyles(styles)(IOTAppBar);
-
 
 export default withStyles(styles)(
     connect(

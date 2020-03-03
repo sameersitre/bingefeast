@@ -39,9 +39,9 @@ class MovieDetails extends Component {
 
         return (
             <div>
-                <Grid item xs={12} style={{ backgroundColor: '#1B1A20', paddingTop:80 }}>
+                <Grid item xs={12} style={{ backgroundColor: '#1B1A20', }}>
 
-                    <Grid container justify="center" spacing={4}>
+                    <Grid container justify="center" spacing={4} >
                         <div
                             style={{
                                 display: 'flex', position: 'relative',
@@ -63,8 +63,8 @@ class MovieDetails extends Component {
 
                             </div>
 
-                            <div style={{ position: 'absolute', color: 'white', margin: 50, }} >
-                                <div style={{ display: 'flex', flexDirection: 'row'  }}>
+                            <div style={{ position: 'absolute', color: 'white', margin: 50,}} >
+                                <div style={{ display: 'flex', flexDirection: 'row' , marginTop:50 }}>
                                     <Poster
                                         movieData={this.state.movieData}
                                     />

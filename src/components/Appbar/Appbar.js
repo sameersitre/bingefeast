@@ -8,11 +8,10 @@ import Badge from '@material-ui/core/Badge';
 import DetailView from '@material-ui/icons/ShoppingCart';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-
 import Dialog from '@material-ui/core/Dialog';
-
 import CloseIcon from '@material-ui/icons/Close';
 import Slide from '@material-ui/core/Slide';
+import FilterChips from './filter';
 import CartList from '../cartList/CartList';
 const styles = theme => ({
   grow: {
@@ -23,7 +22,7 @@ const styles = theme => ({
     [theme.breakpoints.up('sm')]: {
       display: 'block',
     },
-    color:'#FFFFFF'
+    color: '#FFFFFF'
   },
   dialogWidth: {
     width: '40%', marginLeft: 'auto', marginRight: 0
@@ -71,13 +70,16 @@ class Appbar extends Component {
     const { classes } = this.props;
     return (
       <div className={classes.grow} >
-        <AppBar style={{
-          position: 'fixed',
-          background: 'linear-gradient(to top, transparent 0%, black 85%)',
-          backgroundColor: (window.scrollY > 100) ? '#000000' : (window.scrollY < 100) && 'none'
-        }
+        <AppBar
+          elevation={0}
+          style={{
+            position: 'fixed',
+            height: 100,
+            background: 'linear-gradient(to top, transparent 0%, #000000 100%)',
+            backgroundColor: 'none'
+          }
 
-        }>
+          }>
           <Dialog
             fullScreen
             open={this.state.setDialog}
@@ -102,19 +104,25 @@ class Appbar extends Component {
 
           <Toolbar>
             <IconButton href='/' >
-               <Typography className={classes.title} variant="h6" noWrap  >
-              IN MOVIE
-          </Typography>
+              <Typography className={classes.title} variant="h6" noWrap  >
+                IN MOVIE
+            </Typography>
             </IconButton>
-           
+
+            <IconButton href='/' >
+              <Typography className={classes.title} variant="subtitle2" noWrap  >
+                Home
+            </Typography>
+            </IconButton>
+
+            <IconButton href='/' >
+              <Typography className={classes.title} variant="subtitle2" noWrap  >
+                Genre
+            </Typography>
+            </IconButton>
+
             <div className={classes.grow} />
-            <div  >
-              <IconButton aria-label="show 17 new notifications" color="inherit" onClick={this.handleClickOpen} >
-                <Badge badgeContent={this.props.user.user_cart && this.props.user.user_cart.length} color="secondary">
-                  <DetailView />
-                </Badge>
-              </IconButton>
-            </div>
+             <FilterChips/>
           </Toolbar>
         </AppBar>
       </div>

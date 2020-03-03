@@ -31,7 +31,7 @@ class Dashboard extends Component {
             <div>
                 <Grid item xs={12} style={{  backgroundColor: '#1B1A20' }}>
                         <Grid container justify="center" spacing={6} style={{paddingTop:80}}>
-                            {this.state.movieData && this.state.movieData.map((value, i) => (
+                            {this.state.movieData && this.state.movieData.slice(0,6).map((value, i) => (
                                 <Grid key={i} item>
                                     <Card movieData={value} />
                                 </Grid>

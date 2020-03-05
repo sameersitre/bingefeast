@@ -7,3 +7,4 @@ export const MOVIE_DATA = "movie_data";
 export const TVSHOW_DATA = "tvshow_data";
 export const DETAILS_DATA = "details_data";
 export const BUFFER_ENABLE = "buffer_enable";
+export const SEARCH_RESULTS = "search_results";

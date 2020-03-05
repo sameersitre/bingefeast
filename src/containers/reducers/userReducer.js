@@ -3,7 +3,7 @@ import {
   USER_CART,
   SIZE_FILTER,
   CART_REMOVE,
-  MOVIE_DATA, TVSHOW_DATA, DETAILS_DATA, BUFFER_ENABLE
+  MOVIE_DATA, TVSHOW_DATA, DETAILS_DATA, BUFFER_ENABLE, SEARCH_RESULTS
 } from '../actions/types';
 
 import Genres from '../../utils/Genres';
@@ -83,6 +83,11 @@ export default function (state = initialState, action) {
         ...state,
         buffer_enable: action.payload,
       };
+      case SEARCH_RESULTS:
+        return {
+          ...state,
+          search_results: action.payload,
+        };
 
     default:
       return state;

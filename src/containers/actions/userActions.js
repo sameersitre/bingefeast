@@ -1,9 +1,11 @@
 
 import {
   PRODUCT_LIST, USER_CART,
-  MOVIE_DATA, TVSHOW_DATA, DETAILS_DATA, BUFFER_ENABLE
+  MOVIE_DATA, TVSHOW_DATA, DETAILS_DATA, BUFFER_ENABLE, SEARCH_RESULTS
 } from './types';
+
 import axios from 'axios'
+
 export const productList = data => (dispatch) => {
   dispatch({
     type: PRODUCT_LIST,
@@ -44,45 +46,18 @@ export const updateTvShowData = data => async (dispatch) => {
     })
 };
 
-
-export const getDetails = data => async (dispatch) => {
-  let trailers = [];
-  let combinedData = null;
-  // dispatch({
-  //   type: DETAILS_DATA,
-  //   payload: []
-  // });
-  dispatch({
-    type: BUFFER_ENABLE,
-    payload: true
-  });
-  await axios.get(`https://api.themoviedb.org/3/${data.media_type}/${data.id}/videos?api_key=a2d451cdbcf87912820b3b17b82514c3&language=en-US`)
+export const searchResultData = data => async (dispatch) => {
+  await axios.get(`https://api.themoviedb.org/3/search/multi?api_key=a2d451cdbcf87912820b3b17b82514c3&language=en-US&query=${data}&page=1&include_adult=false`)
     .then(res => {
-      trailers = res.data
-     
-    })
-    .catch(function (error) {
-      console.log(error);
-    })
-
-  await axios.get(`https://api.themoviedb.org/3/${data.media_type}/${data.id}?api_key=a2d451cdbcf87912820b3b17b82514c3&language=en-US`)
-    .then(res => {
-      combinedData = [trailers, res.data]
       dispatch({
-        type: DETAILS_DATA,
-        payload: combinedData
+        type: MOVIE_DATA,
+        payload: res.data.results
       });
     })
     .catch(function (error) {
       console.log(error);
     })
-
-  dispatch({
-    type: BUFFER_ENABLE,
-    payload: false
-  });
 };
-
 
 
 
@@ -108,3 +83,53 @@ export const filterMovieData = data => async (dispatch) => {
       console.log(error);
     })
 };
+
+export const getDetails = data => async (dispatch) => {
+  let trailers = [];
+  let combinedData = null;
+  let mediaTypeSelected = null
+
+  // json field 'media_type' is unavailable in filtered response json
+  if (data.media_type) {
+    mediaTypeSelected = data.media_type
+  }
+  else if (data.title) {
+    mediaTypeSelected = 'movie'
+  }
+  else if (data.name) {
+    mediaTypeSelected = 'tv'
+  }
+
+  dispatch({
+    type: BUFFER_ENABLE,
+    payload: true
+  });
+  await axios.get(`https://api.themoviedb.org/3/${mediaTypeSelected}/${data.id}/videos?api_key=a2d451cdbcf87912820b3b17b82514c3&language=en-US`)
+    .then(res => {
+      trailers = res.data
+
+    })
+    .catch(function (error) {
+      console.log(error);
+    })
+
+  await axios.get(`https://api.themoviedb.org/3/${mediaTypeSelected}/${data.id}?api_key=a2d451cdbcf87912820b3b17b82514c3&language=en-US`)
+    .then(res => {
+      combinedData = [trailers, res.data]
+      dispatch({
+        type: DETAILS_DATA,
+        payload: combinedData
+      });
+    })
+    .catch(function (error) {
+      console.log(error);
+    })
+
+  dispatch({
+    type: BUFFER_ENABLE,
+    payload: false
+  });
+};
+
+
+

@@ -47,7 +47,7 @@ class MovieDetails extends Component {
 
     componentDidMount() {
         this.props.getDetails(JSON.parse(localStorage.selectedMovieDetails))
-
+console.log(localStorage.selectedMovieDetails)
         window.scrollTo(0, 0)
         console.log(window.location.pathname)
 

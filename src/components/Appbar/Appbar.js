@@ -17,7 +17,7 @@ import SearchIcon from '@material-ui/icons/Search';
 
 import FilterChips from './filter';
 import CartList from '../cartList/CartList';
-import {searchResultData} from '../../containers/actions/userActions';
+import { searchResultData } from '../../containers/actions/userActions';
 const styles = theme => ({
   grow: {
     flexGrow: 1,
@@ -113,7 +113,7 @@ class Appbar extends Component {
   }
 
   handleKeyPress = (event) => {
-    if(event.key === 'Enter'){
+    if (event.key === 'Enter') {
       this.props.searchResultData(this.state.searchText)
     }
   }
@@ -172,23 +172,27 @@ class Appbar extends Component {
                 TV Shows
             </Typography>
             </IconButton>
-            <div className={classes.search}>
-              <div className={classes.searchIcon}>
-                <SearchIcon />
-              </div>
-              <InputBase
-                placeholder="Search…"
-                classes={{
-                  root: classes.inputRoot,
-                  input: classes.inputInput,
-                }}
 
-                value={this.state.searchText}
-                onChange={this.handleChange}
-                onKeyPress={this.handleKeyPress}
-                inputProps={{ 'aria-label': 'search' }}
-              />
-            </div>
+            {window.location.pathname === '/' || window.location.pathname === '/inMovie-webapp/' ?
+              <div className={classes.search}>
+                <div className={classes.searchIcon}>
+                  <SearchIcon />
+                </div>
+                <InputBase
+                  placeholder="Search…"
+                  classes={{
+                    root: classes.inputRoot,
+                    input: classes.inputInput,
+                  }}
+
+                  value={this.state.searchText}
+                  onChange={this.handleChange}
+                  onKeyPress={this.handleKeyPress}
+                  inputProps={{ 'aria-label': 'search' }}
+                />
+              </div>
+              : null}
+
             <div className={classes.grow} />
 
             {window.location.pathname === '/' || window.location.pathname === '/inMovie-webapp/' ? <FilterChips /> : null}
@@ -202,12 +206,11 @@ class Appbar extends Component {
 
 
 const mapStateToProps = state => ({
-  user: state.user,
-
+  user: state.user
 });
 
 export default withStyles(styles)(
   connect(
-    mapStateToProps,{searchResultData}
+    mapStateToProps, { searchResultData }
   )(withRouter(Appbar))
 );

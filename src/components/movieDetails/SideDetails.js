@@ -18,7 +18,8 @@ const styles = (theme) => ({
     buttons: {
         display: 'flex',
         flexDirection: 'row',
-        width: 450, marginTop: 10,
+        alignContent: 'flex-start',
+        width: 450, height: 450, marginTop: 10,
         // backgroundColor: 'pink'
     },
     button: {
@@ -184,9 +185,9 @@ class SideDetails extends Component {
                 <div style={{ marginTop: 10 }} >
                     <a style={{
                         display: 'flex', flexDirection: 'row',
-                        alignItems: 'center', color:'#FFFFFF', textDecoration:'none', width:100
+                        alignItems: 'center', color: '#FFFFFF', textDecoration: 'none', width: 150
                     }}
-                    href={`https://www.imdb.com/title/${this.state.movieData.imdb_id}`}  target="_blank"
+                        href={`https://www.imdb.com/title/${this.state.movieData.imdb_id}`} target="_blank"
                     >
                         <img src={require('../../assets/Icons/imdb.png')} alt="Smiley face" height="28" width="28" />
                         <Typography variant="body2"  >
@@ -194,8 +195,11 @@ class SideDetails extends Component {
                         </Typography>
                     </a>
 
-                    <Typography variant="body2" style={{marginTop:10}}  >
-                        {moment(this.state.movieData.release_date).format('LL')} (USA)
+                    <Typography variant="body2" style={{ marginTop: 10 }}  >
+                        {moment(this.state.movieData.release_date
+                            ||
+                            this.state.movieData.first_air_date).format('LL')
+                        }  (USA)
                         </Typography>
                 </div>
 
@@ -219,7 +223,7 @@ class SideDetails extends Component {
 
 
                     <Grid container className={classes.buttons} spacing={1} >
-                        {this.state.videoData && this.state.videoData.results.map((value, i) =>
+                        {this.state.videoData && this.state.videoData.results.slice(0, 30).map((value, i) =>
                             <div>
 
                                 <Button

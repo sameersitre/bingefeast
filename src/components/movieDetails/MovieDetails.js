@@ -94,7 +94,7 @@ console.log(localStorage.selectedMovieDetails)
 
                             </div>
 
-                            <div style={{ position: 'absolute', color: 'white', margin: 50, }} >
+                            <div style={{ position: 'absolute',  margin: 50, }} >
                                 <div style={{ display: 'flex', flexDirection: 'row', marginTop: 50 }}>
                                     <Poster
                                         data={this.state.movieData}

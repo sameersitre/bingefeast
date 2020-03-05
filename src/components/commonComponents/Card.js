@@ -104,7 +104,7 @@ class MediaCard extends Component {
                     <Typography gutterBottom variant="subtitle2"
                         style={{
                             color: '#E5CA49', alignSelf: 'center',
-                             marginTop: -10
+                            marginTop: -10
                         }}  >
                         {this.state.movieData.title
                             ||
@@ -114,7 +114,7 @@ class MediaCard extends Component {
                         <div  >
                             <Typography variant="body2"  >
                                 {`${this.state.movieData.vote_average} (${this.state.movieData.vote_count})`}
-                        </Typography>
+                            </Typography>
                             <Typography variant="body2"  >
                                 {moment(this.state.movieData.release_date).format('LL')} (USA)
                         </Typography>
@@ -122,7 +122,7 @@ class MediaCard extends Component {
                         <div style={{ display: 'flex', flexDirection: 'row', marginTop: 10 }}   >
 
                             <div className={classes.chipView}
-                              >
+                            >
 
                                 {this.state.genreStrings.map((value, i) =>
                                     <Chip
@@ -130,7 +130,7 @@ class MediaCard extends Component {
                                         size="small"
                                         label={value}
                                         style={{ color: '#000000', backgroundColor: '#6A6A6A', height: 20 }}
-                                        component="a" href="#chip" clickable />
+                                        component="a" />
                                 )}
                             </div>
                         </div>

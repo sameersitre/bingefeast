@@ -13,7 +13,7 @@ const styles = (theme) => ({
         display: 'flex',
         justifyContent: 'flex-end',
         flexWrap: 'wrap',
-        backgroundColor: 'grey',
+        backgroundColor: '#454545',
         maxWidth: 800,
         borderRadius: 25,
         padding: 0.2,
@@ -96,7 +96,7 @@ class ChipsArray extends Component {
                     <Chip
                         size="small"
                         clickable
-                        icon={<FilterListIcon style={{ marginRight: -13 }} />}
+                        icon={<FilterListIcon style={{ marginRight: -12 }} />}
                         className={classes.chip}
                         style={{ display: 'flex', marginLeft: 5 }}
                         onClick={() => this.filterIconClick()}

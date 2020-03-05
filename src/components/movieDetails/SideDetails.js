@@ -18,8 +18,7 @@ const styles = (theme) => ({
     buttons: {
         display: 'flex',
         flexDirection: 'row',
-        marginTop: 10,
-        width: 450,
+        width: 450, marginTop: 10,
         // backgroundColor: 'pink'
     },
     button: {
@@ -30,7 +29,7 @@ const styles = (theme) => ({
     chipView: {
         display: 'flex',
         justifyContent: 'flex-start',
-        width: 400,
+        width: 400, marginTop: 10,
         flexWrap: 'wrap',
         '& > *': {
             margin: theme.spacing(0.3),
@@ -106,13 +105,13 @@ class SideDetails extends Component {
 
             <div
                 style={{
-                    display: 'flex', flexDirection: 'column',
-                    justifyContent: 'space-between', margin: 10,
-                    color: '#FFFFFF',
-                    flexDirection: 'column', width: 600
+                    flexDirection: 'column',
+                    justifyItems: 'space-between',
+                    alignContent: 'flex-start',
+                    color: '#FFFFFF', marginLeft: 10,//backgroundColor:'pink',
+                    width: 600, height: '25rem'
                 }}>
                 <Popover
-
                     id="mouse-over-popover"
                     className={classes.popover}
                     classes={{
@@ -151,7 +150,7 @@ class SideDetails extends Component {
 
                     <iframe
                         src={`https://www.youtube.com/embed/${this.state.videoSelected && this.state.videoSelected.key}`}
-                         // height="315"
+                        // height="315"
                         style={{
                             position: 'absolute',
                             width: '100%',
@@ -165,16 +164,37 @@ class SideDetails extends Component {
                     />
                 </Dialog>
 
-                <Typography gutterBottom variant="h6" style={{ color: '#E5CA49', }}  >
+
+
+
+                <Typography gutterBottom variant="h4" style={{ color: '#E5CA49', margin: 0 }}  >
                     {this.state.movieData.title
                         ||
                         this.state.movieData.name}
                 </Typography>
-                <div style={{ flexDirection: 'row' }} >
-                    <Typography variant="body2"  >
-                        {`${this.state.movieData.vote_average} (${this.state.movieData.vote_count})`}
+
+                {this.state.movieData.tagline
+                    &&
+                    <Typography gutterBottom variant="subtitle1" style={{ color: '#E5CA49', margin: 0 }}>
+
+                        {this.state.movieData.tagline}
                     </Typography>
-                    <Typography variant="body2"  >
+                }
+
+                <div style={{ marginTop: 10 }} >
+                    <a style={{
+                        display: 'flex', flexDirection: 'row',
+                        alignItems: 'center', color:'#FFFFFF', textDecoration:'none', width:100
+                    }}
+                    href={`https://www.imdb.com/title/${this.state.movieData.imdb_id}`}  target="_blank"
+                    >
+                        <img src={require('../../assets/Icons/imdb.png')} alt="Smiley face" height="28" width="28" />
+                        <Typography variant="body2"  >
+                            &nbsp;&nbsp;{`${this.state.movieData.vote_average} (${this.state.movieData.vote_count})`}
+                        </Typography>
+                    </a>
+
+                    <Typography variant="body2" style={{marginTop:10}}  >
                         {moment(this.state.movieData.release_date).format('LL')} (USA)
                         </Typography>
                 </div>
@@ -191,32 +211,36 @@ class SideDetails extends Component {
                             href="#chip" clickable />
                     )}
                 </div>
-                <Typography variant="body2" width={300}   >
+                <Typography variant="body2" width={300} style={{ marginTop: 10 }}   >
                     Overview: {this.state.movieData.overview}
                 </Typography>
 
-                <Grid container className={classes.buttons} spacing={1} >
-                    {this.state.videoData && this.state.videoData.results.map((value, i) =>
-                        <div>
+                <div>
 
-                            <Button
-                                key={i}
-                                variant="contained"
-                                size="small"
-                                color="#E46E36"
-                                // aria-owns={this.state.popoverOpen ? 'mouse-over-popover' : undefined}
-                                aria-haspopup="true"
-                                className={classes.button}
-                                onMouseEnter={() => this.handlePopoverOpen(value)}
-                                onMouseLeave={this.handlePopoverClose}
-                                onClick={() => this.handleVideoButton(value)}
-                            >
-                                {`${i + 1}.${value.type}`}
-                            </Button>
 
-                        </div>
-                    )}
-                </Grid>
+                    <Grid container className={classes.buttons} spacing={1} >
+                        {this.state.videoData && this.state.videoData.results.map((value, i) =>
+                            <div>
+
+                                <Button
+                                    key={i}
+                                    variant="contained"
+                                    size="small"
+                                    color="#E46E36"
+                                    // aria-owns={this.state.popoverOpen ? 'mouse-over-popover' : undefined}
+                                    aria-haspopup="true"
+                                    className={classes.button}
+                                    onMouseEnter={() => this.handlePopoverOpen(value)}
+                                    onMouseLeave={this.handlePopoverClose}
+                                    onClick={() => this.handleVideoButton(value)}
+                                >
+                                    {`${i + 1}.${value.type}`}
+                                </Button>
+
+                            </div>
+                        )}
+                    </Grid>
+                </div>
             </div>
 
         )

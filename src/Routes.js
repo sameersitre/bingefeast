@@ -10,36 +10,44 @@ import ForgotPassword from './components/authentication/forgotPassword/ForgotPas
 
 import Appbar from './components/Appbar/Appbar';
 import Dashboard from './components/dashboard/Dashboard';
+
+import TVShows from './components/tvshows/TVShows.js';
 import MovieDetails from './components/movieDetails/MovieDetails';
 // PCMP Routes
 
 const Routes = () => (
     <BrowserRouter basename={process.env.PUBLIC_URL}>
         <Appbar />
-        <div style={{ position: 'absolute',  }}>
+        <div style={{ position: 'absolute', }}>
 
-       
-        <Switch>
-            <Route
-                exact
-                path="/register"
-                name="Register"
-                component={Register}
-            //   component={Auth(Register, false)}
-            />
-            <Route exact path="/login" name="Login" component={Login} />
-            <Route
-                exact
-                path="/forgotpassword"
-                name="Forgot Password"
-                component={ForgotPassword}
-            //   component={Auth(ForgotPassword, false)}
-            />
-            <Route exact path="/" name="Dashboard" component={Dashboard} />
-            <Route exact path="/movieDetails" name="MovieDetails" component={MovieDetails} />
 
-        </Switch>
-         </div>
+            <Switch>
+                <Route
+                    exact
+                    path="/register"
+                    name="Register"
+                    component={Register}
+                //   component={Auth(Register, false)}
+                />
+                <Route exact path="/login" name="Login" component={Login} />
+                <Route
+                    exact
+                    path="/forgotpassword"
+                    name="Forgot Password"
+                    component={ForgotPassword}
+                //   component={Auth(ForgotPassword, false)}
+                />
+                <Route exact path="/" name="Dashboard" component={Dashboard} />
+                <Route exact path="/inMovie-webapp/" name="Dashboard" component={Dashboard} />
+                <Route exact path="/tvshows" name="TVshows" component={TVShows} />
+
+                <Route exact path="/moviedetails" name="MovieDetails" component={MovieDetails} />
+                <Route exact path="/tvshowdetails" name="TVShowDetails" component={MovieDetails} />
+
+
+
+            </Switch>
+        </div>
     </BrowserRouter>
 );
 

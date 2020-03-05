@@ -2,22 +2,27 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
+import CardActionArea from '@material-ui/core/CardActionArea';
+
 import CardMedia from '@material-ui/core/CardMedia';
 const styles = (theme) => ({
     root: {
         width: '15rem',
-        height: 350,
+        height: 320,
+    },
+    media: {
+        height: 320,
     },
 });
 export class Poster extends Component {
-state={
+    state = {
 
-}
+    }
     static getDerivedStateFromProps(nextProps, prevState) {
-        if (nextProps.movieData) {
+        if (nextProps.data) {
             return {
-                movieData: nextProps.movieData,
-                genres: nextProps.user.Genres
+                data: nextProps.data,
+                // genres: nextProps.user.Genres
             }
         }
     }
@@ -26,16 +31,17 @@ state={
 
         return (
             <Card className={classes.root}>
-                <CardMedia
-                    component="img"
-                    alt="Contemplative Reptile"
-                    height="350"
-                    image={`https://image.tmdb.org/t/p/w500${this.state.movieData.poster_path}`}
-                    // image={`https://image.tmdb.org/t/p/w500/riTANvQ8GKmQbgtC1ps3OfkU43A.jpg`}
-
-                    title="Contemplative Reptile"
-                />
-            </Card>
+               <CardActionArea>
+                    <CardMedia
+                        className={classes.media}
+                        image={`https://image.tmdb.org/t/p/w500${this.state.data.poster_path}`}
+                        title={`Original Title: ${this.state.data.original_name
+                            ||
+                            this.state.data.original_title}`
+                        }
+                    />
+                </CardActionArea>
+             </Card>
         )
     }
 }

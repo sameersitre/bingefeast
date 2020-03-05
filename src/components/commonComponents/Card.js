@@ -11,16 +11,15 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Chip from '@material-ui/core/Chip';
 import Grid from '@material-ui/core/Grid';
-
+import moment from 'moment';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { addtoCart } from '../../containers/actions/userActions';
-
+import Poster from './Poster.js';
 //  import ProductImg from '../../assets/products/';
 const styles = (theme) => ({
     root: {
         width: '15rem',
-        height: 550,
         backgroundColor: '#101010'
 
     },
@@ -30,7 +29,7 @@ const styles = (theme) => ({
         position: 'relative',
     },
     media: {
-        height: 350,
+        height: 320,
     },
     chipView: {
         display: 'flex',
@@ -51,9 +50,9 @@ class MediaCard extends Component {
     }
 
     static getDerivedStateFromProps(nextProps, prevState) {
-        if (nextProps.movieData) {
+        if (nextProps.parentData) {
             return {
-                movieData: nextProps.movieData,
+                movieData: nextProps.parentData,
                 genres: nextProps.user.Genres
             }
         }
@@ -69,7 +68,6 @@ class MediaCard extends Component {
             let propGenres = this.state.movieData.genre_ids
             let genreStrings = []
             propGenres.forEach((value) => {
-                // console.log(value)
                 for (let j = 0; j < genres.length; j++) {
                     if (value === genres[j].id) {
                         genreStrings.push(genres[j].name)
@@ -79,15 +77,16 @@ class MediaCard extends Component {
             this.setState({ genreStrings: genreStrings })
         }
     }
-    
+
     _addCartClick = () => {
-        
+
         // gets cart list from redux and updates the cart
+        //put on localstorage to avoid undefined on user refresh
         localStorage.setItem('selectedMovieDetails', JSON.stringify(this.state.movieData))
         this.props.history.push({
-            pathname: `/movieDetails`,
+            pathname: `/moviedetails`,
             //search: '?the=search',
-            movieData: this.state.movieData
+            // movieData: this.state.movieData
         })
     }
 
@@ -95,55 +94,48 @@ class MediaCard extends Component {
         const { classes } = this.props;
         return (
             <Card className={classes.root}>
+                <div onClick={() => this._addCartClick()}>
+                    <Poster
+                        data={this.state.movieData}
+                    />
+                </div>
 
-                <CardMedia
-                    className={classes.media}
-                    image={`https://image.tmdb.org/t/p/w500${this.state.movieData.poster_path}`}
-                />
                 <CardContent className={classes.CardContent}>
-                    <Typography gutterBottom variant="subtitle2" style={{ color: '#E5CA49', alignSelf: 'center', height: 40 }}  >
-                        {this.state.movieData.title}
+                    <Typography gutterBottom variant="subtitle2"
+                        style={{
+                            color: '#E5CA49', alignSelf: 'center',
+                             marginTop: -10
+                        }}  >
+                        {this.state.movieData.title
+                            ||
+                            this.state.movieData.name}
                     </Typography>
-                    <div style={{ display: 'flex', color: '#FFFFFF', flexDirection: 'column' }}>
-                        <Typography variant="body2"  >
-                            Ratings: {`${this.state.movieData.vote_average}(${this.state.movieData.vote_count})`}
+                    <Grid style={{ display: 'flex', color: '#FFFFFF', flexDirection: 'column' }}>
+                        <div  >
+                            <Typography variant="body2"  >
+                                {`${this.state.movieData.vote_average} (${this.state.movieData.vote_count})`}
                         </Typography>
+                            <Typography variant="body2"  >
+                                {moment(this.state.movieData.release_date).format('LL')} (USA)
+                        </Typography>
+                        </div>
                         <div style={{ display: 'flex', flexDirection: 'row', marginTop: 10 }}   >
-                            {/* <Typography variant="subtitle2" style={{marginTop:5}}  >
-                                Genre:
-                                 </Typography> */}
+
                             <div className={classes.chipView}
-                                style={{ width: 270, height: 50 }}>
+                              >
 
                                 {this.state.genreStrings.map((value, i) =>
                                     <Chip
                                         key={i}
                                         size="small"
                                         label={value}
-                                        style={{ color: '#000000', backgroundColor: '#6A6A6A' }}
+                                        style={{ color: '#000000', backgroundColor: '#6A6A6A', height: 20 }}
                                         component="a" href="#chip" clickable />
                                 )}
                             </div>
                         </div>
-                    </div>
+                    </Grid>
 
-                    <div style={{
-                        zIndex: 2,
-                        position: 'absolute',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        bottom: '-25px'
-                    }}>
-                        <Button
-                            style={{
-                                color: '#FFFFFF', backgroundColor: 'black',
-                                borderRadius: 0, width: '13rem'
-                            }}
-                            onClick={() => this._addCartClick()}
-                        >  Details
-                        </Button>
-                    </div>
                 </CardContent>
             </Card>
         );

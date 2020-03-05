@@ -104,21 +104,21 @@ class Appbar extends Component {
           </Dialog>
 
           <Toolbar>
-            <IconButton href='/' >
+            <IconButton href='/inMovie-webapp/' >
               <Typography className={classes.title} variant="h6" noWrap  >
-                IN MOVIE
+                inMovie
             </Typography>
             </IconButton>
 
-            <IconButton href='/' >
+            <IconButton href='/inMovie-webapp/' >
               <Typography className={classes.title} variant="subtitle2" noWrap  >
                 Home
             </Typography>
             </IconButton>
 
-            <IconButton href='/' >
+            <IconButton href='/inMovie-webapp/tvshows' >
               <Typography className={classes.title} variant="subtitle2" noWrap  >
-                Genre
+                TV Shows
             </Typography>
             </IconButton>
 

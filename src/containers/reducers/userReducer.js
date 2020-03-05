@@ -3,12 +3,13 @@ import {
   USER_CART,
   SIZE_FILTER,
   CART_REMOVE,
-MOVIE_DATA
+  MOVIE_DATA, TVSHOW_DATA, DETAILS_DATA, BUFFER_ENABLE
 } from '../actions/types';
 
 import Genres from '../../utils/Genres';
 const initialState = {
   Genres,
+  buffer_enable: true,
   user_cart: [{
     "id": 12,
     "title": "Cat Tee Black T-Shirt",
@@ -38,8 +39,6 @@ const initialState = {
     "src_1": "/products/114_1.jpg",
     "src_2": "/products/114_2.jpg"
   }],
-  userDetails: {},
-  orgDetails: {},
 };
 
 export default function (state = initialState, action) {
@@ -64,10 +63,25 @@ export default function (state = initialState, action) {
         ...state,
         movie_data: action.payload,
       };
+    case TVSHOW_DATA:
+      return {
+        ...state,
+        tvshow_data: action.payload,
+      };
+    case DETAILS_DATA:
+      return {
+        ...state,
+        details_data: action.payload,
+      }
     case CART_REMOVE:
       return {
         ...state,
         cart_remove: action.payload,
+      };
+    case BUFFER_ENABLE:
+      return {
+        ...state,
+        buffer_enable: action.payload,
       };
 
     default:

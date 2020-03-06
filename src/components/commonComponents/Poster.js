@@ -7,11 +7,11 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import CardMedia from '@material-ui/core/CardMedia';
 const styles = (theme) => ({
     root: {
-        width: '15rem',
-        height: 320,
+        width: '13rem',
+        height: 300,
     },
     media: {
-        height: 320,
+        height: 300,
     },
 });
 export class Poster extends Component {

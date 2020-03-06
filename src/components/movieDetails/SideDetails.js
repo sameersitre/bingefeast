@@ -167,12 +167,20 @@ class SideDetails extends Component {
 
 
 
-
-                <Typography gutterBottom variant="h4" style={{ color: '#E5CA49', margin: 0 }}  >
-                    {this.state.movieData.title
-                        ||
-                        this.state.movieData.name}
+                <div style={{ display:'flex', flexDirection: 'row', alignItems:'flex-end', width:window.innerWidth }} >
+                    <Typography gutterBottom variant="h4" style={{ color: '#E5CA49', }}  >
+                        {this.state.movieData.title
+                            ||
+                            this.state.movieData.name}
+                    </Typography>
+                    <Typography gutterBottom variant="h6" style={{ color: '#E5CA49',marginBottom:15 }}  >
+                         &nbsp;({moment(this.state.movieData.release_date
+                            ||
+                            this.state.movieData.first_air_date).format('YYYY')
+                        })
                 </Typography>
+                </div>
+
 
                 {this.state.movieData.tagline
                     &&
@@ -185,7 +193,7 @@ class SideDetails extends Component {
                 <div style={{ marginTop: 10 }} >
                     <a style={{
                         display: 'flex', flexDirection: 'row',
-                        alignItems: 'center', color: '#FFFFFF', textDecoration: 'none', width: 150
+                        alignItems: 'center', color: '#FFFFFF', textDecoration: 'none', width: 250
                     }}
                         href={`https://www.imdb.com/title/${this.state.movieData.imdb_id}`} target="_blank"
                     >
@@ -193,6 +201,9 @@ class SideDetails extends Component {
                         <Typography variant="body2"  >
                             &nbsp;&nbsp;{`${this.state.movieData.vote_average} (${this.state.movieData.vote_count})`}
                         </Typography>
+                        {/* <Typography variant="subtitle2" color={'grey'}  >
+                           Old Rating
+                        </Typography> */}
                     </a>
 
                     <Typography variant="body2" style={{ marginTop: 10 }}  >
@@ -201,6 +212,10 @@ class SideDetails extends Component {
                             this.state.movieData.first_air_date).format('LL')
                         }  (USA)
                         </Typography>
+
+                    <Typography variant="body2" style={{ marginTop: 10 }}  >
+                        {this.state.movieData.runtime} mins
+                    </Typography>
                 </div>
 
                 <div className={classes.chipView} >

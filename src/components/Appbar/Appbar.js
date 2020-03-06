@@ -114,6 +114,8 @@ class Appbar extends Component {
 
   handleKeyPress = (event) => {
     if (event.key === 'Enter') {
+      window.scrollTo(0, 0)
+
       this.props.searchResultData(this.state.searchText)
     }
   }

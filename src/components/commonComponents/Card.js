@@ -19,7 +19,7 @@ import Poster from './Poster.js';
 //  import ProductImg from '../../assets/products/';
 const styles = (theme) => ({
     root: {
-        width: '15rem',
+        width: '13rem',
         backgroundColor: '#101010'
 
     },
@@ -27,10 +27,7 @@ const styles = (theme) => ({
         display: 'flex',
         flexDirection: 'column',
         position: 'relative',
-    },
-    media: {
-        height: 320,
-    },
+    }, 
     chipView: {
         display: 'flex',
         justifyContent: 'flex-start',

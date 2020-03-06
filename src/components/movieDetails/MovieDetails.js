@@ -17,8 +17,12 @@ import YouTube from 'react-youtube';
 
 const styles = (theme) => ({
     root: {
-        width: '15rem',
-        height: 350,
+        width: window.innerWidth,
+        height: window.innerHeight,
+    },
+    media: {
+        height: window.innerHeight,
+        backgroundSize:'cover'
     },
     margin: {
         margin: theme.spacing(1),
@@ -27,7 +31,7 @@ const styles = (theme) => ({
     backdrop: {
         zIndex: theme.zIndex.drawer + 1,
         color: '#fff',
-      },
+    },
 });
 class MovieDetails extends Component {
 
@@ -46,9 +50,10 @@ class MovieDetails extends Component {
     }
 
     componentDidMount() {
+         window.scrollTo(0, 0)
         this.props.getDetails(JSON.parse(localStorage.selectedMovieDetails))
-console.log(localStorage.selectedMovieDetails)
-        window.scrollTo(0, 0)
+        console.log(localStorage.selectedMovieDetails)
+       
         console.log(window.location.pathname)
 
     }
@@ -63,7 +68,7 @@ console.log(localStorage.selectedMovieDetails)
             }
         };
         return (
-            <Box display="flex" p={1} bgcolor="background.paper">
+            <Box display="flex"   bgcolor="background.paper">
                 <Backdrop className={classes.backdrop} open={this.props.user.buffer_enable}  >
                     <CircularProgress color="inherit" />
                 </Backdrop>
@@ -75,14 +80,13 @@ console.log(localStorage.selectedMovieDetails)
                                 display: 'flex', position: 'relative',
                             }}
                         >
-                            <img src={`https://image.tmdb.org/t/p/original${this.state.movieData && this.state.movieData.backdrop_path}`}
-/*  <img src={`https://image.tmdb.org/t/p/w500${this.state.movieData && this.state.movieData.backdrop_path}`} */
-                                style=
-                                {{
-                                    width: window.innerWidth,
-                                    // height: window.innerHeight,
-                                    backgroundSize: 'cover'
-                                }} />
+                            <Card className={classes.root}>
+
+                                <CardMedia
+                                 className={classes.media}
+                                    image={`https://image.tmdb.org/t/p/w500${this.state.movieData && this.state.movieData.backdrop_path}`}
+                                />
+                            </Card>
                             <div
                                 style={{
                                     position: 'absolute',
@@ -94,7 +98,7 @@ console.log(localStorage.selectedMovieDetails)
 
                             </div>
 
-                            <div style={{ position: 'absolute',  margin: 50, }} >
+                            <div style={{ position: 'absolute', margin: 50, }} >
                                 <div style={{ display: 'flex', flexDirection: 'row', marginTop: 50 }}>
                                     <Poster
                                         data={this.state.movieData}

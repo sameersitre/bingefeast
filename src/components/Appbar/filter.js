@@ -4,8 +4,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import Chip from '@material-ui/core/Chip';
 import Paper from '@material-ui/core/Paper';
-import TagFacesIcon from '@material-ui/icons/TagFaces';
-import FilterListIcon from '@material-ui/icons/FilterList';
+ import FilterListIcon from '@material-ui/icons/FilterList';
 import {  filterMovieData } from '../../containers/actions/userActions';
 
 const styles = (theme) => ({

@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
-
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import {  updateMovieData } from '../../containers/actions/userActions';
@@ -22,10 +21,10 @@ class Dashboard extends Component {
                 movieData: nextProps.user.movie_data
             }
         }
+        return null
     }
     componentDidMount() {
         window.scrollTo(0, 0)
-
         this.props.updateMovieData()
         console.log(window.location.pathname)  
 
@@ -42,9 +41,7 @@ class Dashboard extends Component {
                                 </Grid>
                             ))}
                         </Grid>
-                  
                 </Grid>
-               
             </Box>
         )
     }

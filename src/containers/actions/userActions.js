@@ -1,7 +1,7 @@
 
 import {
   PRODUCT_LIST, USER_CART,
-  MOVIE_DATA, TVSHOW_DATA, DETAILS_DATA, BUFFER_ENABLE, SEARCH_RESULTS
+  MOVIE_DATA, TVSHOW_DATA, DETAILS_DATA, BUFFER_ENABLE,
 } from './types';
 
 import axios from 'axios'
@@ -85,7 +85,9 @@ export const filterMovieData = data => async (dispatch) => {
 };
 
 export const getDetails = data => async (dispatch) => {
-  let trailers = [];
+  let movieDetails = null;
+  let videos = null;
+  let streamAvailablity = null;
   let combinedData = null;
   let mediaTypeSelected = null
 
@@ -104,27 +106,53 @@ export const getDetails = data => async (dispatch) => {
     type: BUFFER_ENABLE,
     payload: true
   });
-  await axios.get(`https://api.themoviedb.org/3/${mediaTypeSelected}/${data.id}/videos?api_key=a2d451cdbcf87912820b3b17b82514c3&language=en-US`)
-    .then(res => {
-      trailers = res.data
 
-    })
-    .catch(function (error) {
-      console.log(error);
-    })
 
+  //GET MOVIE DETAILS
   await axios.get(`https://api.themoviedb.org/3/${mediaTypeSelected}/${data.id}?api_key=a2d451cdbcf87912820b3b17b82514c3&language=en-US`)
     .then(res => {
-      combinedData = [trailers, res.data]
-      dispatch({
-        type: DETAILS_DATA,
-        payload: combinedData
-      });
+      movieDetails = res.data
+
     })
     .catch(function (error) {
       console.log(error);
     })
 
+  // GET LIST OF VIDEOS
+  await axios.get(`https://api.themoviedb.org/3/${mediaTypeSelected}/${data.id}/videos?api_key=a2d451cdbcf87912820b3b17b82514c3&language=en-US`)
+    .then(res => {
+      videos = res.data
+
+    })
+    .catch(function (error) {
+      console.log(error);
+    })
+
+  // GET AVAILABLE STREAMING SERVICES
+  await axios({
+    "method": "GET",
+    "url": "https://utelly-tv-shows-and-movies-availability-v1.p.rapidapi.com/idlookup",
+    "headers": {
+      "content-type": "application/octet-stream",
+      "x-rapidapi-host": "utelly-tv-shows-and-movies-availability-v1.p.rapidapi.com",
+      "x-rapidapi-key": "d41ec63c05mshc5f9c53b5bdb10bp1e72ecjsnd1e7a018f33f"
+    }, "params": {
+      "source_id": data.id,
+      "source": "tmdb"
+    }
+  })
+    .then(res => {
+      streamAvailablity = res.data.collection.locations
+    })
+    .catch((error) => {
+      console.log(error)
+    })
+  combinedData = [movieDetails, videos, streamAvailablity]
+
+  dispatch({
+    type: DETAILS_DATA,
+    payload: combinedData
+  });
   dispatch({
     type: BUFFER_ENABLE,
     payload: false

@@ -3,31 +3,25 @@ import { connect } from 'react-redux'
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardMedia from '@material-ui/core/CardMedia';
-import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
+ import Box from '@material-ui/core/Box';
 import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
-import Poster from '../commonComponents/Poster.js';
+ import Poster from '../commonComponents/Poster.js';
 import SideDetails from './SideDetails';
 import { getDetails } from '../../containers/actions/userActions';
 // import Iframe from '../commonComponents/YoutubeIframe';
-import YouTube from 'react-youtube';
-
+ 
 const styles = (theme) => ({
     root: {
-        width: window.innerWidth,
-        height: window.innerHeight,
+        width: window.innerWidth+16,
+        height: window.innerHeight+15,
+        margin:0
     },
     media: {
         height: window.innerHeight,
-        backgroundSize:'cover'
+        backgroundSize: 'cover'
     },
-    margin: {
-        margin: theme.spacing(1),
-    },
-
     backdrop: {
         zIndex: theme.zIndex.drawer + 1,
         color: '#fff',
@@ -42,33 +36,29 @@ class MovieDetails extends Component {
     static getDerivedStateFromProps(nextProps, prevState) {
         if (nextProps.user.details_data) {
             return {
-                movieData: nextProps.user.details_data[1],
-                videoData: nextProps.user.details_data[0],
+                movieData: nextProps.user.details_data[0],
+                videoData: nextProps.user.details_data[1],
+                streamAvailablity: nextProps.user.details_data[2],
                 bufferEnabled: nextProps.user.buffer_enable
             }
         }
+        return null
     }
 
     componentDidMount() {
-         window.scrollTo(0, 0)
+        window.scrollTo(0, 0)
         this.props.getDetails(JSON.parse(localStorage.selectedMovieDetails))
-        console.log(localStorage.selectedMovieDetails)
-       
-        console.log(window.location.pathname)
+        // console.log(localStorage.selectedMovieDetails)
+        // console.log(window.location.pathname)
+
 
     }
     render() {
 
         const { classes } = this.props;
-        const opts = {
-            height: '200',
-            width: '400',
-            playerVars: { // https://developers.google.com/youtube/player_parameters
-                autoplay: 0
-            }
-        };
+       
         return (
-            <Box display="flex"   bgcolor="background.paper">
+            <Box display="flex" bgcolor="#000000">
                 <Backdrop className={classes.backdrop} open={this.props.user.buffer_enable}  >
                     <CircularProgress color="inherit" />
                 </Backdrop>
@@ -83,7 +73,7 @@ class MovieDetails extends Component {
                             <Card className={classes.root}>
 
                                 <CardMedia
-                                 className={classes.media}
+                                    className={classes.media}
                                     image={`https://image.tmdb.org/t/p/w500${this.state.movieData && this.state.movieData.backdrop_path}`}
                                 />
                             </Card>
@@ -106,6 +96,7 @@ class MovieDetails extends Component {
                                     <SideDetails
                                         movieData={this.state.movieData}
                                         videoData={this.state.videoData}
+                                        streamAvailablity={this.state.streamAvailablity}
                                     />
 
                                 </div>
@@ -125,7 +116,6 @@ const mapStateToProps = (state) => ({
     user: state.user
 })
 
-const mapDispatchToProps = {
-}
+ 
 
 export default withStyles(styles)(connect(mapStateToProps, { getDetails })(MovieDetails))

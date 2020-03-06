@@ -167,7 +167,7 @@ class SideDetails extends Component {
 
 
 
-                <div style={{ display:'flex', flexDirection: 'row', alignItems:'flex-end', width:window.innerWidth }} >
+                <div style={{ display:'flex', flexDirection: 'row', alignItems:'flex-end', width:window.innerWidth-500 }} >
                     <Typography gutterBottom variant="h4" style={{ color: '#E5CA49', }}  >
                         {this.state.movieData.title
                             ||

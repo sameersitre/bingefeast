@@ -8,12 +8,10 @@
 
 import React, { Component } from 'react';
 import { withStyles, fade } from '@material-ui/core/styles';
-
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import Dialog from '@material-ui/core/Dialog';
@@ -21,7 +19,6 @@ import CloseIcon from '@material-ui/icons/Close';
 import Slide from '@material-ui/core/Slide';
 import InputBase from '@material-ui/core/InputBase';
 import SearchIcon from '@material-ui/icons/Search';
-
 import FilterChips from './filter';
 import CartList from '../cartList/CartList';
 import { searchResultData } from '../../containers/actions/userActions';
@@ -201,11 +198,8 @@ class Appbar extends Component {
                 />
               </div>
               : null}
-
             <div className={classes.grow} />
-
             {window.location.pathname === '/' || window.location.pathname === '/inMovie-webapp/' ? <FilterChips /> : null}
-
           </Toolbar>
         </AppBar>
       </div>

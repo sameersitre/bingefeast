@@ -1,3 +1,9 @@
+/*
+  * Author: Sameer Sitre
+  * https://www.linkedin.com/in/sameersitre/
+  * https://github.com/sameersitre
+  * File Description:  
+ */
 
 import {
   PRODUCT_LIST, USER_CART,
@@ -5,7 +11,7 @@ import {
 } from './types';
 
 import axios from 'axios'
-
+import {RAPID_API_KEY, TMDB_API_KEY} from '../../utils/Config';
 export const productList = data => (dispatch) => {
   dispatch({
     type: PRODUCT_LIST,
@@ -21,7 +27,7 @@ export const addtoCart = data => (dispatch) => {
 
 
 export const updateMovieData = data => async (dispatch) => {
-  await axios.get('https://api.themoviedb.org/3/trending/all/day?api_key=a2d451cdbcf87912820b3b17b82514c3')
+  await axios.get(`https://api.themoviedb.org/3/trending/all/day?api_key=${TMDB_API_KEY}`)
     .then(res => {
       dispatch({
         type: MOVIE_DATA,
@@ -34,7 +40,7 @@ export const updateMovieData = data => async (dispatch) => {
 };
 
 export const updateTvShowData = data => async (dispatch) => {
-  await axios.get('https://api.themoviedb.org/3/trending/tv/day?api_key=a2d451cdbcf87912820b3b17b82514c3')
+  await axios.get(`https://api.themoviedb.org/3/trending/tv/day?api_key=${TMDB_API_KEY}`)
     .then(res => {
       dispatch({
         type: TVSHOW_DATA,
@@ -47,7 +53,7 @@ export const updateTvShowData = data => async (dispatch) => {
 };
 
 export const searchResultData = data => async (dispatch) => {
-  await axios.get(`https://api.themoviedb.org/3/search/multi?api_key=a2d451cdbcf87912820b3b17b82514c3&language=en-US&query=${data}&page=1&include_adult=false`)
+  await axios.get(`https://api.themoviedb.org/3/search/multi?api_key=${TMDB_API_KEY}&language=en-US&query=${data}&page=1&include_adult=false`)
     .then(res => {
       dispatch({
         type: MOVIE_DATA,
@@ -72,7 +78,7 @@ export const filterMovieData = data => async (dispatch) => {
   let genreString = genreArray.join("%2C");
   console.log(genreString)
 
-  await axios.get(`https://api.themoviedb.org/3/discover/movie?api_key=a2d451cdbcf87912820b3b17b82514c3&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=${genreString}`)
+  await axios.get(`https://api.themoviedb.org/3/discover/movie?api_key=${TMDB_API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=${genreString}`)
     .then(res => {
       dispatch({
         type: MOVIE_DATA,
@@ -109,7 +115,7 @@ export const getDetails = data => async (dispatch) => {
 
 
   //GET MOVIE DETAILS
-  await axios.get(`https://api.themoviedb.org/3/${mediaTypeSelected}/${data.id}?api_key=a2d451cdbcf87912820b3b17b82514c3&language=en-US`)
+  await axios.get(`https://api.themoviedb.org/3/${mediaTypeSelected}/${data.id}?api_key=${TMDB_API_KEY}&language=en-US`)
     .then(res => {
       movieDetails = res.data
 
@@ -119,7 +125,7 @@ export const getDetails = data => async (dispatch) => {
     })
 
   // GET LIST OF VIDEOS
-  await axios.get(`https://api.themoviedb.org/3/${mediaTypeSelected}/${data.id}/videos?api_key=a2d451cdbcf87912820b3b17b82514c3&language=en-US`)
+  await axios.get(`https://api.themoviedb.org/3/${mediaTypeSelected}/${data.id}/videos?api_key=${TMDB_API_KEY}&language=en-US`)
     .then(res => {
       videos = res.data
 
@@ -135,7 +141,7 @@ export const getDetails = data => async (dispatch) => {
     "headers": {
       "content-type": "application/octet-stream",
       "x-rapidapi-host": "utelly-tv-shows-and-movies-availability-v1.p.rapidapi.com",
-      "x-rapidapi-key": "d41ec63c05mshc5f9c53b5bdb10bp1e72ecjsnd1e7a018f33f"
+      "x-rapidapi-key": RAPID_API_KEY
     }, "params": {
       "source_id": data.id,
       "source": "tmdb"

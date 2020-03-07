@@ -1,6 +1,12 @@
+/*
+  * Author: Sameer Sitre
+  * https://www.linkedin.com/in/sameersitre/
+  * https://github.com/sameersitre
+  * File Description:  
+ */
+
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 

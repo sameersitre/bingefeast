@@ -1,3 +1,10 @@
+/*
+  * Author: Sameer Sitre
+  * https://www.linkedin.com/in/sameersitre/
+  * https://github.com/sameersitre
+  * File Description:  
+ */
+
 import { createStore, applyMiddleware, compose } from "redux";
 import thunk from "redux-thunk";
 

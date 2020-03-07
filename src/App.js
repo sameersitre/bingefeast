@@ -1,6 +1,12 @@
+/*
+  * Author: Sameer Sitre
+  * https://www.linkedin.com/in/sameersitre/
+  * https://github.com/sameersitre
+  * File Description:  
+ */
+ 
  import React, { Component } from 'react'
 
- import './App.css';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 

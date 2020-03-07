@@ -1,3 +1,10 @@
+/*
+  * Author: Sameer Sitre
+  * https://www.linkedin.com/in/sameersitre/
+  * https://github.com/sameersitre
+  * File Description:  
+ */
+
 import React from 'react';
 import { Route, BrowserRouter, Switch } from 'react-router-dom';
 

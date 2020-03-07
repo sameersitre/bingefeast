@@ -1,22 +1,30 @@
+/*
+  * Author: Sameer Sitre
+  * https://www.linkedin.com/in/sameersitre/
+  * https://github.com/sameersitre
+  * File Description:  
+ */
+
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardMedia from '@material-ui/core/CardMedia';
- import Box from '@material-ui/core/Box';
+import Box from '@material-ui/core/Box';
 import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
- import Poster from '../commonComponents/Poster.js';
+import Poster from '../commonComponents/Poster.js';
 import SideDetails from './SideDetails';
 import { getDetails } from '../../containers/actions/userActions';
 // import Iframe from '../commonComponents/YoutubeIframe';
- 
+
 const styles = (theme) => ({
     root: {
-        width: window.innerWidth+16,
-        height: window.innerHeight+15,
-        margin:0
+        width: window.innerWidth + 16,
+        height: window.innerHeight  ,
+        margin: 0,
+        backgroundColor : 'grey'
     },
     media: {
         height: window.innerHeight,
@@ -56,9 +64,9 @@ class MovieDetails extends Component {
     render() {
 
         const { classes } = this.props;
-       
+
         return (
-            <Box display="flex" bgcolor="#000000">
+            <Box display="flex" bgcolor="#000000" style={{margin:0,padding:0, width: window.innerWidth - 50 }}>
                 <Backdrop className={classes.backdrop} open={this.props.user.buffer_enable}  >
                     <CircularProgress color="inherit" />
                 </Backdrop>
@@ -71,10 +79,10 @@ class MovieDetails extends Component {
                             }}
                         >
                             <Card className={classes.root}>
-
                                 <CardMedia
                                     className={classes.media}
-                                    image={`https://image.tmdb.org/t/p/w500${this.state.movieData && this.state.movieData.backdrop_path}`}
+                                    image={`https://image.tmdb.org/t/p/w500${this.state.movieData && this.state.movieData.backdrop_path}`  }
+
                                 />
                             </Card>
                             <div
@@ -116,6 +124,6 @@ const mapStateToProps = (state) => ({
     user: state.user
 })
 
- 
+
 
 export default withStyles(styles)(connect(mapStateToProps, { getDetails })(MovieDetails))

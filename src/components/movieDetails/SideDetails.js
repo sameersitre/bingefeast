@@ -1,3 +1,11 @@
+/*
+  * Author: Sameer Sitre
+  * https://www.linkedin.com/in/sameersitre/
+  * https://github.com/sameersitre
+  * File Description:  
+ */
+
+
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withStyles } from '@material-ui/core/styles';
@@ -272,7 +280,7 @@ class SideDetails extends Component {
                         display: 'flex', flexDirection: 'row', color: '#FFFFFF',
                         textDecoration: 'none', marginTop: 10, justifyContent: 'flex-start'
                     }}>
-                        {this.props.user.details_data
+                        {this.props.user.details_data && this.props.user.details_data[2]
                             &&
                             this.props.user.details_data[2].map((value, i) => 
                                 value.country[0] === 'us' || value.country[0] === 'in'?

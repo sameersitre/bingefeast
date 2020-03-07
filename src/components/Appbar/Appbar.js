@@ -1,3 +1,11 @@
+/*
+  * Author: Sameer Sitre
+  * https://www.linkedin.com/in/sameersitre/
+  * https://github.com/sameersitre
+  * File Description:  
+ */
+
+
 import React, { Component } from 'react';
 import { withStyles, fade } from '@material-ui/core/styles';
 
@@ -5,7 +13,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
- 
+
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import Dialog from '@material-ui/core/Dialog';

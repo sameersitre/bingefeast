@@ -275,15 +275,17 @@ class SideDetails extends Component {
                     </a>
 
 
-
+                    {/* streaming icons */}
                     <div style={{
-                        display: 'flex', flexDirection: 'row', color: '#FFFFFF',
+                        display: 'flex', flexDirection: 'row', color: '#FFFFFF', alignItems: 'baseline',
                         textDecoration: 'none', marginTop: 10, justifyContent: 'flex-start'
                     }}>
                         {this.props.user.details_data && this.props.user.details_data[2]
                             &&
-                            this.props.user.details_data[2].map((value, i) => 
-                                value.country[0] === 'us' || value.country[0] === 'in'?
+                            this.props.user.details_data[2].map((value, i) =>
+                                value.country[0] === 'us' ||
+                                    value.country[0] === 'in'
+                                    ?
                                     <a style={{ margin: 10 }}
                                         href={value.url} target="_blank"
                                     >
@@ -291,7 +293,7 @@ class SideDetails extends Component {
                                     </a>
                                     : null
 
-                            
+
 
                             )}
                     </div>

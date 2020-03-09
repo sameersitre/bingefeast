@@ -173,7 +173,7 @@ class Appbar extends Component {
             </Typography>
             </IconButton>
 
-            <IconButton href='/inMovie-webapp/tvshows' >
+            <IconButton href='/inMovie-webapp/tvshows/' >
               <Typography className={classes.title} variant="subtitle2" noWrap  >
                 TV Shows
             </Typography>

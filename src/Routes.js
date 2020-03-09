@@ -6,7 +6,7 @@
  */
 
 import React from 'react';
-import { Route, BrowserRouter, Switch } from 'react-router-dom';
+import { Route, BrowserRouter, Switch, HashRouter } from 'react-router-dom';
 
 // import Auth from './hoc/Auth';
 
@@ -23,7 +23,7 @@ import MovieDetails from './components/movieDetails/MovieDetails';
 // PCMP Routes
 
 const Routes = () => (
-    <BrowserRouter basename={process.env.PUBLIC_URL}>
+    <HashRouter  basename={process.env.PUBLIC_URL}>
         <Appbar />
         <div style={{ position: 'absolute', }}>
 
@@ -48,14 +48,14 @@ const Routes = () => (
                 <Route exact path="/inMovie-webapp/" name="Dashboard" component={Dashboard} />
                 <Route exact path="/tvshows" name="TVshows" component={TVShows} />
 
-                <Route exact path="/moviedetails" name="MovieDetails" component={MovieDetails} />
-                <Route exact path="/tvshowdetails" name="TVShowDetails" component={MovieDetails} />
+                <Route  path="/moviedetails" name="MovieDetails" component={MovieDetails} />
+                <Route  path="/tvshowdetails" name="TVShowDetails" component={MovieDetails} />
 
 
 
             </Switch>
         </div>
-    </BrowserRouter>
+    </HashRouter>
 );
 
 export default Routes;

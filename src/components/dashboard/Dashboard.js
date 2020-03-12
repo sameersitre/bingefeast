@@ -32,8 +32,11 @@ class Dashboard extends Component {
     }
     componentDidMount() {
         window.scrollTo(0, 0)
-        this.props.updateMovieData()
-        console.log(window.location.pathname)  
+        console.log(window.location )
+               this.props.updateMovieData()
+        // console.log(window.location.pathname)  
+       
+    
 
     }
 

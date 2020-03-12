@@ -6,12 +6,12 @@
  */
 
 import React, { Component } from 'react';
- 
+
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
- 
+
 import CardContent from '@material-ui/core/CardContent';
- 
+
 import Typography from '@material-ui/core/Typography';
 import Chip from '@material-ui/core/Chip';
 import Grid from '@material-ui/core/Grid';
@@ -31,7 +31,7 @@ const styles = (theme) => ({
         display: 'flex',
         flexDirection: 'column',
         position: 'relative',
-    }, 
+    },
     chipView: {
         display: 'flex',
         justifyContent: 'flex-start',
@@ -86,8 +86,7 @@ class MediaCard extends Component {
         localStorage.setItem('selectedMovieDetails', JSON.stringify(this.state.movieData))
         this.props.history.push({
             pathname: `/moviedetails`,
-            //search: '?the=search',
-            // movieData: this.state.movieData
+            //  movieData: this.state.movieData
         })
     }
 
@@ -117,7 +116,9 @@ class MediaCard extends Component {
                                 {`${this.state.movieData.vote_average} (${this.state.movieData.vote_count})`}
                             </Typography>
                             <Typography variant="body2"  >
-                                {moment(this.state.movieData.release_date).format('LL')} (USA)
+                                {moment(this.state.movieData.release_date
+                                    ||
+                                    this.state.movieData.first_air_date).format('LL')} (USA)
                         </Typography>
                         </div>
                         <div style={{ display: 'flex', flexDirection: 'row', marginTop: 10 }}   >

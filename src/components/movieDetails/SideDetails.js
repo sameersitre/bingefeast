@@ -17,6 +17,7 @@ import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import moment from 'moment';
 import Popover from '@material-ui/core/Popover';
+import Tooltip from '@material-ui/core/Tooltip';
 
 import Typography from '@material-ui/core/Typography';
 const styles = (theme) => ({
@@ -286,15 +287,18 @@ class SideDetails extends Component {
                                 value.country[0] === 'us' ||
                                     value.country[0] === 'in'
                                     ?
-                                    <a style={{ margin: 10 }}
-                                        href={value.url} target="_blank"
-                                    >
-                                        <img src={value.icon} alt="Smiley face" width="70" />
-                                    </a>
+                                    <Tooltip
+                                        title={value.country[0] === 'us' && 'US' ||
+                                            value.country[0] === 'in' && 'INDIA'}
+                                        placement="bottom-end"
+                                        aria-label="add">
+                                        <a style={{ margin: 10 }}
+                                            href={value.url} target="_blank"
+                                        >
+                                            <img src={value.icon} alt="Smiley face" width="70" />
+                                        </a>
+                                    </Tooltip>
                                     : null
-
-
-
                             )}
                     </div>
 

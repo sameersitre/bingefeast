@@ -42,7 +42,7 @@ class Dashboard extends Component {
 
     render() {
         return (
-            <Box display="flex" justifyContent='center' boxSizing='border-box'  width={window.innerWidth} bgcolor="#1B1A20">
+            <Box display="flex" justifyContent='center' boxSizing='border-box'  width={window.innerWidth-20} bgcolor="#1B1A20">
             <Grid item xs={11} >
                         <Grid container justify="center" spacing={2} style={{paddingTop:80}}>
                             {this.state.movieData && this.state.movieData.map((value, i) => (

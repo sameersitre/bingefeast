@@ -8,6 +8,8 @@
 
 import React, { Component } from 'react';
 import { withStyles, fade } from '@material-ui/core/styles';
+import { Link } from "react-router-dom";
+
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
@@ -28,6 +30,7 @@ const styles = theme => ({
   },
   title: {
     display: 'none',
+    textDecoration: 'none',
     [theme.breakpoints.up('sm')]: {
       display: 'block',
     },
@@ -72,9 +75,9 @@ const styles = theme => ({
     width: '40%', marginLeft: 'auto', marginRight: 0
   },
 });
-function Transition(props) {
-  return <Slide direction="left" {...props} />;
-}
+// function Transition(props) {
+//   return <Slide direction="left" {...props} />;
+// }
 
 class Appbar extends Component {
   state = {
@@ -138,7 +141,7 @@ class Appbar extends Component {
           }
 
           }>
-          <Dialog
+          {/* <Dialog
             fullScreen
             open={this.state.setDialog}
             onClose={this.handleClose}
@@ -158,26 +161,24 @@ class Appbar extends Component {
             <CartList
               allList={this.state.userCart}
             />
-          </Dialog>
+          </Dialog> */}
 
           <Toolbar>
-            <IconButton href='/inMovie-webapp/' >
+            <IconButton href='/' >
               <Typography className={classes.title} variant="h6" noWrap  >
-                inMovie
+                bingeFeast
             </Typography>
             </IconButton>
 
-            <IconButton href='/inMovie-webapp/' >
-              <Typography className={classes.title} variant="subtitle2" noWrap  >
-                Home
-            </Typography>
-            </IconButton>
-
-            {/* <IconButton href='/inMovie-webapp/tvshows/' >
-              <Typography className={classes.title} variant="subtitle2" noWrap  >
+            <IconButton  >
+              <Typography className={classes.title} variant="subtitle2"
+                component={Link}
+                to={`/tvshows`}
+              >
                 TV Shows
             </Typography>
-            </IconButton> */}
+            </IconButton>
+
 
             {window.location.pathname === '/' || window.location.pathname === '/inMovie-webapp/' ?
               <div className={classes.search}>

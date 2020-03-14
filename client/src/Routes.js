@@ -25,35 +25,35 @@ import MovieDetails from './components/movieDetails/MovieDetails';
 const Routes = () => (
     <BrowserRouter basename={process.env.PUBLIC_URL}>
         <Appbar />
-        <div style={{ position: 'absolute', }}>
+<div>
+    
+
+        <Switch style={{ position: 'absolute', }}>
+            <Route
+                exact
+                path="/register"
+                name="Register"
+                component={Register}
+            //   component={Auth(Register, false)}
+            />
+            <Route exact path="/login" name="Login" component={Login} />
+            <Route
+                exact
+                path="/forgotpassword"
+                name="Forgot Password"
+                component={ForgotPassword}
+            //   component={Auth(ForgotPassword, false)}
+            />
+            <Route exact path="/" name="Dashboard" component={Dashboard} />
+            <Route exact path="/inMovie-webapp/" name="Dashboard" component={Dashboard} />
+            <Route exact path="/tvshows" name="TVshows" component={TVShows} />
+
+            <Route exact path="/moviedetails" name="MovieDetails" component={MovieDetails} />
+            <Route exact path="/tvshowdetails" name="TVShowDetails" component={MovieDetails} />
 
 
-            <Switch>
-                <Route
-                    exact
-                    path="/register"
-                    name="Register"
-                    component={Register}
-                //   component={Auth(Register, false)}
-                />
-                <Route exact path="/login" name="Login" component={Login} />
-                <Route
-                    exact
-                    path="/forgotpassword"
-                    name="Forgot Password"
-                    component={ForgotPassword}
-                //   component={Auth(ForgotPassword, false)}
-                />
-                <Route exact path="/" name="Dashboard" component={Dashboard} />
-                <Route exact path="/inMovie-webapp/" name="Dashboard" component={Dashboard} />
-                <Route exact path="/tvshows" name="TVshows" component={TVShows} />
 
-                <Route exact path="/moviedetails" name="MovieDetails" component={MovieDetails} />
-                <Route exact path="/tvshowdetails" name="TVShowDetails" component={MovieDetails} />
-
-
-
-            </Switch>
+        </Switch>
         </div>
     </BrowserRouter>
 );

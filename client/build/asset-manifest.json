@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.js": "/inMovie-webapp/static/js/main.1e772cf4.chunk.js",
-    "main.js.map": "/inMovie-webapp/static/js/main.1e772cf4.chunk.js.map",
+    "main.js": "/inMovie-webapp/static/js/main.1bd7432d.chunk.js",
+    "main.js.map": "/inMovie-webapp/static/js/main.1bd7432d.chunk.js.map",
     "runtime-main.js": "/inMovie-webapp/static/js/runtime-main.fed6b1c3.js",
     "runtime-main.js.map": "/inMovie-webapp/static/js/runtime-main.fed6b1c3.js.map",
     "static/js/2.84632ec6.chunk.js": "/inMovie-webapp/static/js/2.84632ec6.chunk.js",
     "static/js/2.84632ec6.chunk.js.map": "/inMovie-webapp/static/js/2.84632ec6.chunk.js.map",
     "index.html": "/inMovie-webapp/index.html",
-    "precache-manifest.274816856a717b087e6df2f2dc695f37.js": "/inMovie-webapp/precache-manifest.274816856a717b087e6df2f2dc695f37.js",
+    "precache-manifest.69c8fccc5cacbea4bbbaa98c288b84cb.js": "/inMovie-webapp/precache-manifest.69c8fccc5cacbea4bbbaa98c288b84cb.js",
     "service-worker.js": "/inMovie-webapp/service-worker.js",
     "static/js/2.84632ec6.chunk.js.LICENSE.txt": "/inMovie-webapp/static/js/2.84632ec6.chunk.js.LICENSE.txt",
     "static/media/101_1.jpg": "/inMovie-webapp/static/media/101_1.b5714b6a.jpg",
@@ -34,6 +34,6 @@
   "entrypoints": [
     "static/js/runtime-main.fed6b1c3.js",
     "static/js/2.84632ec6.chunk.js",
-    "static/js/main.1e772cf4.chunk.js"
+    "static/js/main.1bd7432d.chunk.js"
   ]
 }

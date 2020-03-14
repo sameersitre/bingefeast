@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "a770ff062ecbc0c38ef11623b222fa13",
+    "revision": "de718ccc661872988d79c03b32b12baf",
     "url": "/inMovie-webapp/index.html"
   },
   {
@@ -12,8 +12,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/inMovie-webapp/static/js/2.84632ec6.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "8a7cb48b68a73fe9c21a",
-    "url": "/inMovie-webapp/static/js/main.1e772cf4.chunk.js"
+    "revision": "004f1aa836e314e2fc7b",
+    "url": "/inMovie-webapp/static/js/main.1bd7432d.chunk.js"
   },
   {
     "revision": "df61d6bc88c10cd2b7e0",

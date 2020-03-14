@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/inMovie-webapp/precache-manifest.274816856a717b087e6df2f2dc695f37.js"
+  "/inMovie-webapp/precache-manifest.69c8fccc5cacbea4bbbaa98c288b84cb.js"
 );
 
 self.addEventListener('message', (event) => {

@@ -40,9 +40,9 @@ const Routes = () => (
             />
             <Route exact path="/" name="Dashboard" component={Dashboard} />
             <Route exact path="/inMovie-webapp/" name="Dashboard" component={Dashboard} />
-            <Route exact path="/tvshows" name="TVshows" component={TVShows} />
+            <Route  path="/tvshows" name="TVshows" component={TVShows} />
 
-            <Route exact path="/moviedetails" name="MovieDetails" component={MovieDetails} />
+            <Route  path="/moviedetails" name="MovieDetails" component={MovieDetails} />
             <Route exact path="/tvshowdetails" name="TVShowDetails" component={MovieDetails} />
         </Switch>
     </BrowserRouter>

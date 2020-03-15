@@ -6,7 +6,7 @@
  */
 
 import React from 'react';
-import { Route, BrowserRouter, Switch } from 'react-router-dom';
+import { Route, BrowserRouter, Switch, withRouter} from 'react-router-dom';
 
 // import Auth from './hoc/Auth';
 import Register from './components/authentication/register/Register';
@@ -50,4 +50,4 @@ const Routes = () => (
     </BrowserRouter>
 );
 
-export default Routes;
+export default withRouter(Routes);

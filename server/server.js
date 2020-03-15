@@ -13,6 +13,7 @@ var cookieParser = require('cookie-parser');
 const path = require('path');
 // var session = require('express-session');
 var busboy = require('connect-busboy');
+var history = require('connect-history-api-fallback');
 
 
 const app = express();
@@ -31,7 +32,7 @@ app.use((req, res, next) => {
   //app.use(cors());
 // app.use(validator());
 app.use(cookieParser());
-
+app.use(history())
 // Serve the static files from the React app
 app.use(express.static(path.join(__dirname, '../client/build')));
 

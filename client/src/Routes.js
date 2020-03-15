@@ -9,8 +9,6 @@ import React from 'react';
 import { Route, BrowserRouter, Switch } from 'react-router-dom';
 
 // import Auth from './hoc/Auth';
-
-
 import Register from './components/authentication/register/Register';
 import Login from './components/authentication/login/Login';
 import ForgotPassword from './components/authentication/forgotPassword/ForgotPassword';
@@ -20,14 +18,10 @@ import Dashboard from './components/dashboard/Dashboard';
 
 import TVShows from './components/tvshows/TVShows.js';
 import MovieDetails from './components/movieDetails/MovieDetails';
-// PCMP Routes
 
 const Routes = () => (
     <BrowserRouter basename={process.env.PUBLIC_URL}>
         <Appbar />
-<div>
-    
-
         <Switch style={{ position: 'absolute', }}>
             <Route
                 exact
@@ -50,11 +44,7 @@ const Routes = () => (
 
             <Route exact path="/moviedetails" name="MovieDetails" component={MovieDetails} />
             <Route exact path="/tvshowdetails" name="TVShowDetails" component={MovieDetails} />
-
-
-
         </Switch>
-        </div>
     </BrowserRouter>
 );
 

@@ -20,10 +20,17 @@ import TVShows from './components/tvshows/TVShows.js';
 import MovieDetails from './components/movieDetails/MovieDetails';
 
 const Routes = () => (
-    <BrowserRouter basename={process.env.PUBLIC_URL}>
+    <BrowserRouter  >
         <Appbar />
         <Switch style={{ position: 'absolute', }}>
-            <Route
+            <Route exact path="/" name="Dashboard" component={Dashboard} />
+            {/* <Route exact path="/inMovie-webapp/" name="Dashboard" component={Dashboard} /> */}
+            <Route path="/tvshows" name="TVshows" component={TVShows} />
+
+            <Route path="/moviedetails" name="MovieDetails" component={MovieDetails} />
+            <Route path="/tvshowdetails" name="TVShowDetails" component={MovieDetails} />
+
+            {/* <Route
                 exact
                 path="/register"
                 name="Register"
@@ -37,13 +44,8 @@ const Routes = () => (
                 name="Forgot Password"
                 component={ForgotPassword}
             //   component={Auth(ForgotPassword, false)}
-            />
-            <Route exact path="/" name="Dashboard" component={Dashboard} />
-            <Route exact path="/inMovie-webapp/" name="Dashboard" component={Dashboard} />
-            <Route  path="/tvshows" name="TVshows" component={TVShows} />
+            /> */}
 
-            <Route  path="/moviedetails" name="MovieDetails" component={MovieDetails} />
-            <Route exact path="/tvshowdetails" name="TVShowDetails" component={MovieDetails} />
         </Switch>
     </BrowserRouter>
 );

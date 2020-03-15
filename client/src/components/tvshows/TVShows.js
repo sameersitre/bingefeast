@@ -13,7 +13,7 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import {  updateTvShowData } from '../../containers/actions/userActions';
 import Card from '../commonComponents/Card.js';
-class Dashboard extends Component {
+class TVShows extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -60,6 +60,6 @@ const mapStateToProps = (state) => ({
     user: state.user
 })
 
-// export default Dashboard
+// export default TVShows
 
-export default connect(mapStateToProps, { updateTvShowData })(withRouter(Dashboard));
+export default connect(mapStateToProps, { updateTvShowData })(withRouter(TVShows));

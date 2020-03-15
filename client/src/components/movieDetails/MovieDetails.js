@@ -7,6 +7,8 @@
 
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import {  withRouter } from 'react-router-dom';
+
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardMedia from '@material-ui/core/CardMedia';
@@ -128,4 +130,4 @@ const mapStateToProps = (state) => ({
 
 
 
-export default withStyles(styles)(connect(mapStateToProps, { getDetails })(MovieDetails))
+export default withStyles(styles)(connect(mapStateToProps, { getDetails })(withRouter(MovieDetails)))

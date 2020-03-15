@@ -6,7 +6,7 @@
  */
 
 import React from 'react';
-import { Route, BrowserRouter, Switch, withRouter} from 'react-router-dom';
+import { Route, BrowserRouter, Switch, withRouter } from 'react-router-dom';
 
 // import Auth from './hoc/Auth';
 import Register from './components/authentication/register/Register';
@@ -20,15 +20,17 @@ import TVShows from './components/tvshows/TVShows.js';
 import MovieDetails from './components/movieDetails/MovieDetails';
 
 const Routes = () => (
-    <BrowserRouter  >
+    <BrowserRouter
+        // basename={process.env.PUBLIC_URL}
+    >
         <Appbar />
         <Switch style={{ position: 'absolute', }}>
             <Route exact path="/" name="Dashboard" component={Dashboard} />
             {/* <Route exact path="/inMovie-webapp/" name="Dashboard" component={Dashboard} /> */}
-            <Route path="/tvshows" name="TVshows" component={TVShows} />
+            <Route exact path="/tvshows" name="TVshows" component={TVShows} />
 
-            <Route path="/moviedetails" name="MovieDetails" component={MovieDetails} />
-            <Route path="/tvshowdetails" name="TVShowDetails" component={MovieDetails} />
+            <Route exact path="/moviedetails" name="MovieDetails" component={MovieDetails} />
+            <Route exact path="/tvshowdetails" name="TVShowDetails" component={MovieDetails} />
 
             {/* <Route
                 exact
@@ -49,5 +51,5 @@ const Routes = () => (
         </Switch>
     </BrowserRouter>
 );
-
-export default withRouter(Routes);
+export default Routes;
+// export default withRouter(Routes);

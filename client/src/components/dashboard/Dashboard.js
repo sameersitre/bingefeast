@@ -9,6 +9,7 @@ import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+import axios from 'axios';
 import { updateMovieData } from '../../containers/actions/userActions';
 import Card from '../commonComponents/Card.js';
 class Dashboard extends Component {
@@ -33,6 +34,16 @@ class Dashboard extends Component {
         console.log(window.location)
         this.props.updateMovieData()
         // console.log(window.location.pathname)  
+
+        // axios.get(`http://localhost:5000/api/getList`)
+        //     .then(res => {
+        //        console.log(res.data)
+        //     })
+        //     .catch(function (error) {
+        //         console.log(error);
+        //     })
+
+
     }
     render() {
         return (

@@ -4,8 +4,8 @@
   * https://github.com/sameersitre
   * File Description:  
  */
- 
- import React, { Component } from 'react'
+
+import React, { Component } from 'react'
 
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
@@ -21,10 +21,13 @@ class App extends Component {
   render() {
     return (
       <Provider store={Store}>
-      <BrowserRouter>
-        <Routes />
-      </BrowserRouter>
-     </Provider>
+        <BrowserRouter
+        // forceRefresh={false}
+        // basename={process.env.PUBLIC_URL}
+        >
+          <Routes />
+        </BrowserRouter>
+      </Provider>
     )
   }
 }

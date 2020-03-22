@@ -1,18 +1,24 @@
+"use strict";
 
 var express = require('express');
+
 var cors = require('cors');
+
 var bodyparser = require('body-parser');
- var mainRouter = require('./routes/router');
- var validator = require('express-validator');
+
+var mainRouter = require('./routes/router');
+
+var validator = require('express-validator');
+
 var cookieParser = require('cookie-parser');
+
 var path = require('path');
 
-global.config = require('./config');
- 
-// creating server instance
+global.config = require('./config'); // creating server instance
+
 var app = express();
 app.set('view engine', 'ejs');
-app.use((req, res, next) => {
+app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Methods", "GET, PUT, PATCH, POST, DELETE");
   res.header("Access-Control-Allow-Headers", req.header('access-control-request-headers'));
@@ -23,21 +29,22 @@ app.use((req, res, next) => {
     next();
   }
 });
-
 app.use(cookieParser());
-app.use(
-  bodyparser.json({ limit: '50mb', extended: true }),
-  bodyparser.urlencoded({ limit: '50mb', extended: true })
-);
-// app.use(busboy());
+app.use(bodyparser.json({
+  limit: '50mb',
+  extended: true
+}), bodyparser.urlencoded({
+  limit: '50mb',
+  extended: true
+})); // app.use(busboy());
 //app.use(bodyparser.json());
-mainRouter.configure(app);
 
-//listening application on port 8000
+mainRouter.configure(app); //listening application on port 8000
+
 var server = app.listen(5500, function () {
   console.log('Server Listening on port ' + server.address().port);
-});
-//server.setTimeout(600000, function(){
+}); //server.setTimeout(600000, function(){
 //    console.log("API TIMED OUT");
 //});
+
 server.timeout = 60 * 10 * 1000;

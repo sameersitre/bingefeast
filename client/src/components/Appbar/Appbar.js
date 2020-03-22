@@ -14,13 +14,9 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import Dialog from '@material-ui/core/Dialog';
-import CloseIcon from '@material-ui/icons/Close';
-import Slide from '@material-ui/core/Slide';
 import InputBase from '@material-ui/core/InputBase';
 import SearchIcon from '@material-ui/icons/Search';
 import FilterChips from './filter';
-import CartList from '../cartList/CartList';
 import { searchResultData } from '../../containers/actions/userActions';
 const styles = theme => ({
   grow: {
@@ -73,9 +69,6 @@ const styles = theme => ({
     width: '40%', marginLeft: 'auto', marginRight: 0
   },
 });
-// function Transition(props) {
-//   return <Slide direction="left" {...props} />;
-// }
 
 class Appbar extends Component {
   state = {
@@ -137,34 +130,12 @@ class Appbar extends Component {
             background: 'linear-gradient(to top, transparent 0%, #000000 100%)',
             backgroundColor: 'none'
           }
-
           }>
-          {/* <Dialog
-            fullScreen
-            open={this.state.setDialog}
-            onClose={this.handleClose}
-            TransitionComponent={Transition}
-            className={classes.dialogWidth}
-          >
-            <IconButton
-              edge="start"
-              color="inherit"
-              onClick={this.handleClose}
-              aria-label="close"
-              style={{ position: 'fixed', zIndex: 1, backgroundColor: 'white', marginLeft: -45 }}
-            >
-              <CloseIcon />
-            </IconButton>
-
-            <CartList
-              allList={this.state.userCart}
-            />
-          </Dialog> */}
 
           <Toolbar>
             <IconButton href='/' >
               <Typography className={classes.title} variant="h6" noWrap  >
-                bingeFeast
+                BingeFeast
             </Typography>
             </IconButton>
 
@@ -211,8 +182,4 @@ const mapStateToProps = state => ({
   user: state.user
 });
 
-export default withStyles(styles)(
-  connect(
-    mapStateToProps, { searchResultData }
-  )(withRouter(Appbar))
-);
+export default withStyles(styles)(withRouter(connect(mapStateToProps, { searchResultData })(Appbar)));

@@ -27,17 +27,34 @@ export const addtoCart = data => (dispatch) => {
 };
 
 export const updateMovieData = data => async (dispatch) => {
+  var requestOptions = {
+    method: 'POST',
+    redirect: 'follow'
+  };
 
-  await axios.post(`${main_url}/getDetails`)
-    .then(res => {
+  fetch("http://ec2-34-197-252-217.compute-1.amazonaws.com:8080/getDetails", requestOptions)
+    .then(response => response.text())
+    .then(result => {
+      console.log(result);
       dispatch({
         type: MOVIE_DATA,
-        payload: res.data.results
+        payload: result.results
       });
-    })
-    .catch(function (error) {
-      console.log(error);
-    })
+    }
+    )
+    .catch(error => console.log('error', error));
+
+
+  // await axios.post(`${main_url}/getDetails`)
+  //   .then(res => {
+  //     dispatch({
+  //       type: MOVIE_DATA,
+  //       payload: res.data.results
+  //     });
+  //   })
+  //   .catch(function (error) {
+  //     console.log(error);
+  //   })
 };
 
 export const updateTvShowData = data => async (dispatch) => {

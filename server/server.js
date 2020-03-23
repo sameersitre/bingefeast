@@ -34,7 +34,7 @@ app.use(
 mainRouter.configure(app);
 
 //listening application on port 8000
-var server = app.listen(5500, function () {
+var server = app.listen(8080, function () {
   console.log('Server Listening on port ' + server.address().port);
 });
 //server.setTimeout(600000, function(){

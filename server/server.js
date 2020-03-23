@@ -1,14 +1,20 @@
+/*
+  * Author: Sameer Sitre
+  * https://www.linkedin.com/in/sameersitre/
+  * https://github.com/sameersitre
+  * File Description:  
+ */
 
 var express = require('express');
 var cors = require('cors');
 var bodyparser = require('body-parser');
- var mainRouter = require('./routes/router');
- var validator = require('express-validator');
+var mainRouter = require('./routes/router');
+var validator = require('express-validator');
 var cookieParser = require('cookie-parser');
 var path = require('path');
 
 global.config = require('./config');
- 
+
 // creating server instance
 var app = express();
 app.set('view engine', 'ejs');

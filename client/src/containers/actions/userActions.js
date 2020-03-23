@@ -6,28 +6,29 @@
  */
 
 import {
-  PRODUCT_LIST, USER_CART,
-  MOVIE_DATA, TVSHOW_DATA, DETAILS_DATA, BUFFER_ENABLE,
+  PRODUCT_LIST, USER_CART, MOVIE_DATA, TVSHOW_DATA, DETAILS_DATA, BUFFER_ENABLE,
 } from './types';
-
 import axios from 'axios'
-import {RAPID_API_KEY, TMDB_API_KEY} from '../../utils/Config';
+import { RAPID_API_KEY, TMDB_API_KEY, main_url } from '../../utils/Config';
+
 export const productList = data => (dispatch) => {
+
   dispatch({
     type: PRODUCT_LIST,
     payload: data
   })
 };
 export const addtoCart = data => (dispatch) => {
+
   dispatch({
     type: USER_CART,
     payload: data
   })
 };
 
-
 export const updateMovieData = data => async (dispatch) => {
-  await axios.get(`https://api.themoviedb.org/3/trending/all/day?api_key=${TMDB_API_KEY}`)
+
+  await axios.get(main_url)
     .then(res => {
       dispatch({
         type: MOVIE_DATA,

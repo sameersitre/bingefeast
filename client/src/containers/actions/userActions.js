@@ -28,7 +28,7 @@ export const addtoCart = data => (dispatch) => {
 
 export const updateMovieData = data => async (dispatch) => {
 
-  await axios.post(main_url)
+  await axios.post(`${main_url}/getDetails`)
     .then(res => {
       dispatch({
         type: MOVIE_DATA,

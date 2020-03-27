@@ -26,46 +26,18 @@ export const addtoCart = data => (dispatch) => {
   })
 };
 
-export const updateMovieData = data => async (dispatch) => {
-
-  axios.get(`https://api.themoviedb.org/3/trending/all/day?api_key=${TMDB_API_KEY}`)
-    .then(res => {
+export const updateMovieData = data =>  (dispatch) => {
+  // axios.get(`https://api.themoviedb.org/3/trending/all/day?api_key=${TMDB_API_KEY}`)
+   axios.post(`${main_url}/trending/all`)
+    .then(res =>
       dispatch({
         type: MOVIE_DATA,
         payload: res.data.results
-      });
-    })
+      })
+    )
     .catch(function (error) {
       console.log(error);
     })
-
-  // var requestOptions = {
-  //   method: 'POST',
-  //   redirect: 'follow'
-  // };
-  // fetch("http://ec2-34-197-252-217.compute-1.amazonaws.com:8080/getDetails", requestOptions)
-  //   .then(response => response.text())
-  //   .then(result => {
-  //     console.log(result);
-  //     dispatch({
-  //       type: MOVIE_DATA,
-  //       payload: result.results
-  //     });
-  //   }
-  //   )
-  //   .catch(error => console.log('error', error));
-
-
-  // await axios.post(`${main_url}/getDetails`)
-  //   .then(res => {
-  //     dispatch({
-  //       type: MOVIE_DATA,
-  //       payload: res.data.results
-  //     });
-  //   })
-  //   .catch(function (error) {
-  //     console.log(error);
-  //   })
 
 };
 
@@ -183,6 +155,7 @@ export const getDetails = data => async (dispatch) => {
     .catch((error) => {
       console.log(error)
     })
+
   combinedData = [movieDetails, videos, streamAvailablity]
 
   dispatch({

@@ -1,21 +1,12 @@
-/*
-  * Author: Sameer Sitre
-  * https://www.linkedin.com/in/sameersitre/
-  * https://github.com/sameersitre
-  * File Description:  
- */
-
-var express = require('express');
-var cors = require('cors');
+const serverless = require('serverless-http');
+const express = require('express')
+const fetch = require('node-fetch');
+const axios = require('axios');
 var bodyparser = require('body-parser');
 var mainRouter = require('./routes/router');
-var validator = require('express-validator');
 var cookieParser = require('cookie-parser');
-var path = require('path');
-
 global.config = require('./config');
 
-// creating server instance
 var app = express();
 app.set('view engine', 'ejs');
 app.use((req, res, next) => {
@@ -39,11 +30,18 @@ app.use(
 //app.use(bodyparser.json());
 mainRouter.configure(app);
 
-//listening application on port 8000
-var server = app.listen(8080, function () {
-  console.log('Server Listening on port ' + server.address().port);
-});
-//server.setTimeout(600000, function(){
-//    console.log("API TIMED OUT");
-//});
-server.timeout = 60 * 10 * 1000;
+// app.post('/getDetails', async function (req, res) {
+//   let resp = null;
+//   await axios.get(`https://api.themoviedb.org/3/trending/all/day?api_key=a2d451cdbcf87912820b3b17b82514c3`)
+//     .then(res => {
+//       resp = res.data.results
+//       console.log(resp)
+//     })
+//     .catch(function (error) {
+//       console.log(error);
+//     })
+//   console.log(resp)
+//   res.send(resp)
+// })
+
+module.exports.handler = serverless(app);

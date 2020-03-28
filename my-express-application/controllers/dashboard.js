@@ -14,7 +14,7 @@ function getUserDashboardData() {
         console.log(apiKeys.TMDB_API_KEY)
         axios.get(`https://api.themoviedb.org/3/trending/all/day?api_key=${apiKeys.TMDB_API_KEY}`)
             .then(res => {
-                response.send({ status: res.data.results })
+                response.send(res.data)
             })
             .catch(function (error) {
                 console.log(error);

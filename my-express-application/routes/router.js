@@ -13,7 +13,7 @@ module.exports = {
 
         app.use(cookieParser())
 
-        app.post('/getDetails', function (req, res) {
+        app.post('/trending/all', function (req, res) {
             DashboardData.popularList(req, res)
         });
 

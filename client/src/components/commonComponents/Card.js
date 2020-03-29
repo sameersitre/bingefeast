@@ -18,7 +18,6 @@ import Grid from '@material-ui/core/Grid';
 import moment from 'moment';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { addtoCart } from '../../containers/actions/userActions';
 import Poster from './Poster.js';
 //  import ProductImg from '../../assets/products/';
 const styles = (theme) => ({
@@ -152,6 +151,6 @@ const mapStateToProps = state => ({
 export default withStyles(styles)(
     connect(
         mapStateToProps,
-        { addtoCart }
+       
     )(withRouter(MediaCard))
 );

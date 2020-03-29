@@ -10,11 +10,15 @@ var cookieParser = require("cookie-parser")
 
 module.exports = {
     configure: function (app) {
-
         app.use(cookieParser())
 
         app.post('/trending/all', function (req, res) {
             DashboardData.popularList(req, res)
+        });
+
+        app.post('/getDetails', function (req, res) {
+          //  console.log(req.body)
+            DashboardData.getDetails(req, res)
         });
 
         // app.get("/logout", function (req, res) {
@@ -25,5 +29,7 @@ module.exports = {
         //     console.log(req.session)
         //     res.json({ status: true, message: "successfully logged out!" })
         // })
+        
     }
+
 }

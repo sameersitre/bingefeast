@@ -11,24 +11,23 @@ import {
 import axios from 'axios'
 import { RAPID_API_KEY, TMDB_API_KEY, main_url } from '../../utils/Config';
 
-export const productList = data => (dispatch) => {
+// export const productList = data => (dispatch) => {
 
-  dispatch({
-    type: PRODUCT_LIST,
-    payload: data
-  })
-};
-export const addtoCart = data => (dispatch) => {
+//   dispatch({
+//     type: PRODUCT_LIST,
+//     payload: data
+//   })
+// };
+// export const addtoCart = data => (dispatch) => {
 
-  dispatch({
-    type: USER_CART,
-    payload: data
-  })
-};
+//   dispatch({
+//     type: USER_CART,
+//     payload: data
+//   })
+// };
 
-export const updateMovieData = data =>  (dispatch) => {
-  // axios.get(`https://api.themoviedb.org/3/trending/all/day?api_key=${TMDB_API_KEY}`)
-   axios.post(`${main_url}/trending/all`)
+export const updateMovieData = data => async (dispatch) => {
+ await axios.post(`${main_url}/trending/all`)
     .then(res =>
       dispatch({
         type: MOVIE_DATA,
@@ -38,8 +37,35 @@ export const updateMovieData = data =>  (dispatch) => {
     .catch(function (error) {
       console.log(error);
     })
+};
+
+export const getDetails = data => async (dispatch) => {
+  console.log(data)
+  
+  dispatch({
+    type: BUFFER_ENABLE,
+    payload: true
+  });
+
+  await axios.post(`${main_url}/getDetails`, data)
+    .then(res => {
+
+      dispatch({
+        type: DETAILS_DATA,
+        payload: res.data
+      });
+    })
+    .catch(function (error) {
+      console.log(error);
+    })
+
+  dispatch({
+    type: BUFFER_ENABLE,
+    payload: false
+  });
 
 };
+
 
 export const updateTvShowData = data => async (dispatch) => {
   await axios.get(`https://api.themoviedb.org/3/trending/tv/day?api_key=${TMDB_API_KEY}`)
@@ -67,8 +93,6 @@ export const searchResultData = data => async (dispatch) => {
     })
 };
 
-
-
 export const filterMovieData = data => async (dispatch) => {
   let genreArray = [];
 
@@ -91,82 +115,3 @@ export const filterMovieData = data => async (dispatch) => {
       console.log(error);
     })
 };
-
-export const getDetails = data => async (dispatch) => {
-  let movieDetails = null;
-  let videos = null;
-  let streamAvailablity = null;
-  let combinedData = null;
-  let mediaTypeSelected = null
-
-  // json field 'media_type' is unavailable in filtered response json
-  if (data.media_type) {
-    mediaTypeSelected = data.media_type
-  }
-  else if (data.title) {
-    mediaTypeSelected = 'movie'
-  }
-  else if (data.name) {
-    mediaTypeSelected = 'tv'
-  }
-
-  dispatch({
-    type: BUFFER_ENABLE,
-    payload: true
-  });
-
-
-  //GET MOVIE DETAILS
-  await axios.get(`https://api.themoviedb.org/3/${mediaTypeSelected}/${data.id}?api_key=${TMDB_API_KEY}&language=en-US`)
-    .then(res => {
-      movieDetails = res.data
-
-    })
-    .catch(function (error) {
-      console.log(error);
-    })
-
-  // GET LIST OF VIDEOS
-  await axios.get(`https://api.themoviedb.org/3/${mediaTypeSelected}/${data.id}/videos?api_key=${TMDB_API_KEY}&language=en-US`)
-    .then(res => {
-      videos = res.data
-
-    })
-    .catch(function (error) {
-      console.log(error);
-    })
-
-  // GET AVAILABLE STREAMING SERVICES
-  await axios({
-    "method": "GET",
-    "url": "https://utelly-tv-shows-and-movies-availability-v1.p.rapidapi.com/idlookup",
-    "headers": {
-      "content-type": "application/octet-stream",
-      "x-rapidapi-host": "utelly-tv-shows-and-movies-availability-v1.p.rapidapi.com",
-      "x-rapidapi-key": RAPID_API_KEY
-    }, "params": {
-      "source_id": data.id,
-      "source": "tmdb"
-    }
-  })
-    .then(res => {
-      streamAvailablity = res.data.collection.locations
-    })
-    .catch((error) => {
-      console.log(error)
-    })
-
-  combinedData = [movieDetails, videos, streamAvailablity]
-
-  dispatch({
-    type: DETAILS_DATA,
-    payload: combinedData
-  });
-  dispatch({
-    type: BUFFER_ENABLE,
-    payload: false
-  });
-};
-
-
-

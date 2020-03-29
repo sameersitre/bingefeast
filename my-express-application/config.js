@@ -7,6 +7,8 @@
 
 var TMDB_API_KEY = 'a2d451cdbcf87912820b3b17b82514c3'
 var RAPID_API_KEY = 'd41ec63c05mshc5f9c53b5bdb10bp1e72ecjsnd1e7a018f33f'
+var MAIN_URL = 'https://api.themoviedb.org/3'
 
 module.exports.TMDB_API_KEY = TMDB_API_KEY;
 module.exports.RAPID_API_KEY = RAPID_API_KEY;
+module.exports.MAIN_URL = MAIN_URL;

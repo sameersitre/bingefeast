@@ -18,11 +18,12 @@ import CloseIcon from '@material-ui/icons/Close';
 import moment from 'moment';
 import Popover from '@material-ui/core/Popover';
 import Tooltip from '@material-ui/core/Tooltip';
+import Card from '@material-ui/core/Card';
 
 import Typography from '@material-ui/core/Typography';
 const styles = (theme) => ({
     dialog: {
-        width: 500, height: 800,
+        width: 500, height: 800, borderRadius: 15,
     },
     buttons: {
         display: 'flex',
@@ -156,23 +157,6 @@ class SideDetails extends Component {
 
     render() {
         const { classes } = this.props;
-        //         var selectedStreams = []
-        //         if (this.state.streamAvailablity && this.state.streamAvailablity.locations) {
-        //             let locations = this.state.streamAvailablity.locations
-        //             console.log(locations)
-
-        //             let filteredLocation = []
-        //             for (let i = 0; i < locations.length; i++) {
-        //                 if (locations[i].country[0] === 'in' || locations[i].country[0] === 'us') {
-        //                     filteredLocation.push(locations[i])
-        //                 }
-        //             }
-
-        //            selectedStreams.push(filteredLocation)
-
-        //             console.log('selectedStreams',selectedStreams)
-        //         }
-        //  this.setState({selectedStreams:selectedStreams})
 
         return (
 
@@ -208,18 +192,20 @@ class SideDetails extends Component {
                     fullScreen
                     disableBackdropClick
                     disableEscapeKeyDown
-                    className={classes.dialog}
+                    // className={classes.dialog}
                     open={this.state.dialogOpen}
-                    style={{ width: '80%', height: '80%', margin: 'auto' }}
+                    style={{ width: '75%', height: '75%', margin: 'auto', marginTop: '8%', }}
                 >
                     <IconButton
                         color="inherit"
                         onClick={() => this.handleDialogClose()}
                         aria-label="Close"
-                        style={{ position: 'fixed', zIndex: 1, backgroundColor: 'white', marginTop: -45, marginLeft: '80%' }}
+                        style={{ position: 'fixed', zIndex: 1, backgroundColor: 'white', marginTop: -45, marginLeft: '75%' }}
                     >
                         <CloseIcon />
                     </IconButton>
+
+
 
                     <iframe
                         src={`https://www.youtube.com/embed/${this.state.videoSelected && this.state.videoSelected.key}`}
@@ -228,13 +214,13 @@ class SideDetails extends Component {
                             position: 'absolute',
                             width: '100%',
                             height: '100%',
-                            left: 0, top: 0,
                         }}
                         frameBorder='0'
                         allow='autoplay; encrypted-media'
                         allowFullScreen
                         title='video'
                     />
+
                 </Dialog>
 
 
@@ -247,8 +233,8 @@ class SideDetails extends Component {
                     </Typography>
                     <Typography gutterBottom variant="h6" style={{ color: '#E5CA49', marginBottom: 15 }}  >
                         &nbsp;({moment(this.state.movieData.release_date
-                            ||
-                            this.state.movieData.first_air_date).format('YYYY')
+                        ||
+                        this.state.movieData.first_air_date).format('YYYY')
                         })
                 </Typography>
                 </div>

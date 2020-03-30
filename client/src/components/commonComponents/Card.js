@@ -63,7 +63,7 @@ class MediaCard extends Component {
     }
 
     getGenre = () => {
-        if (this.state.genres) {
+        if (this.state.genres && this.state.movieData.genre_ids) {
             let genres = this.state.genres.genres
             let propGenres = this.state.movieData.genre_ids
             let genreStrings = []

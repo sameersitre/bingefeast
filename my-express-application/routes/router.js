@@ -12,12 +12,19 @@ module.exports = {
     configure: function (app) {
         app.use(cookieParser())
 
-        app.post('/trending/all', function (req, res) {
-            DashboardData.popularList(req, res)
+        app.post('/trending', function (req, res) {
+            DashboardData.trendingList(req, res)
+        });
+
+        app.post('/search', function (req, res) {
+            DashboardData.searchResult(req, res)
+        });
+
+        app.post('/filter', function (req, res) {
+            DashboardData.filterResult(req, res)
         });
 
         app.post('/getDetails', function (req, res) {
-          //  console.log(req.body)
             DashboardData.getDetails(req, res)
         });
 
@@ -31,5 +38,4 @@ module.exports = {
         // })
         
     }
-
 }

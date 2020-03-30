@@ -13,14 +13,17 @@ import TVShows from './components/tvshows/TVShows.js';
 import MovieDetails from './components/movieDetails/MovieDetails';
 
 const Routes = () => (
-    <div>
+    <div style={{
+        backgroundColor: '#000000',
+       
+        // height: window.innerHeight
+    }} >
         <Appbar />
-        <Switch style={{ position: 'absolute', }}>
+        <Switch style={{ position: 'absolute',   }}>
             <Route exact path="/" component={Dashboard} />
             <Route exact path="/tvshows" component={TVShows} />
             <Route exact path="/moviedetails" component={MovieDetails} />
             <Route exact path="/tvshowdetails" component={MovieDetails} />
-            {/* <Redirect from='*' to='/' /> */}
         </Switch>
     </div>
 );

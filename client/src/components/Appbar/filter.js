@@ -1,4 +1,3 @@
-
 /*
   * Author: Sameer Sitre
   * https://www.linkedin.com/in/sameersitre/
@@ -12,8 +11,8 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import Chip from '@material-ui/core/Chip';
 import Paper from '@material-ui/core/Paper';
- import FilterListIcon from '@material-ui/icons/FilterList';
-import {  filterMovieData } from '../../containers/actions/userActions';
+import FilterListIcon from '@material-ui/icons/FilterList';
+import { filterMovieData, refreshDashboard } from '../../containers/actions/userActions';
 
 const styles = (theme) => ({
     root: {
@@ -25,34 +24,22 @@ const styles = (theme) => ({
         borderRadius: 25,
         padding: 0.2,
     },
-
     chip: {
         margin: theme.spacing(0.5),
     },
 });
 
-
 class ChipsArray extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            allGenres: [],
+            allGenres: this.props.user.Genres.genres,
             selectedGenres: [],
             allGenresEnabled: false,
             updateOnce: true
         }
     }
-
-    // static getDerivedStateFromProps(nextProps, prevState) {
-    //     if (nextProps.user.Genres  ) {
-    //         return {
-    //             allGenres: nextProps.user.Genres.genres
-    //         }
-    //     }
-    // }
-    componentDidMount() {
-        this.setState({ allGenres: this.props.user.Genres.genres })
-    }
+ 
     handleDelete = (chipToDelete) => {
 
         var filtered = this.state.selectedGenres.filter(function (el) { return el.id !== chipToDelete.id; });
@@ -60,7 +47,9 @@ class ChipsArray extends Component {
 
         allGenres.push(chipToDelete)
         this.setState({ allGenres: allGenres, selectedGenres: filtered })
-
+        if (this.state.selectedGenres.length === 0) {
+            this.props.refreshDashboard(false)
+        }
     }
 
 
@@ -70,8 +59,7 @@ class ChipsArray extends Component {
 
         selectedGenres.push(chipToadd)
         this.setState({ selectedGenres: selectedGenres, allGenres: filtered })
-
-
+        this.props.refreshDashboard(true)
     }
 
     handleClear = () => {
@@ -79,6 +67,7 @@ class ChipsArray extends Component {
         var allGenres = this.state.allGenres
         selectedGenres.filter(function (el) { allGenres.push(el) })
         this.setState({ allGenres: allGenres, selectedGenres: [] })
+        this.props.refreshDashboard(false)
     }
 
     filterIconClick = () => {
@@ -88,7 +77,7 @@ class ChipsArray extends Component {
     }
     filterClick = () => {
         this.setState({
-            allGenresEnabled: !this.state.allGenresEnabled
+            allGenresEnabled: false
         })
         this.props.filterMovieData(this.state.selectedGenres)
     }
@@ -175,4 +164,4 @@ class ChipsArray extends Component {
 const mapStateToProps = state => ({
     user: state.user
 });
-export default withStyles(styles)(connect(mapStateToProps, {filterMovieData})(withRouter(ChipsArray)));
+export default withStyles(styles)(connect(mapStateToProps, { filterMovieData, refreshDashboard })(withRouter(ChipsArray)));

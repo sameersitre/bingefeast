@@ -7,9 +7,10 @@
 
 var apiKeys = require('../config');
 var axios = require('axios')
+var fetch = require('node-fetch')
+
 function getUserDashboardData() {
 
-  /* *********    TRENDING ALL DAY    ********** */
   this.popularList = function (req, response) {
     console.log(apiKeys.TMDB_API_KEY)
     axios.get(`${apiKeys.MAIN_URL}/trending/all/day?api_key=${apiKeys.TMDB_API_KEY}`)
@@ -18,6 +19,53 @@ function getUserDashboardData() {
       })
       .catch(function (error) {
         console.log(error);
+      })
+  }
+
+  /* *********    TRENDING ALL/TV/MOVIE DAY    ********** */
+  this.trendingList = async function (req, response) {
+    console.log(apiKeys.TMDB_API_KEY)
+    let data = req.body
+    await axios.get(
+      `${apiKeys.MAIN_URL}/trending/${data.type}/day?api_key=${apiKeys.TMDB_API_KEY}`
+    )
+      .then(res => {
+        response.send(JSON.stringify(res.data))
+      })
+      .catch(function (error) {
+        console.log(error);
+        response.send(error)
+      })
+  }
+
+  /* *********    SEARCH RESULT    ********** */
+  this.searchResult = async function (req, response) {
+    console.log(apiKeys.TMDB_API_KEY)
+    let data = req.body
+    await axios.get(
+      `${apiKeys.MAIN_URL}/search/multi?api_key=${apiKeys.TMDB_API_KEY}&language=en-US&query=${data.searchText}&page=1&include_adult=false`
+    )
+      .then(res => {
+        response.send(JSON.stringify(res.data))
+      })
+      .catch(function (error) {
+        console.log(error);
+        response.send(error)
+      })
+  }
+
+  /* *********    FILTER RESULT    ********** */
+  this.filterResult = async function (req, response) {
+   console.log(req.body)
+    await axios.get(
+      `${apiKeys.MAIN_URL}/discover/movie?api_key=${apiKeys.TMDB_API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=${req.body.genres}`
+    )
+      .then(res => {
+        response.send(JSON.stringify(res.data))
+      })
+      .catch(function (error) {
+        console.log(error);
+        response.send(error)
       })
   }
 

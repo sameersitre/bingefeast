@@ -23,12 +23,13 @@ import { getDetails } from '../../containers/actions/userActions';
 
 const styles = (theme) => ({
     root: {
-        width: window.innerWidth + 16,
-        height: window.innerHeight  ,
+        width: window.innerWidth  ,
+        // height: window.innerHeight  ,
         margin: 0,
         backgroundColor : 'grey'
     },
     media: {
+        width: window.innerWidth  ,
         height: window.innerHeight,
         backgroundSize: 'cover'
     },
@@ -70,30 +71,31 @@ class MovieDetails extends Component {
         const { classes } = this.props;
 
         return (
-            <Box display="flex" bgcolor="#000000" style={{margin:0,padding:0, width: window.innerWidth - 50 }}>
+            <Box display="flex"  
+            style={{   marginLeft:-8
+            //  width: window.innerWidth - 50
+              }}>
                 <Backdrop className={classes.backdrop} open={this.props.user.buffer_enable}  >
                     <CircularProgress color="inherit" />
                 </Backdrop>
                 <Grid item xs={12} style={{ backgroundColor: '#1B1A20', }}>
 
-                    <Grid container justify="center" spacing={4} >
+                    <Grid      >
                         <div
                             style={{
                                 display: 'flex', position: 'relative',
                             }}
                         >
-                            <Card className={classes.root}>
                                 <CardMedia
                                     className={classes.media}
                                     image={`https://image.tmdb.org/t/p/w500${this.state.movieData && this.state.movieData.backdrop_path}`  }
 
                                 />
-                            </Card>
                             <div
                                 style={{
                                     position: 'absolute',
                                     backgroundSize: 'cover',
-                                    width: window.innerWidth,
+                                    width: window.innerWidth-25 ,
                                     height: window.innerHeight,
                                     background: 'linear-gradient(to left, transparent 0%, black 85%)'
                                 }} >

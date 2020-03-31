@@ -14,7 +14,7 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import CardMedia from '@material-ui/core/CardMedia';
 const styles = (theme) => ({
     root: {
-        width: '13rem',
+        width: '12rem',
         height: 300,
     },
     media: {

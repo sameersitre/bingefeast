@@ -256,9 +256,14 @@ class SideDetails extends Component {
                         href={`https://www.imdb.com/title/${this.state.movieData.imdb_id}`} target="_blank"
                     >
                         <img src={require('../../assets/Icons/imdb.png')} alt="Smiley face" height="28" width="28" />
-                        <Typography variant="body2"  >
-                            &nbsp;&nbsp;{`${this.state.movieData.vote_average} (${this.state.movieData.vote_count})`}
-                        </Typography>
+                        {this.state.movieData.vote_average > 0
+                            ?
+                            <Typography variant="body2"  >
+                                &nbsp;&nbsp;{`${this.state.movieData.vote_average} (${this.state.movieData.vote_count})`}
+                            </Typography>
+                            :
+                            <Typography variant="body2">&nbsp;&nbsp;NA</Typography>
+                        }
                     </a>
 
 

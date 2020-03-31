@@ -32,21 +32,24 @@ class TVShows extends Component {
 
     componentDidMount() {
         let data = { "page": 1, "type": "tv" }
-        !this.props.user.search_text_available && 
-        this.props.trendingList(data)
+        !this.props.user.search_text_available &&
+            this.props.trendingList(data)
         console.log(window.location.pathname)
     }
 
     render() {
         return (
-            <Box display="flex"
-                justifyContent='center'
-                // boxSizing='border-box'
-                width={window.innerWidth}
-                bgcolor="#1B1A20"
-                style={{ marginLeft: -8, }}>
-                <Grid item xs={10} >
-                    <Grid container justify="center" spacing={3} style={{ paddingTop: 100 }}>
+            <Box
+                style={{
+                    display: "flex",
+                    justifyContent: 'center',
+                    justifySelf: 'center',
+                    backgroundColor: "#1B1A20",
+                    minHeight: window.innerHeight
+                }}
+            >
+                <Grid item xs={11} >
+                    <Grid container justify="center" spacing={4} style={{ paddingTop: 100 }}>
                         {this.state.tvshowData && this.state.tvshowData.map((value, i) => (
                             <Grid key={i} item>
                                 <Card parentData={value} />

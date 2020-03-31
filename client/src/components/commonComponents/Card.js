@@ -22,7 +22,7 @@ import Poster from './Poster.js';
 //  import ProductImg from '../../assets/products/';
 const styles = (theme) => ({
     root: {
-        width: '13rem',
+        width: '12rem',
         backgroundColor: '#101010'
 
     },
@@ -83,8 +83,11 @@ class MediaCard extends Component {
         // gets cart list from redux and updates the cart
         //put on localstorage to avoid undefined on user refresh
         // localStorage.clear()
+
+        //pending if statements for popular, movies, upcoming
         localStorage.setItem('selectedMovieDetails', JSON.stringify(this.state.movieData))
-        this.props.history.push({ pathname: `/moviedetails` })
+
+        this.props.history.push({ pathname: `/details` })
     }
 
     render() {

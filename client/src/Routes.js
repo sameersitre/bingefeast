@@ -10,20 +10,24 @@ import { Route, Switch, withRouter, Redirect, BrowserRouter } from 'react-router
 import Appbar from './components/Appbar/Appbar';
 import Dashboard from './components/dashboard/Dashboard';
 import TVShows from './components/tvshows/TVShows.js';
+import Upcoming from './components/upcoming/Upcoming';
+
 import MovieDetails from './components/movieDetails/MovieDetails';
 
 const Routes = () => (
     <div style={{
         backgroundColor: '#000000',
-       
-        // height: window.innerHeight
+       marginLeft:-8,marginRight:-8,
+
+     
+      //   height: window.innerHeight
     }} >
         <Appbar />
-        <Switch style={{ position: 'absolute',   }}>
+        <Switch style={{ position: 'absolute',     }}>
             <Route exact path="/" component={Dashboard} />
             <Route exact path="/tvshows" component={TVShows} />
-            <Route exact path="/moviedetails" component={MovieDetails} />
-            <Route exact path="/tvshowdetails" component={MovieDetails} />
+            <Route exact path="/upcoming/page:pageNumber" component={Upcoming} />
+            <Route exact path="/details" component={MovieDetails} />
         </Switch>
     </div>
 );

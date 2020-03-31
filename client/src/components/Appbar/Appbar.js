@@ -20,6 +20,12 @@ import Chip from '@material-ui/core/Chip';
 import Paper from '@material-ui/core/Paper';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import FilterChips from './filter';
+import ButtonSwitch from './ButtonSwitch';
+import Button from '@material-ui/core/Button';
+import ButtonGroup from '@material-ui/core/ButtonGroup';
+import Icon from '@material-ui/core/Icon';
+import DeleteIcon from '@material-ui/icons/Delete';
+
 import { searchResultData, refreshDashboard, filterMovieData } from '../../containers/actions/userActions';
 const styles = theme => ({
   grow: {
@@ -65,7 +71,7 @@ const styles = theme => ({
     transition: theme.transitions.create('width'),
     width: '100%',
     [theme.breakpoints.up('md')]: {
-      width: 200,
+      width: 150,
     },
   },
 
@@ -75,7 +81,7 @@ const styles = theme => ({
     justifyContent: 'flex-end',
     flexWrap: 'wrap',
     backgroundColor: '#454545',
-    maxWidth: 800,
+    maxWidth: 500,
     borderRadius: 25,
     padding: 0.2,
   },
@@ -191,7 +197,7 @@ class Appbar extends Component {
         style={{
           width: window.innerWidth,
           position: 'fixed',
-          height: 130,
+          height: 80,
           background: 'linear-gradient(to top, transparent 0%, #000000 100%)',
           backgroundColor: 'none'
         }
@@ -212,12 +218,33 @@ class Appbar extends Component {
               component={Link}
               to={`/tvshows`}
             >
+              Movies
+            </Typography>
+          </IconButton>
+
+          <IconButton  >
+            <Typography className={classes.title}
+              style={{ color: window.location.pathname === "/tvshows" && '#E46E36' }}
+              variant="subtitle2"
+              component={Link}
+              to={`/tvshows`}
+            >
               TV Shows
             </Typography>
           </IconButton>
 
+          <IconButton  >
+            <Typography className={classes.title} variant="subtitle2"
+              style={{ color: window.location.pathname.indexOf(`/upcoming/page`)>-1 && '#E46E36' }}
+              component={Link}
+              to={`/upcoming/page1`}
+            >
+              Upcoming Movies
+            </Typography>
+          </IconButton>
+
           {/* FILTER */}
-          {window.location.pathname === '/' || window.location.pathname === '/inMovie-webapp/' ?
+          {window.location.pathname === '/' ?
             <div className={classes.search}>
               <div className={classes.searchIcon}>
                 <SearchIcon />
@@ -236,8 +263,10 @@ class Appbar extends Component {
               />
             </div>
             : null}
+
+
           <div className={classes.grow} />
-          {window.location.pathname === '/' || window.location.pathname === '/inMovie-webapp/'
+          {window.location.pathname === '/'
             ?
             <div style={{ display: 'flex', flexDirection: 'column', position: 'relative', }} >
               <Paper className={classes.root}>
@@ -309,7 +338,9 @@ class Appbar extends Component {
             </div>
             :
             null}
+
         </Toolbar>
+
       </AppBar>
 
     );

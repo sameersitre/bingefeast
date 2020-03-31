@@ -24,6 +24,10 @@ module.exports = {
             DashboardData.filterResult(req, res)
         });
 
+        app.post('/upcoming', function (req, res) {
+            DashboardData.upcomingList(req, res)
+        });
+
         app.post('/getDetails', function (req, res) {
             DashboardData.getDetails(req, res)
         });

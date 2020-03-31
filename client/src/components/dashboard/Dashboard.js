@@ -47,30 +47,30 @@ class Dashboard extends Component {
     }
     componentDidMount() {
         window.scrollTo(0, 0)
-        console.log(window.location)
 
         // if search box is empty, do action below
         let data = { "page": 1, "type": "all" }
-         !this.props.user.search_text_available && 
-        this.props.trendingList(data)
+        !this.props.user.search_text_available &&
+            this.props.trendingList(data)
     }
     render() {
         const { classes } = this.props;
 
         return (
             <Box
-                display="flex"
-                justifyContent='center'
-                // boxSizing='border-box'
-                width={window.innerWidth}
-                bgcolor="#1B1A20"
-                style={{ marginLeft: -8, }}
+                style={{
+                    display: "flex",
+                    justifyContent: 'center',
+                    justifySelf: 'center',
+                    backgroundColor: "#1B1A20",
+                    minHeight: window.innerHeight
+                }}
             >
                 {/* <Backdrop className={classes.backdrop} open={this.props.user.buffer_enable}  >
                     <CircularProgress color="inherit" />
                 </Backdrop> */}
-                <Grid item xs={10} >
-                    <Grid container justify="center" spacing={3} style={{ paddingTop: 100 }}>
+                <Grid item xs={11}  >
+                    <Grid container justify="center" spacing={4} style={{ paddingTop: 100 }}>
                         {this.state.movieData && this.state.movieData.map((value, i) => (
                             <Grid key={i} item>
                                 <Card parentData={value} />

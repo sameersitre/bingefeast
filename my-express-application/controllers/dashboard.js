@@ -69,6 +69,22 @@ function getUserDashboardData() {
       })
   }
 
+  /* *********    FILTER RESULT    ********** */
+  this.upcomingList = async function (req, response) {
+    console.log(req.body)
+     await axios.get(
+      `${apiKeys.MAIN_URL}/movie/upcoming?api_key=${apiKeys.TMDB_API_KEY}&language=en-US&page=${req.body.page}&region=US%2CIN`
+      //  `${apiKeys.MAIN_URL}/discover/movie?api_key=${apiKeys.TMDB_API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=${req.body.genres}`
+     )
+       .then(res => {
+         response.send(JSON.stringify(res.data))
+       })
+       .catch(function (error) {
+         console.log(error);
+         response.send(error)
+       })
+   }
+
   /* *********    DETAILS OF SELECTED MOVIE/SERIES    ********** */
   this.getDetails = async function (req, response) {
     console.log('REQUEST BODY: ????????????????????????????????\n', req.body)

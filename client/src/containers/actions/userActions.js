@@ -9,7 +9,7 @@ import {
   MOVIE_DATA, DETAILS_DATA, BUFFER_ENABLE, SEARCH_TEXT_AVAILABLE
 } from './types';
 import axios from 'axios'
-import { main_url } from '../../utils/Config';
+import { main_url, TMDB_API_KEY } from '../../utils/Config';
 
 export const refreshDashboard = data => (dispatch) => {
   dispatch({
@@ -44,6 +44,21 @@ export const searchResultData = data => async (dispatch) => {
       console.log(error);
     })
 };
+
+export const upcomingMoviesData = data => async (dispatch) => {
+console.log(data)
+  await axios.post(`${main_url}/upcoming`, data)
+    .then(res => {
+      dispatch({
+        type: MOVIE_DATA,
+        payload: res.data.results
+      });
+    })
+    .catch(function (error) {
+      console.log(error);
+    })
+};
+
 
 export const filterMovieData = data => async (dispatch) => {
 

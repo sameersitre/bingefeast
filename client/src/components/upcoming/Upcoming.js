@@ -56,6 +56,7 @@ class Upcoming extends Component {
     }
 
     componentDidMount() {
+        window.scrollTo(0, 0)
         // this.setState({pageNumber:this.props.match.params.pageNumber})
         let data = { "page": this.state.pageNumber, "type": "movie" }
         this.props.upcomingMoviesData(data)

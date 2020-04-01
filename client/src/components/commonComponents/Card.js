@@ -112,9 +112,10 @@ class MediaCard extends Component {
                     </Typography>
                     <Grid style={{ display: 'flex', color: '#FFFFFF', flexDirection: 'column' }}>
                         <div  >
+                           {this.state.movieData.vote_average!==0 && 
                             <Typography variant="body2"  >
                                 {`${this.state.movieData.vote_average} (${this.state.movieData.vote_count})`}
-                            </Typography>
+                            </Typography>}
                             <Typography variant="body2"  >
                                 {moment(this.state.movieData.release_date
                                     ||

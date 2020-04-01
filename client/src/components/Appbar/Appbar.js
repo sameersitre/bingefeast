@@ -216,7 +216,8 @@ class Appbar extends Component {
           <IconButton  >
             <Typography className={classes.title} variant="subtitle2"
               component={Link}
-              to={`/tvshows`}
+              style={{ color: window.location.pathname === "/movies" && '#E46E36' }}
+              to={`/movies`}
             >
               Movies
             </Typography>

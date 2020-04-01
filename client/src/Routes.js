@@ -9,6 +9,8 @@ import { Route, Switch, withRouter, Redirect, BrowserRouter } from 'react-router
 
 import Appbar from './components/Appbar/Appbar';
 import Dashboard from './components/dashboard/Dashboard';
+import Movies from './components/movies/Movies';
+
 import TVShows from './components/tvshows/TVShows.js';
 import Upcoming from './components/upcoming/Upcoming';
 
@@ -25,6 +27,7 @@ const Routes = () => (
         <Appbar />
         <Switch style={{ position: 'absolute',     }}>
             <Route exact path="/" component={Dashboard} />
+            <Route exact path="/movies" component={Movies} />
             <Route exact path="/tvshows" component={TVShows} />
             <Route exact path="/upcoming/page:pageNumber" component={Upcoming} />
             <Route exact path="/details" component={MovieDetails} />

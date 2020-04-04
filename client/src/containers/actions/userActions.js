@@ -59,6 +59,20 @@ console.log(data)
     })
 };
 
+export const testData = data => async (dispatch) => {
+  console.log(data)
+    await axios.get(`https://api.themoviedb.org/3/discover/movie?api_key=a2d451cdbcf87912820b3b17b82514c3&language=en-US&sort_by=release_date.asc&include_adult=false&include_video=true&page=6&primary_release_date.gte=2020-04-01`)
+      .then(res => {
+        dispatch({
+          type: MOVIE_DATA,
+          payload: res.data.results
+        });
+      })
+      .catch(function (error) {
+        console.log(error);
+      })
+  };
+
 
 export const filterMovieData = data => async (dispatch) => {
 

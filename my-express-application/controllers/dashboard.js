@@ -70,10 +70,11 @@ function getUserDashboardData() {
   }
 
   /* *********    FILTER RESULT    ********** */
+  /* https://api.themoviedb.org/3/discover/movie?api_key=a2d451cdbcf87912820b3b17b82514c3&language=en-US&sort_by=release_date.asc&include_adult=false&include_video=true&page=6&primary_release_date.gte=2020-04-01 */
   this.upcomingList = async function (req, response) {
     console.log(req.body)
      await axios.get(
-      `${apiKeys.MAIN_URL}/movie/upcoming?api_key=${apiKeys.TMDB_API_KEY}&language=en-US&page=${req.body.page}&region=US%2CIN`
+      `${apiKeys.MAIN_URL}/discover/movie?api_key=${apiKeys.TMDB_API_KEY}&language=en-US&sort_by=release_date.asc&include_adult=false&include_video=true&page=${req.body.page}&primary_release_date.gte=2020-04-01`
       //  `${apiKeys.MAIN_URL}/discover/movie?api_key=${apiKeys.TMDB_API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=${req.body.genres}`
      )
        .then(res => {

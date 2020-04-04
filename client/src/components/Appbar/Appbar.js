@@ -11,21 +11,30 @@ import { Link } from "react-router-dom";
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
+import MenuIcon from '@material-ui/icons/Menu';
 import Typography from '@material-ui/core/Typography';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import InputBase from '@material-ui/core/InputBase';
 import SearchIcon from '@material-ui/icons/Search';
+import Grid from '@material-ui/core/Grid';
+import Hidden from '@material-ui/core/Hidden';
+
 import Chip from '@material-ui/core/Chip';
 import Paper from '@material-ui/core/Paper';
 import FilterListIcon from '@material-ui/icons/FilterList';
-import FilterChips from './filter';
-import ButtonSwitch from './ButtonSwitch';
+import Drawer from '@material-ui/core/Drawer';
+import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
+import Dialog from '@material-ui/core/Dialog';
+
 import Button from '@material-ui/core/Button';
+import List from '@material-ui/core/List';
+import Divider from '@material-ui/core/Divider';
+import FilterChips from './filter';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Icon from '@material-ui/core/Icon';
 import DeleteIcon from '@material-ui/icons/Delete';
-
+import MobileMenu from './MobileMenu';
 import { searchResultData, refreshDashboard, filterMovieData } from '../../containers/actions/userActions';
 const styles = theme => ({
   grow: {
@@ -48,7 +57,7 @@ const styles = theme => ({
     },
     marginRight: theme.spacing(2),
     marginLeft: 0,
-    width: '100%',
+    maxWidth: '100%',
     [theme.breakpoints.up('sm')]: {
       marginLeft: theme.spacing(3),
       width: 'auto',
@@ -95,11 +104,12 @@ class Appbar extends Component {
     setDialog: false,
     barColor: false,
     searchText: '',
-
+    drawerOpen: false,
     allGenres: this.props.user.Genres.genres,
     selectedGenres: [],
     allGenresEnabled: false,
-    updateOnce: true
+    updateOnce: true,
+    restrictDisplay: false
   }
   static getDerivedStateFromProps(nextProps, prevState) {
     if (nextProps.user.user_cart) {
@@ -109,16 +119,16 @@ class Appbar extends Component {
     }
   }
   componentDidMount() {
-    window.addEventListener('scroll', this.onScroll, false);
-    console.log(window.location.href)
+    window.addEventListener('resize', this.onResize, false);
   }
-  onScroll = () => {
-    if (window.scrollY > 60) {
-      this.setState({ barColor: true })
-      // console.log(window.scrollY)
+
+  onResize = () => {
+    // console.log(navigator.userAgent.indexOf('Mobile'))
+    if ((window.innerWidth > window.innerHeight) && navigator.userAgent.indexOf('Mobile') > -1) {
+      this.setState({ restrictDisplay: true })
     }
-    if (window.scrollY < 60) {
-      this.setState({ barColor: false })
+    else {
+      this.setState({ restrictDisplay: false })
     }
   }
 
@@ -188,63 +198,109 @@ class Appbar extends Component {
     this.props.filterMovieData(this.state.selectedGenres)
   }
 
+  drawerSwitch = (toogle) => {
+    this.setState({ drawerOpen: toogle })
+  }
+
   render() {
     const { classes } = this.props;
+
     return (
 
       <AppBar
         elevation={0}
         style={{
-          width: window.innerWidth,
+          // width: window.innerWidth,
           position: 'fixed',
           height: 80,
           background: 'linear-gradient(to top, transparent 0%, #000000 100%)',
           backgroundColor: 'none'
         }
         }>
+        <SwipeableDrawer anchor='left' open={this.state.drawerOpen}
+          onClose={() => this.drawerSwitch(false)}
+        >
+          <MobileMenu drawerClose={() => this.drawerSwitch(false)} />
+        </SwipeableDrawer>
+
+        <Dialog
+          fullScreen
+          disableBackdropClick
+          disableEscapeKeyDown
+          open={this.state.restrictDisplay}
+          style={{ width: '85%', height: '85%', margin: 'auto' }}
+        >
+          <div style={{
+            width: '100%', height: '100%', color: '#FFFFFF', backgroundColor: '#1B1A20',
+            display: 'flex', flexDirection: 'column', justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+            <Typography variant="h6"   >
+              For best experience,
+          </Typography>
+            <Typography variant="h6"   >
+              please go back to portrait mode or use the app.
+          </Typography>
+          </div>
+
+        </Dialog>
 
         <Toolbar>
-          <IconButton href='/' >
-            <Typography className={classes.title} variant="h6" noWrap  >
-              BingeFeast
-            </Typography>
-            <Typography className={classes.title} style={{ color: '#E46E36' }} variant="h6" noWrap  >
-              .in
-            </Typography>
-          </IconButton>
 
-          <IconButton  >
-            <Typography className={classes.title} variant="subtitle2"
-              component={Link}
-              style={{ color: window.location.pathname === "/movies" && '#E46E36' }}
-              to={`/movies`}
+          <Hidden xsDown>
+            <IconButton href='/' >
+              <Typography className={classes.title} variant="h6" noWrap  >
+                BingeFeast
+            </Typography>
+              <Typography className={classes.title} style={{ color: '#E46E36' }} variant="h6" noWrap  >
+                .in
+            </Typography>
+            </IconButton>
+
+            <IconButton  >
+              <Typography className={classes.title} variant="subtitle2"
+                component={Link}
+                style={{ color: window.location.pathname === "/movies" && '#E46E36' }}
+                to={`/movies`}
+              >
+                Movies
+            </Typography>
+            </IconButton>
+
+            <IconButton  >
+              <Typography className={classes.title}
+                style={{ color: window.location.pathname === "/tvshows" && '#E46E36' }}
+                variant="subtitle2"
+                component={Link}
+                to={`/tvshows`}
+              >
+                TV Shows
+            </Typography>
+            </IconButton>
+
+            <IconButton  >
+              <Typography className={classes.title} variant="subtitle2"
+                style={{ color: window.location.pathname.indexOf(`/upcoming/page`) > -1 && '#E46E36' }}
+                component={Link}
+                to={`/upcoming/page1`}
+              >
+                Upcoming Movies
+            </Typography>
+            </IconButton>
+          </Hidden>
+
+          <Hidden smUp>
+            <IconButton
+              edge="start" className={classes.menuButton}
+              color="inherit" aria-label="menu"
+              onClick={() => this.drawerSwitch(true)}
             >
-              Movies
-            </Typography>
-          </IconButton>
+              <MenuIcon />
+            </IconButton>
+          </Hidden>
 
-          <IconButton  >
-            <Typography className={classes.title}
-              style={{ color: window.location.pathname === "/tvshows" && '#E46E36' }}
-              variant="subtitle2"
-              component={Link}
-              to={`/tvshows`}
-            >
-              TV Shows
-            </Typography>
-          </IconButton>
 
-          <IconButton  >
-            <Typography className={classes.title} variant="subtitle2"
-              style={{ color: window.location.pathname.indexOf(`/upcoming/page`)>-1 && '#E46E36' }}
-              component={Link}
-              to={`/upcoming/page1`}
-            >
-              Upcoming Movies
-            </Typography>
-          </IconButton>
-
-          {/* FILTER */}
+          {/* SEARCH BOX  */}
           {window.location.pathname === '/' ?
             <div className={classes.search}>
               <div className={classes.searchIcon}>
@@ -265,7 +321,7 @@ class Appbar extends Component {
             </div>
             : null}
 
-
+          {/* FILTER */}
           <div className={classes.grow} />
           {window.location.pathname === '/'
             ?

@@ -11,6 +11,8 @@ import Box from '@material-ui/core/Box';
 
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+import Footer from '../commonComponents/Footer';
+
 import { searchResultData, trendingList } from '../../containers/actions/userActions';
 import Card from '../commonComponents/Card.js';
 class TVShows extends Component {
@@ -39,27 +41,20 @@ class TVShows extends Component {
 
     render() {
         return (
-            <Box
-                style={{
-                    display: "flex",
-                    justifyContent: 'center',
-                    justifySelf: 'center',
-                    backgroundColor: "#1B1A20",
-                    minHeight: window.innerHeight
-                }}
-            >
-                <Grid item xs={11} >
-                    <Grid container justify="center" spacing={4} style={{ paddingTop: 100 }}>
-                        {this.state.tvshowData && this.state.tvshowData.map((value, i) => (
-                            <Grid key={i} item>
-                                <Card parentData={value} />
-                            </Grid>
-                        ))}
+            <Grid
+            style={{
+                backgroundColor: "#1B1A20", minHeight: window.innerHeight
+            }} >
+            <Grid container xs={12} sm={12} direction='row' justify="space-evenly" alignItems='flex-start'
+                spacing={1} style={{ paddingTop: 80 }}>
+                {this.state.tvshowData && this.state.tvshowData.map((value, i) => (
+                    <Grid key={i} item>
+                        <Card parentData={value} />
                     </Grid>
-
-                </Grid>
-
-            </Box>
+                ))}
+            </Grid>
+            <Footer />
+        </Grid>
         )
     }
 }

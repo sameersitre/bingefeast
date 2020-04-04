@@ -22,7 +22,7 @@ import Poster from './Poster.js';
 //  import ProductImg from '../../assets/products/';
 const styles = (theme) => ({
     root: {
-        width: '12rem',
+        width: '11rem',
         backgroundColor: '#101010'
 
     },

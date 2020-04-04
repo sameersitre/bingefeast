@@ -12,21 +12,11 @@ import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import axios from 'axios';
 import { trendingList } from '../../containers/actions/userActions';
 import Card from '../commonComponents/Card.js';
 import Container from '@material-ui/core/Container';
-
+import Footer from '../commonComponents/Footer';
 const styles = (theme) => ({
-
-    media: {
-        height: window.innerHeight,
-        backgroundSize: 'cover'
-    },
-    backdrop: {
-        zIndex: theme.zIndex.drawer + 1,
-        color: '#fff',
-    },
 });
 class Dashboard extends Component {
     constructor(props) {
@@ -47,38 +37,27 @@ class Dashboard extends Component {
     }
     componentDidMount() {
         window.scrollTo(0, 0)
-
         // if search box is empty, do action below
         let data = { "page": 1, "type": "all" }
         !this.props.user.search_text_available &&
             this.props.trendingList(data)
     }
     render() {
-        const { classes } = this.props;
-
         return (
-            <Box
+            <Grid
                 style={{
-                    display: "flex",
-                    justifyContent: 'center',
-                    justifySelf: 'center',
-                    backgroundColor: "#1B1A20",
-                    minHeight: window.innerHeight
-                }}
-            >
-                {/* <Backdrop className={classes.backdrop} open={this.props.user.buffer_enable}  >
-                    <CircularProgress color="inherit" />
-                </Backdrop> */}
-                <Grid item xs={11}  >
-                    <Grid container justify="center" spacing={4} style={{ paddingTop: 100 }}>
-                        {this.state.movieData && this.state.movieData.map((value, i) => (
-                            <Grid key={i} item>
-                                <Card parentData={value} />
-                            </Grid>
-                        ))}
-                    </Grid>
+                    backgroundColor: "#1B1A20", minHeight: window.innerHeight
+                }} >
+                <Grid container xs={12} sm={12} direction='row' justify="space-evenly" alignItems='flex-start'
+                    spacing={1} style={{ paddingTop: 80 }}>
+                    {this.state.movieData && this.state.movieData.map((value, i) => (
+                        <Grid key={i} item>
+                            <Card parentData={value} />
+                        </Grid>
+                    ))}
                 </Grid>
-            </Box>
+                <Footer />
+            </Grid>
         )
     }
 }

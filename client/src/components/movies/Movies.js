@@ -6,7 +6,6 @@
  */
 import React, { Component } from 'react'
 import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
 
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -14,20 +13,9 @@ import { withStyles } from '@material-ui/core/styles';
 
 import { searchResultData, trendingList, upcomingMoviesData, refreshDashboard } from '../../containers/actions/userActions';
 import Card from '../commonComponents/Card.js';
+import Footer from '../commonComponents/Footer';
 
 const styles = (theme) => ({
-    root: {
-        color: '#FFFFFF',
-        '& > *': {
-            marginTop: theme.spacing(2),
-        },
-    },
-    button: {
-        color: '#FFFFFF',
-        backgroundColor: '#E46E36',
-        margin: theme.spacing(1),
-    },
-
 })
 class Upcoming extends Component {
     constructor(props) {
@@ -59,28 +47,20 @@ class Upcoming extends Component {
         const { classes } = this.props;
 
         return (
-            <Box
+            <Grid
                 style={{
-                    display: "flex",
-                    justifyContent: 'center',
-                    justifySelf: 'center',
-                    backgroundColor: "#1B1A20",
-                    minHeight: window.innerHeight
-                }}
-            >
-                <Grid item xs={11}>
-                    <Grid container justify="center" spacing={4} style={{ paddingTop: 100 }}>
-                        {this.state.upcomingData && this.state.upcomingData.map((value, i) => (
-                            <Grid key={i} item>
-                                <Card parentData={value} />
-                            </Grid>
-                        ))}
-                    </Grid>
-
-                    <Grid style={{ marginTop: 100 }}>
-                    </Grid>
+                    backgroundColor: "#1B1A20", minHeight: window.innerHeight
+                }} >
+                <Grid container xs={12} sm={12} direction='row' justify="space-evenly" alignItems='flex-start'
+                    spacing={1} style={{ paddingTop: 80 }}>
+                    {this.state.upcomingData && this.state.upcomingData.map((value, i) => (
+                        <Grid key={i} item>
+                            <Card parentData={value} />
+                        </Grid>
+                    ))}
                 </Grid>
-            </Box>
+                <Footer />
+            </Grid>
         )
     }
 }

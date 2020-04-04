@@ -16,6 +16,7 @@ import Pagination from '@material-ui/lab/Pagination';
 import Button from '@material-ui/core/Button';
 import NavigateBefore from '@material-ui/icons/NavigateBefore';
 import NavigateNext from '@material-ui/icons/NavigateNext';
+import Footer from '../commonComponents/Footer';
 
 import { searchResultData, trendingList, upcomingMoviesData, refreshDashboard } from '../../containers/actions/userActions';
 import Card from '../commonComponents/Card.js';
@@ -88,52 +89,45 @@ class Upcoming extends Component {
         const { classes } = this.props;
 
         return (
-            <Box
+            <Grid
                 style={{
-                    display: "flex",
-                    justifyContent: 'center',
-                    justifySelf: 'center',
-                    backgroundColor: "#1B1A20",
-                    minHeight: window.innerHeight
-                }}
-            >
-                <Grid item xs={11}>
-                    <Grid container justify="center" spacing={4} style={{ paddingTop: 100 }}>
-                        {this.state.upcomingData && this.state.upcomingData.map((value, i) => (
-                            <Grid key={i} item>
-                                <Card parentData={value} />
-                            </Grid>
-                        ))}
-                    </Grid>
-
-                    {this.state.upcomingData && this.state.upcomingData.length > 0 &&
-                        <ThemeProvider theme={createMuiTheme({ palette: { type: 'dark' } })} >
-                            <div style={{ display: "flex", marginTop: 80, justifyContent: 'center' }}>
-                                <Button
-                                    variant="contained"
-                                    color="secondary"
-                                    size="small"
-                                    disabled={parseInt(this.props.match.params.pageNumber) <= 1 ? true : false}
-                                    className={classes.button}
-                                    startIcon={<NavigateBefore />}
-                                    onClick={() => this.pageClick(this.props.match.params.pageNumber - 1)}
-                                > Prev </Button>
-
-                                <Button
-                                    variant="contained"
-                                    color="secondary"
-                                    size="small"
-                                    disabled={parseInt(this.state.upcomingData && this.state.upcomingData.length) < 20 ? true : false}
-                                    className={classes.button}
-                                    endIcon={<NavigateNext />}
-                                    onClick={() => this.pageClick(parseInt(this.props.match.params.pageNumber) + 1)}
-                                >Next </Button></div>
-                        </ThemeProvider>
-                    }
-                    <Grid style={{ marginTop: 100 }}>
-                    </Grid>
+                    backgroundColor: "#1B1A20", minHeight: window.innerHeight
+                }} >
+                <Grid container xs={12} sm={12} direction='row' justify="space-evenly" alignItems='flex-start'
+                    spacing={1} style={{ paddingTop: 80 }}>
+                    {this.state.upcomingData && this.state.upcomingData.map((value, i) => (
+                        <Grid key={i} item>
+                            <Card parentData={value} />
+                        </Grid>
+                    ))}
                 </Grid>
-            </Box>
+
+                {this.state.upcomingData && this.state.upcomingData.length > 0 &&
+                    <ThemeProvider theme={createMuiTheme({ palette: { type: 'dark' } })} >
+                        <div style={{ display: "flex", marginTop: 80, justifyContent: 'center' }}>
+                            <Button
+                                variant="contained"
+                                color="secondary"
+                                size="small"
+                                disabled={parseInt(this.props.match.params.pageNumber) <= 1 ? true : false}
+                                className={classes.button}
+                                startIcon={<NavigateBefore />}
+                                onClick={() => this.pageClick(this.props.match.params.pageNumber - 1)}
+                            > Prev </Button>
+
+                            <Button
+                                variant="contained"
+                                color="secondary"
+                                size="small"
+                                disabled={parseInt(this.state.upcomingData && this.state.upcomingData.length) < 20 ? true : false}
+                                className={classes.button}
+                                endIcon={<NavigateNext />}
+                                onClick={() => this.pageClick(parseInt(this.props.match.params.pageNumber) + 1)}
+                            >Next </Button></div>
+                    </ThemeProvider>
+                }
+                <Footer />
+            </Grid>
         )
     }
 }
@@ -143,3 +137,4 @@ const mapStateToProps = (state) => ({
 })
 
 export default withStyles(styles)(connect(mapStateToProps, { searchResultData, refreshDashboard, trendingList, upcomingMoviesData })(withRouter(Upcoming)));
+

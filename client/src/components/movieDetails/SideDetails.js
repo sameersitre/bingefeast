@@ -29,8 +29,7 @@ const styles = (theme) => ({
         display: 'flex',
         flexDirection: 'row',
         alignContent: 'flex-start',
-        width: 450, height: 350, marginTop: 10,
-        // backgroundColor: 'pink'
+        marginTop: 10,
     },
     button: {
         color: '#FFFFFF',
@@ -40,7 +39,7 @@ const styles = (theme) => ({
     chipView: {
         display: 'flex',
         justifyContent: 'flex-start',
-        width: 400, marginTop: 10,
+        marginTop: 10,
         flexWrap: 'wrap',
         '& > *': {
             margin: theme.spacing(0.3),
@@ -53,6 +52,7 @@ const styles = (theme) => ({
         padding: theme.spacing(1),
     },
 });
+
 class SideDetails extends Component {
     constructor(props) {
         super(props);
@@ -65,16 +65,10 @@ class SideDetails extends Component {
             selectedStreams: [],
             streamAvailablity: []
         }
-
     }
 
-
     static getDerivedStateFromProps(nextProps, prevState) {
-        //  if(nextProps.user.details_data){
-        //     return {
-        //         streamAvailablity: nextProps.user.details_data[2]
-        //     }
-        // }
+
         if (nextProps.movieData) {
             return {
                 movieData: nextProps.movieData,
@@ -83,57 +77,16 @@ class SideDetails extends Component {
         }
         return null
     }
-    // static getDerivedStateFromProps(nextProps, prevState) {
-    //     if (nextProps.user.details_data) {
-    //         return {
-    //             movieData: nextProps.user.details_data[0],
-    //             videoData: nextProps.user.details_data[1],
-    //             streamAvailablity: nextProps.user.details_data[2],
-    //             bufferEnabled: nextProps.user.buffer_enable
-    //         }
-    //     }
-    //     return null
-    // }
+
     componentDidMount() {
-        //this.getGenre()
-        // this.getAvailableStreams()
+
         let locations = this.props.user.details_data
         console.log(this.props.user.details_data)
     }
 
     getAvailableStreams = () => {
-        var selectedStreams = []
-
         let locations = this.props.user.details_data && this.props.user.details_data[2]
         console.log(locations)
-
-        // let filteredLocation = []
-        // for (let i = 0; i < locations.length; i++) {
-        //     if (locations[i].country[0] === 'in' || locations[i].country[0] === 'us') {
-        //         filteredLocation.push(locations[i])
-        //     }
-        // }
-        // selectedStreams.push(filteredLocation)
-
-        // console.log('selectedStreams',selectedStreams)
-        // this.setState({selectedStreams:selectedStreams})
-
-    }
-
-    getGenre = () => {
-        if (this.state.genres) {
-            let genres = this.state.genres.genres
-            let propGenres = this.state.movieData.genre_ids
-            let genreStrings = []
-            propGenres.forEach((value) => {
-                for (let j = 0; j < genres.length; j++) {
-                    if (value === genres[j].id) {
-                        genreStrings.push(genres[j].name)
-                    }
-                }
-            })
-            this.setState({ genreStrings: genreStrings })
-        }
     }
 
     handleDialogOpen = () => {
@@ -154,19 +107,17 @@ class SideDetails extends Component {
         this.setState({ popoverOpen: false })
     };
 
-
     render() {
         const { classes } = this.props;
 
         return (
-
             <div
                 style={{
                     flexDirection: 'column',
                     justifyItems: 'space-between',
                     alignContent: 'flex-start',
                     color: '#FFFFFF', marginLeft: 10,//backgroundColor:'pink',
-                    width: 600, height: '25rem'
+                    // height: '25rem'
                 }}>
                 <Popover
                     id="mouse-over-popover"
@@ -192,7 +143,6 @@ class SideDetails extends Component {
                     fullScreen
                     disableBackdropClick
                     disableEscapeKeyDown
-                    // className={classes.dialog}
                     open={this.state.dialogOpen}
                     style={{ width: '75%', height: '75%', margin: 'auto', marginTop: '8%', }}
                 >
@@ -204,8 +154,6 @@ class SideDetails extends Component {
                     >
                         <CloseIcon />
                     </IconButton>
-
-
 
                     <iframe
                         src={`https://www.youtube.com/embed/${this.state.videoSelected && this.state.videoSelected.key}`}
@@ -220,137 +168,44 @@ class SideDetails extends Component {
                         allowFullScreen
                         title='video'
                     />
-
                 </Dialog>
 
-
-
-                <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'flex-end', width: window.innerWidth - 500 }} >
-                    <Typography gutterBottom variant="h4" style={{ color: '#E5CA49', }}  >
-                        {this.state.movieData.title
-                            ||
-                            this.state.movieData.name}
-                    </Typography>
-                    <Typography gutterBottom variant="h6" style={{ color: '#E5CA49', marginBottom: 15 }}  >
-                        &nbsp;({moment(this.state.movieData.release_date
-                        ||
-                        this.state.movieData.first_air_date).format('YYYY')
-                        })
-                </Typography>
-                </div>
-
-
-                {this.state.movieData.tagline
-                    &&
-                    <Typography gutterBottom variant="subtitle1" style={{ color: '#E5CA49', margin: 0 }}>
-
-                        {this.state.movieData.tagline}
-                    </Typography>
-                }
-
-                <div style={{ marginTop: 10 }} >
-                    <a style={{
-                        display: 'flex', flexDirection: 'row', alignItems: 'center',
-                        color: '#FFFFFF', textDecoration: 'none', width: 250
+                <Grid
+                    xs={12} sm={6}
+                    style={{
+                        overflow: 'hidden',
+                        height: 250,
                     }}
-                        href={`https://www.imdb.com/title/${this.state.movieData.imdb_id}`} target="_blank"
-                    >
-                        <img src={require('../../assets/Icons/imdb.png')} alt="Smiley face" height="28" width="28" />
-                        {this.state.movieData.vote_average > 0
-                            ?
-                            <Typography variant="body2"  >
-                                &nbsp;&nbsp;{`${this.state.movieData.vote_average} (${this.state.movieData.vote_count})`}
-                            </Typography>
-                            :
-                            <Typography variant="body2">&nbsp;&nbsp;NA</Typography>
-                        }
-                    </a>
-
-
-                    {/* streaming icons */}
-                    <div style={{
-                        display: 'flex', flexDirection: 'row', color: '#FFFFFF', alignItems: 'baseline',
-                        textDecoration: 'none', marginTop: 10, justifyContent: 'flex-start'
-                    }}>
-                        {this.props.user.details_data && this.props.user.details_data[2]
-                            &&
-                            this.props.user.details_data[2].map((value, i) =>
-                                value.country[0] === 'us' ||
-                                    value.country[0] === 'in'
-                                    ?
-                                    <Tooltip
-                                        title={value.country[0] === 'us' && 'US' ||
-                                            value.country[0] === 'in' && 'INDIA'}
-                                        placement="bottom-end"
-                                        aria-label="add">
-                                        <a style={{ margin: 10 }}
-                                            href={value.url} target="_blank"
-                                        >
-                                            <img src={value.icon} alt="Smiley face" width="70" />
-                                        </a>
-                                    </Tooltip>
-                                    : null
-                            )}
-                    </div>
-
-
-
-
-                    <Typography variant="body2" style={{ marginTop: 10 }}  >
-                        {moment(this.state.movieData.release_date
-                            ||
-                            this.state.movieData.first_air_date).format('LL')
-                        }  (USA)
-                        </Typography>
-
-                    <Typography variant="body2" style={{ marginTop: 10 }}  >
-                        {this.state.movieData.runtime || this.state.movieData.episode_run_time} mins
+                    container className={classes.buttons} spacing={1} >
+                    {/* OVERVIEW */}
+                    <Typography variant="body2" style={{ marginTop: 10 }}   >
+                        &nbsp;{this.state.movieData.overview}
                     </Typography>
-                </div>
-
-                <div className={classes.chipView} >
-                    {this.state.movieData.genres && this.state.movieData.genres.map((value, i) =>
-                        <Chip
-                            key={i}
-                            size="small"
-                            label={value.name}
-                            component="a"
-                            variant="outlined"
-                            style={{ color: '#FFFFFF', backgroundColor: '#5A5A5A' }}
-                            href="#chip" clickable />
-                    )}
-                </div>
-                <Typography variant="body2" width={300} style={{ marginTop: 10 }}   >
-                    Overview: {this.state.movieData.overview}
-                </Typography>
-
-                <div>
-
-
-                    <Grid container className={classes.buttons} spacing={1} >
+                    <div
+                        style={{
+                            overflow: 'auto',
+                            height: 150,
+                        }}
+                    >
                         {this.state.videoData && this.state.videoData.results.slice(0, 30).map((value, i) =>
-                            <div key={i}>
-                                <Button
-
-                                    variant="contained"
-                                    size="small"
-                                    // color={"#E46E36"}
-                                    // aria-owns={this.state.popoverOpen ? 'mouse-over-popover' : undefined}
-                                    aria-haspopup="true"
-                                    className={classes.button}
-                                    onMouseEnter={() => this.handlePopoverOpen(value)}
-                                    onMouseLeave={this.handlePopoverClose}
-                                    onClick={() => this.handleVideoButton(value)}
-                                >
-                                    {`${i + 1}.${value.type}`}
-                                </Button>
-
-                            </div>
+                            <Button
+                                key={i}
+                                variant="contained"
+                                size="small"
+                                // color={"#E46E36"}
+                                // aria-owns={this.state.popoverOpen ? 'mouse-over-popover' : undefined}
+                                aria-haspopup="true"
+                                className={classes.button}
+                                onMouseEnter={() => this.handlePopoverOpen(value)}
+                                onMouseLeave={this.handlePopoverClose}
+                                onClick={() => this.handleVideoButton(value)}
+                            >
+                                {`${i + 1}.${value.type}`}
+                            </Button>
                         )}
-                    </Grid>
-                </div>
+                    </div>
+                </Grid>
             </div>
-
         )
     }
 }
@@ -360,7 +215,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-
 }
 
 export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(SideDetails))

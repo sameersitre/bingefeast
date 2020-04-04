@@ -6,6 +6,8 @@
  */
 
 var DashboardData = require("../controllers/dashboard")
+var Emailer = require("../controllers/emailer")
+
 var cookieParser = require("cookie-parser")
 
 module.exports = {
@@ -32,6 +34,9 @@ module.exports = {
             DashboardData.getDetails(req, res)
         });
 
+        app.post('/sendmail', function (req, res) {
+            Emailer.getEmail(req, res)
+        });
         // app.get("/logout", function (req, res) {
         //     console.log("session destroyed")
         //     req.session.destroy()

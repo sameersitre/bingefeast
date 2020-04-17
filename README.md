@@ -1,4 +1,4 @@
-# inMovie-webapp
+# bingefeast => MY PORTFOLIO APP
 LIVE LINK:
 https://bingefeast.in
 

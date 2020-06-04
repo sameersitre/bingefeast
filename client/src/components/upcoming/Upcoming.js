@@ -126,7 +126,9 @@ class Upcoming extends Component {
                             >Next </Button></div>
                     </ThemeProvider>
                 }
-                <Footer />
+               {this.state.upcomingData && this.state.upcomingData.length > 0 &&
+                    <Footer />
+                }
             </Grid>
         )
     }

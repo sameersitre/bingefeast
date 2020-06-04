@@ -6,6 +6,8 @@
  */
 
 var DashboardData = require("../controllers/dashboard")
+var DashboardMobile = require("../controllers/dashboardMobile")
+
 var Emailer = require("../controllers/emailer")
 
 var cookieParser = require("cookie-parser")
@@ -32,6 +34,19 @@ module.exports = {
 
         app.post('/getDetails', function (req, res) {
             DashboardData.getDetails(req, res)
+        });
+
+        app.post('/getCreditDetails', function (req, res) {
+            DashboardData.getCreditDetails(req, res)
+        });
+
+
+          app.post('/getDetailsMobile', function (req, res) {
+            DashboardMobile.getDetails(req, res)
+        });
+
+        app.post('/getCastDetailsMobile', function (req, res) {
+            DashboardMobile.getCastDetailsMobile(req, res)
         });
 
         app.post('/sendmail', function (req, res) {

@@ -32,5 +32,4 @@ const Routes = () => (
         </Switch>
     </div>
 );
-// export default Routes;
 export default withRouter(Routes);

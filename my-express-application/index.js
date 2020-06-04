@@ -3,6 +3,7 @@ const express = require('express')
 var bodyparser = require('body-parser');
 var mainRouter = require('./routes/router');
 var cookieParser = require('cookie-parser');
+// var path = require('path');
 global.config = require('./config');
 
 var app = express();
@@ -18,6 +19,13 @@ app.use((req, res, next) => {
   }
 });
 
+//comment out below on prod 
+// app.use(express.static(path.join(__dirname, '../client/build')));
+// app.get('*', (req,res) =>{
+//   res.sendFile(path.join(__dirname+'../client/build/index.html'));
+// })
+//comment out above on prod 
+
 app.use(cookieParser());
 app.use(
   bodyparser.json({ limit: '50mb', extended: true }),
@@ -27,7 +35,7 @@ mainRouter.configure(app);
 
 // COMMENT ON PRODUCTION : sls deploy
 // app.listen(3300, "127.0.0.1", function () {
-//   console.log("Example app listening at 3300 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@     ###############################")
+//   console.log("Example app listening at 3300 #########################################################################################################################################################################################################################################################################################################################################################################")
 // });
 
 module.exports.handler = serverless(app);

@@ -7,8 +7,6 @@
 
 var apiKeys = require('../config');
 var axios = require('axios')
-var fetch = require('node-fetch')
-
 function getUserDashboardData() {
 
   this.popularList = function (req, response) {
@@ -24,10 +22,10 @@ function getUserDashboardData() {
 
   /* *********    TRENDING ALL/TV/MOVIE DAY    ********** */
   this.trendingList = async function (req, response) {
-    console.log(apiKeys.TMDB_API_KEY)
+    console.log(req.body)
     let data = req.body
     await axios.get(
-      `${apiKeys.MAIN_URL}/trending/${data.type}/day?api_key=${apiKeys.TMDB_API_KEY}`
+      `${apiKeys.MAIN_URL}/trending/${data.type}/day?api_key=${apiKeys.TMDB_API_KEY}&page=${req.body.page}`
     )
       .then(res => {
         response.send(JSON.stringify(res.data))
@@ -43,7 +41,7 @@ function getUserDashboardData() {
     console.log(apiKeys.TMDB_API_KEY)
     let data = req.body
     await axios.get(
-      `${apiKeys.MAIN_URL}/search/multi?api_key=${apiKeys.TMDB_API_KEY}&language=en-US&query=${data.searchText}&page=1&include_adult=false`
+      `${apiKeys.MAIN_URL}/search/multi?api_key=${apiKeys.TMDB_API_KEY}&language=en-US&query=${data.searchText}&page=1&include_adult=${data.include_adult ? data.include_adult : false}`
     )
       .then(res => {
         response.send(JSON.stringify(res.data))
@@ -56,7 +54,7 @@ function getUserDashboardData() {
 
   /* *********    FILTER RESULT    ********** */
   this.filterResult = async function (req, response) {
-   console.log(req.body)
+    console.log(req.body)
     await axios.get(
       `${apiKeys.MAIN_URL}/discover/movie?api_key=${apiKeys.TMDB_API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=${req.body.genres}`
     )
@@ -73,18 +71,33 @@ function getUserDashboardData() {
   /* https://api.themoviedb.org/3/discover/movie?api_key=a2d451cdbcf87912820b3b17b82514c3&language=en-US&sort_by=release_date.asc&include_adult=false&include_video=true&page=6&primary_release_date.gte=2020-04-01 */
   this.upcomingList = async function (req, response) {
     console.log(req.body)
-     await axios.get(
+    await axios.get(
       `${apiKeys.MAIN_URL}/discover/movie?api_key=${apiKeys.TMDB_API_KEY}&language=en-US&sort_by=release_date.asc&include_adult=false&include_video=true&page=${req.body.page}&primary_release_date.gte=2020-04-01`
       //  `${apiKeys.MAIN_URL}/discover/movie?api_key=${apiKeys.TMDB_API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=${req.body.genres}`
-     )
-       .then(res => {
-         response.send(JSON.stringify(res.data))
-       })
-       .catch(function (error) {
-         console.log(error);
-         response.send(error)
-       })
-   }
+    )
+      .then(res => {
+        response.send(JSON.stringify(res.data))
+      })
+      .catch(function (error) {
+        console.log(error);
+        response.send(error)
+      })
+  }
+
+  //https://api.themoviedb.org/3/movie/512200/credits?api_key=a2d451cdbcf87912820b3b17b82514c3
+  this.getCreditDetails = async function (req, response) {
+    console.log(req.body)
+    await axios.get(
+      `${apiKeys.MAIN_URL}/${req.body.type}/${req.body.id}/credits?api_key=${apiKeys.TMDB_API_KEY}`
+    )
+      .then(res => {
+        response.send(JSON.stringify(res.data))
+      })
+      .catch(function (error) {
+        console.log(error);
+        response.send(error)
+      })
+  }
 
   /* *********    DETAILS OF SELECTED MOVIE/SERIES    ********** */
   this.getDetails = async function (req, response) {
@@ -92,7 +105,7 @@ function getUserDashboardData() {
     let params = req.body
     let movieDetails = null;
     let videos = null;
-    let streamAvailablity = null;
+    let streamAvailablity = [];
     let combinedData = null;
     let mediaTypeSelected = null
 
@@ -116,40 +129,33 @@ function getUserDashboardData() {
         console.log(error);
       })
 
-    // GET LIST OF VIDEOS
+    // // GET LIST OF VIDEOS
     await axios.get(`${apiKeys.MAIN_URL}/${mediaTypeSelected}/${params.id}/videos?api_key=${apiKeys.TMDB_API_KEY}&language=en-US`)
       .then(res => {
         videos = res.data
-
       })
       .catch(function (error) {
         console.log(error);
       })
 
     // GET AVAILABLE STREAMING SERVICES
-    /* https://utelly-tv-shows-and-movies-availability-v1.p.rapidapi.com/idlookup?source_id=338762&source=tmdb */
-    await axios({
-      "method": "GET",
-      "url": "https://utelly-tv-shows-and-movies-availability-v1.p.rapidapi.com/idlookup",
-      "headers": {
-        "content-type": "application/octet-stream",
-        "x-rapidapi-host": "utelly-tv-shows-and-movies-availability-v1.p.rapidapi.com",
-        "x-rapidapi-key": apiKeys.RAPID_API_KEY
-      }, "params": {
-        "source_id": params.id,
-        "source": "tmdb"
-      }
-    })
+    await axios.get(`https://utelly-tv-shows-and-movies-availability-v1.p.rapidapi.com/idlookup?source_id=${params.id}&source=tmdb`,
+      { headers: { "x-rapidapi-key": apiKeys.RAPID_API_KEY } })
       .then(res => {
         streamAvailablity = res.data.collection.locations
       })
       .catch((error) => {
         console.log(error)
       })
-
     combinedData = [movieDetails, videos, streamAvailablity]
     response.send(combinedData)
   }
+
 }
+
+
+
+
+
 
 module.exports = new getUserDashboardData()

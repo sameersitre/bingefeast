@@ -33,6 +33,7 @@ class TVShows extends Component {
     }
 
     componentDidMount() {
+        window.scrollTo(0, 0)
         let data = { "page": 1, "type": "tv" }
         !this.props.user.search_text_available &&
             this.props.trendingList(data)
@@ -53,7 +54,9 @@ class TVShows extends Component {
                     </Grid>
                 ))}
             </Grid>
-            <Footer />
+            {this.state.tvshowData && this.state.tvshowData.length > 0 &&
+                    <Footer />
+                }
         </Grid>
         )
     }

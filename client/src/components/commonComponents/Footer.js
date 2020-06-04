@@ -77,7 +77,7 @@ export class Footer extends Component {
             userAgent: navigator.userAgent
         }
         if (!this.ValidateEmail(data.senderEmail)) {
-            this.handleDialogOpen('Incorrect email format.', 'Really?!      This is your e-mail?!       :)')
+            this.handleDialogOpen('Incorrect email format.', "Please enter correct email ID.")
         } else {
             if (this.state.emailData.length > 0 && this.state.email.length > 0) {
                 await axios.post(`${main_url}/sendmail`, data)
@@ -112,7 +112,7 @@ export class Footer extends Component {
                 xs={12} sm={12}
                 style={{
                     backgroundColor: '#282828', color: '#BFBFBF', marginTop: 50,
-                    justifyContent: 'space-between', marginBottom: -8
+                    justifyContent: 'space-between',
                 }} >
 
                 <ThemeProvider theme={createMuiTheme({ palette: { type: 'dark' } })} >
@@ -128,7 +128,8 @@ export class Footer extends Component {
                             </DialogContentText>
                         </DialogContent>
                         <DialogActions>
-                            <Button onClick={this.handleDialogClose} color="primary" autoFocus>
+                            <Button onClick={this.handleDialogClose} color="secondary"
+                                style={{ color: '#FFFFFF', backgroundColor: '#E46E36', }} autoFocus>
                                 OK
                             </Button>
                         </DialogActions>
@@ -167,6 +168,7 @@ export class Footer extends Component {
                         <Button
                             variant="contained"
                             size="small"
+                            disabled={this.state.email.length < 6 ? true : false}
                             aria-haspopup="true"
                             className={classes.button}
                             onClick={() => this.sendMail()}
@@ -177,10 +179,14 @@ export class Footer extends Component {
 
                 </ThemeProvider>
 
-                <Grid style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', backgroundColor: '#282828', padding: 20, height: 150, }}>
+                <Grid style={{
+                    display: 'flex', flexDirection: 'column',
+                    // justifyContent: 'space-between',
+                    backgroundColor: '#282828', padding: 20, height: 150,
+                }}>
                     <div>
                         <Typography variant="body2"  >
-                            Extermnal Links:
+                            Extermnal Links
                             </Typography>
                         <IconButton color="inherit" width={50} height={50}
                             href={`https://github.com/sameersitre/bingefeast`} target="_blank"
@@ -194,11 +200,11 @@ export class Footer extends Component {
                             <LinkedIn />
                         </IconButton>
                     </div>
-                    <div>
+                    <div style={{ marginTop: 20 }}>
                         <Typography variant="body2"
                             onclick={() => this.handleDialogOpen('Field(s) is Empty.', 'Please add email and message.')}
                         >
-                            Also Available in App Store and Play Store:
+                            Also Available in App Store and Play Store
                             </Typography>
                         <IconButton color="inherit" width={50} height={50}
                             // href={`http://play.google.com/store/apps/details?id=com.truecaller&hl=en`} target="_blank"

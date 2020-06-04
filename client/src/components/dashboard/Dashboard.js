@@ -16,6 +16,8 @@ import { trendingList } from '../../containers/actions/userActions';
 import Card from '../commonComponents/Card.js';
 import Container from '@material-ui/core/Container';
 import Footer from '../commonComponents/Footer';
+import Typography from '@material-ui/core/Typography';
+
 const styles = (theme) => ({
 });
 class Dashboard extends Component {
@@ -45,8 +47,10 @@ class Dashboard extends Component {
     render() {
         return (
             <Grid
+                spacing={0}
                 style={{
-                    backgroundColor: "#1B1A20", minHeight: window.innerHeight
+                    backgroundColor: "#1B1A20",
+                    minHeight: window.innerHeight
                 }} >
                 <Grid container xs={12} sm={12} direction='row' justify="space-evenly" alignItems='flex-start'
                     spacing={1} style={{ paddingTop: 80 }}>
@@ -56,7 +60,22 @@ class Dashboard extends Component {
                         </Grid>
                     ))}
                 </Grid>
-                <Footer />
+
+                {/* <Grid
+                     xs={12} sm={12}
+                    style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}
+                >
+                    <Typography variant="h6" style={{ color: '#5A5A5A', }}  >
+                        External api problem.   :(
+                    </Typography>
+                    <Typography variant="h6" style={{ color: '#5A5A5A', }}  >
+                        Please Refresh.
+                    </Typography>
+                </Grid> */}
+
+                {this.state.movieData && this.state.movieData.length > 0 &&
+                    <Footer />
+                }
             </Grid>
         )
     }

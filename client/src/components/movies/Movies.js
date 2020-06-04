@@ -59,7 +59,9 @@ class Upcoming extends Component {
                         </Grid>
                     ))}
                 </Grid>
-                <Footer />
+                {this.state.upcomingData && this.state.upcomingData.length > 0 &&
+                    <Footer />
+                }
             </Grid>
         )
     }

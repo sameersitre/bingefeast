@@ -25,10 +25,6 @@ import FilterListIcon from '@material-ui/icons/FilterList';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import Dialog from '@material-ui/core/Dialog';
 
-import FilterChips from './filter';
-import ButtonGroup from '@material-ui/core/ButtonGroup';
-import Icon from '@material-ui/core/Icon';
-import DeleteIcon from '@material-ui/icons/Delete';
 import MobileMenu from './MobileMenu';
 import { searchResultData, refreshDashboard, filterMovieData } from '../../containers/actions/userActions';
 const styles = theme => ({

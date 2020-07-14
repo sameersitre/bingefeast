@@ -16,20 +16,15 @@ import Typography from '@material-ui/core/Typography';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import InputBase from '@material-ui/core/InputBase';
-import SearchIcon from '@material-ui/icons/Search';
-import Grid from '@material-ui/core/Grid';
+import SearchIcon from '@material-ui/icons/Search'; 
 import Hidden from '@material-ui/core/Hidden';
 
 import Chip from '@material-ui/core/Chip';
 import Paper from '@material-ui/core/Paper';
-import FilterListIcon from '@material-ui/icons/FilterList';
-import Drawer from '@material-ui/core/Drawer';
+import FilterListIcon from '@material-ui/icons/FilterList'; 
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import Dialog from '@material-ui/core/Dialog';
 
-import Button from '@material-ui/core/Button';
-import List from '@material-ui/core/List';
-import Divider from '@material-ui/core/Divider';
 import FilterChips from './filter';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Icon from '@material-ui/core/Icon';

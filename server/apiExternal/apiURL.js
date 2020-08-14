@@ -1,3 +1,9 @@
+/*
+  * Author: Sameer Sitre
+  * https://www.linkedin.com/in/sameersitre/
+  * https://github.com/sameersitre
+  * File Description:
+ */
 
 exports.trendingURL = (params) =>
     `${process.env.TMDB_URL}/trending/${params.media_type}/day?api_key=${process.env.TMDB_API_KEY}&page=${params.page}`

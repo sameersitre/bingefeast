@@ -1,3 +1,10 @@
+/*
+  * Author: Sameer Sitre
+  * https://www.linkedin.com/in/sameersitre/
+  * https://github.com/sameersitre
+  * File Description:
+ */
+
 const axios = require("axios")
 
 exports.axios = async function (URL) {

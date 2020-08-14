@@ -1,3 +1,10 @@
+/*
+  * Author: Sameer Sitre
+  * https://www.linkedin.com/in/sameersitre/
+  * https://github.com/sameersitre
+  * File Description:
+ */
+
 exports.testSuccessResponse = function (res, message, data) {
     return res.status(200).json(data)
 }

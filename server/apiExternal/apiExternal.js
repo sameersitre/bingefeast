@@ -1,5 +1,11 @@
-const axios = require("axios")
-const restructure = require("../helpers/jsonRestructure")
+/*
+  * Author: Sameer Sitre
+  * https://www.linkedin.com/in/sameersitre/
+  * https://github.com/sameersitre
+  * File Description:
+ */
+
+const axios = require("axios") 
 const apiURL = require("./apiURL")
 const apiCall = require("./apiCall")
 

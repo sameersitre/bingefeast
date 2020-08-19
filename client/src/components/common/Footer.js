@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withStyles } from '@material-ui/core/styles';
-import axios from 'axios';
-import { main_url } from '../../utils/Config';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
@@ -18,6 +16,11 @@ import GitHub from '@material-ui/icons/GitHub';
 import AndroidIcon from '@material-ui/icons/Android';
 import AppleIcon from '@material-ui/icons/Apple';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+import { event_GAnalytics } from "../../utils/Analytics"
+import { getFeedback } from '../../services/apiURL';
+import apiCall from '../../services/apiCall';
+import countryCode from '../../services/countryCode';
+import { validateEmail } from '../../services/validations';
 const styles = (theme) => ({
 
     buttons: {
@@ -29,16 +32,16 @@ const styles = (theme) => ({
     button: {
         color: '#FFFFFF',
         backgroundColor: '#5A5A5A',
-        margin: theme.spacing(0.6),
+        marginTop: theme.spacing(0.6),
     }
 })
 
-export class Footer extends Component {
+class Footer extends Component {
     constructor(props) {
         super(props);
         this.state = {
             email: '',
-            emailData: '',
+            message: '',
             messageDialog: false,
             messageDialogTitle: '',
             messageDialogContent: '',
@@ -51,7 +54,7 @@ export class Footer extends Component {
     }
     handleChangeData = (event) => {
         console.log(event)
-        this.setState({ emailData: event.target.value })
+        this.setState({ message: event.target.value })
     }
 
     handleDialogOpen = (title, content, status) => {
@@ -64,55 +67,46 @@ export class Footer extends Component {
 
     handleDialogClose = () => {
         this.setState({
-            emailData: '',
+            message: '',
             messageDialog: false
         })
     };
 
-    sendMail = async () => {
+    handleAnalytics = (value) => {
+        event_GAnalytics("Icon", "Click", value)
+    }
 
-        let data = {
-            senderEmail: this.state.email,
-            emailData: this.state.emailData,
-            userAgent: navigator.userAgent
-        }
-        if (!this.ValidateEmail(data.senderEmail)) {
-            this.handleDialogOpen('Incorrect email format.', "Please enter correct email ID.")
+    sendMessage = async () => {
+        if (!validateEmail(this.state.email)) {
+            this.handleDialogOpen('Incorrect email format.', "Please enter correct email.")
         } else {
-            if (this.state.emailData.length > 0 && this.state.email.length > 0) {
-                await axios.post(`${main_url}/sendmail`, data)
-                    .then(res => {
-                        this.setState({ email: '', emailData: '' })
-                        this.handleDialogOpen('Message Sent!', data.emailData)
-                    })
-                    .catch(function (error) {
-                        console.log(error);
-                    })
+            if (this.state.message.length > 0 && this.state.email.length > 0) {
+                let details = await countryCode()
+                console.log(details)
+                let params = {
+                    email: this.state.email,
+                    message: this.state.message,
+                    ...this.props.user.user_info,
+                    coordinates: JSON.parse(localStorage.geolocation),
+                }
+                await apiCall(getFeedback, params)
+                this.handleDialogOpen('Message Sent!', this.state.message)
+                this.setState({ email: '', message: '' })
             }
             else {
                 this.handleDialogOpen('Field(s) is Empty.', 'Please add email and message.')
             }
         }
+    }
 
-    }
-    ValidateEmail = (inputText) => {
-        var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-        if (inputText.match(mailformat)) {
-            return true;
-        }
-        else {
-            return false;
-        }
-    }
     render() {
         const { classes } = this.props;
 
         return (
             <Grid container
-                xs={12} sm={12}
                 style={{
                     backgroundColor: '#282828', color: '#BFBFBF', marginTop: 50,
-                    justifyContent: 'space-between',
+                    justifyContent: 'space-between' 
                 }} >
 
                 <ThemeProvider theme={createMuiTheme({ palette: { type: 'dark' } })} >
@@ -134,12 +128,15 @@ export class Footer extends Component {
                             </Button>
                         </DialogActions>
                     </Dialog>
-                    <Grid container xs={12} sm={4}
+                    <Grid container item xs={12} sm={4}
                         style={{
                             display: 'flex', flexDirection: 'column',
                             justifyContent: 'space-between', padding: 20
                         }} >
-                        <Typography variant="subtitle1"   >
+                        <Typography variant="subtitle1">
+                            This app is for experimentation purposes only.
+                    </Typography>
+                        <Typography variant="subtitle1">
                             Any queries please contact:
                     </Typography>
                         <TextField
@@ -162,7 +159,7 @@ export class Footer extends Component {
                             rows="3"
                             // defaultValue="Default Value"
                             variant="outlined"
-                            value={this.state.emailData}
+                            value={this.state.message}
                             onChange={this.handleChangeData}
                         />
                         <Button
@@ -171,7 +168,7 @@ export class Footer extends Component {
                             disabled={this.state.email.length < 6 ? true : false}
                             aria-haspopup="true"
                             className={classes.button}
-                            onClick={() => this.sendMail()}
+                            onClick={() => this.sendMessage()}
                         >
                             Submit
                     </Button>
@@ -181,34 +178,35 @@ export class Footer extends Component {
 
                 <Grid style={{
                     display: 'flex', flexDirection: 'column',
-                    // justifyContent: 'space-between',
                     backgroundColor: '#282828', padding: 20, height: 150,
                 }}>
                     <div>
                         <Typography variant="body2"  >
-                            Extermnal Links
+                            External Links
                             </Typography>
                         <IconButton color="inherit" width={50} height={50}
                             href={`https://github.com/sameersitre/bingefeast`} target="_blank"
+                            onClick={() => this.handleAnalytics("github clicked")}
                         >
                             <GitHub />
                         </IconButton>
 
                         <IconButton color="inherit"
                             href={`https://www.linkedin.com/in/sameersitre/`} target="_blank"
+                            onClick={() => this.handleAnalytics("linkedin clicked")}
                         >
                             <LinkedIn />
                         </IconButton>
                     </div>
                     <div style={{ marginTop: 20 }}>
                         <Typography variant="body2"
-                            onclick={() => this.handleDialogOpen('Field(s) is Empty.', 'Please add email and message.')}
+
                         >
                             Also Available in App Store and Play Store
                             </Typography>
                         <IconButton color="inherit" width={50} height={50}
-                            // href={`http://play.google.com/store/apps/details?id=com.truecaller&hl=en`} target="_blank"
-                            onClick={() => this.handleDialogOpen('Coming Soon!', 'Will be availabe soon on Play Store.')}
+                            href={`https://play.google.com/store/apps/details?id=com.bingefeast`} target="_blank"
+                            onClick={() => this.handleAnalytics("Play store clicked")}
                         >
                             <AndroidIcon />
                         </IconButton>
@@ -227,9 +225,6 @@ export class Footer extends Component {
 }
 
 const mapStateToProps = (state) => ({
+    user: state.user
 })
-const mapDispatchToProps = {
-}
-
-// export default connect(mapStateToProps, mapDispatchToProps)(Footer)
-export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(Footer))
+export default withStyles(styles)(connect(mapStateToProps)(Footer))

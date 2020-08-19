@@ -1,18 +1,29 @@
 /*
-  * Author: Sameer Sitre
-  * https://www.linkedin.com/in/sameersitre/
-  * https://github.com/sameersitre
-  * File Description:  
+ * Author: Sameer Sitre
+ * https://www.linkedin.com/in/sameersitre/
+ * https://github.com/sameersitre
+ * File Description:
  */
 
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import React from "react"
+import ReactDOM from "react-dom"
+import App from "./App"
+import Appbar from './components/Appbar/Appbar';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+import { BrowserRouter } from "react-router-dom"
+import { Provider } from "react-redux"
+import Store from "./Store"
+ReactDOM.render(
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.register();
+  <Provider store={Store} >
+    <div style={{ backgroundColor: "#1B1A20", margin: -8, }} >
+      <BrowserRouter>
+        <Appbar />
+        <App />
+      </BrowserRouter>
+    </div>
+  </Provider>
+  ,
+  document.getElementById("root")
+)
+//serviceWorker.register()

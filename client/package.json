@@ -1,5 +1,5 @@
 {
-  "name": "inmovie-webapp",
+  "name": "bingefeast",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -10,9 +10,12 @@
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "axios": "^0.19.2",
+    "framer-motion": "^2.9.4",
     "moment": "^2.24.0",
+    "nodemailer": "^6.4.14",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
+    "react-ga": "^3.1.2",
     "react-redux": "^7.2.0",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.0",

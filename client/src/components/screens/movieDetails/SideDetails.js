@@ -73,10 +73,6 @@ class SideDetails extends Component {
         return null
     }
 
-    // getAvailableStreams = () => {
-    //     let locations = this.props.user.details_data && this.props.user.details_data[2]
-    //  }
-
     handleDialogOpen = () => {
         this.setState({ dialogOpen: true })
     }
@@ -104,8 +100,7 @@ class SideDetails extends Component {
                     flexDirection: 'column',
                     justifyItems: 'space-between',
                     alignContent: 'flex-start',
-                    color: '#FFFFFF', marginLeft: 10,//backgroundColor:'pink',
-                    // height: '25rem'
+                    color: '#FFFFFF', marginLeft: 10, 
                 }}>
                 <Popover
                     id="mouse-over-popover"

@@ -111,8 +111,7 @@ class MovieDetails extends Component {
                             style={{
                                 display: 'flex', flexDirection: 'column',
                                 alignItems: 'flex-start',
-                                // backgroundColor: 'pink',
-                            }} >
+                             }} >
                             <Typography gutterBottom variant="h6" style={{ color: '#E5CA49', }}  >
                                 {movieData.title || movieData.name}
                             </Typography>

@@ -40,8 +40,7 @@ class MediaPagination extends Component {
                             variant="contained"
                             color="secondary"
                             size="small"
-                            // disabled={parseInt(upcomingData.length) < 20 ? true : false}
-                            className={classes.button}
+                             className={classes.button}
                             endIcon={<NavigateNext />}
                             onClick={() => next()}
                         >Next </Button>

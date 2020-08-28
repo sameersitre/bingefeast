@@ -157,8 +157,7 @@ class Footer extends Component {
                             size="small"
                             multiline
                             rows="3"
-                            // defaultValue="Default Value"
-                            variant="outlined"
+                             variant="outlined"
                             value={this.state.message}
                             onChange={this.handleChangeData}
                         />

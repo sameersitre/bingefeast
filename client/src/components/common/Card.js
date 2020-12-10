@@ -23,21 +23,15 @@ const styles = (theme) => ({
 
   },
   CardContent: {
-    width: "9rem",
-        backgroundColor: 'black',
+    display: "flex",
+    width: 165,
+    backgroundColor: 'black',
     flexDirection: "column",
     position: "absolute",
+    padding: 5,
     borderBottomRightRadius: 5,
     borderBottomLeftRadius: 5,
-  },
-  chipView: {
-    display: "flex",
-    justifyContent: "flex-start",
-    flexWrap: "wrap",
-    "& > *": {
-      margin: theme.spacing(0.3),
-    },
-  },
+  }
 })
 
 class MediaCard extends PureComponent {
@@ -77,11 +71,8 @@ class MediaCard extends PureComponent {
 
   cardClick = () => {
     event_GAnalytics("Card", "Click", this.state.parentData.original_title)
-    localStorage.setItem(
-      "selectedMovieDetails",
-      JSON.stringify(this.state.parentData)
-    )
-    this.props.history.push({ pathname: `/details` })
+    const { id, media_type } = this.state.parentData
+    this.props.history.push({ pathname: `/details/mediatype=${media_type ? media_type : "movie"}&id=${id}` })
   }
 
   render() {
@@ -89,21 +80,28 @@ class MediaCard extends PureComponent {
     const { parentData, genreStrings } = this.state
     return (
       <Card className={classes.root} style={{
-        boxShadow: enteredCardID === parentData.id ?
-          '0 4px 15px 0 rgba(0, 0, 0, 0.6), 0 6px 20px 0 rgba(0, 0, 0, 0.19)' : 'none',
+        boxShadow: enteredCardID === parentData.id &&
+          '0 4px 15px 0 rgba(0, 0, 0, 0.6), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
       }}>
         <div onClick={() => this.cardClick()}>
           <Poster data={parentData} />
         </div>
 
         {(showCardContent && (enteredCardID === parentData.id)) &&
-          <CardContent className={classes.CardContent}>
+          <CardContent
+            style={{
+              boxShadow: enteredCardID === parentData.id &&
+                '0 4px 15px 0 rgba(0, 0, 0, 0.6), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
+              paddingBottom: 10
+            }}
+            className={classes.CardContent}>
             <Typography
               gutterBottom
               variant="caption"
               style={{
                 color: "#E5CA49",
-                fontSize: 11
+                fontSize: 11,
+                alignSelf: 'center'
               }}
             >
               {parentData.title || parentData.name}
@@ -128,28 +126,24 @@ class MediaCard extends PureComponent {
                   ).format("LL")}
                 </Typography>
               </div>
-              <div
-                style={{ display: "flex", flexDirection: "row", }}
-              >
-                <div className={classes.chipView}>
-                  {genreStrings.map((value, i) => (
-                    <div
-                      key={i}
-                      style={{
-                        display: 'flex', flexDirection: 'row',
-                        alignItems: 'baseline', fontSize: 11
-                      }}>
-                      <Typography style={{ fontSize: 10 }}>{value}&nbsp;</Typography>
+              <div style={{ display: "flex", flexDirection: "row", flexWrap: 'wrap' }}  >
+                {genreStrings.map((value, i) => (
+                  <div
+                    key={i}
+                    style={{
+                      display: 'flex', flexDirection: 'row',
+                      alignItems: 'baseline', fontSize: 11
+                    }}>
+                    <Typography style={{ fontSize: 10 }}>{value}&nbsp;</Typography>
 
-                      {i + 1 !== genreStrings.length ?
-                        (
-                          <Typography style={{ color: '#757575', fontSize: 10 }}>
-                            &nbsp;|
-                          </Typography>
-                        ) : null}
-                    </div>
-                  ))}
-                </div>
+                    {i + 1 !== genreStrings.length ?
+                      (
+                        <Typography style={{ color: '#757575', fontSize: 10 }}>
+                          |&nbsp;
+                        </Typography>
+                      ) : null}
+                  </div>
+                ))}
               </div>
             </Grid>
           </CardContent>}

@@ -18,9 +18,7 @@ class MediaList extends PureComponent {
         showCardContent: false,
         enteredCardID: null
     }
-    componentDidMount() {
-        //   window.addEventListener()
-    }
+
     handleBoxTrue = (param) => this.setState({ showCardContent: true, enteredCardID: param });
     handleBoxFalse = (param) => this.setState({ showCardContent: false, enteredCardID: param });
 
@@ -30,8 +28,7 @@ class MediaList extends PureComponent {
         return (
             <div
                 style={{
-                    display: 'flex', alignContent: 'center',
-                    flexDirection: 'column',
+                    display: 'flex', alignContent: 'center', flexDirection: 'column',
                 }}
             >
                 <Grid container lg={10}
@@ -39,7 +36,7 @@ class MediaList extends PureComponent {
                         display: 'flex', alignSelf: 'center',
                         justifyContent: 'center',
                         paddingTop: 80,
-                        minHeight: window.innerHeight, 
+                        minHeight: window.innerHeight,
                     }}>
                     <Backdrop className={classes.backdrop} open={refresh}  >
                         <CircularProgress color="inherit" />
@@ -48,7 +45,7 @@ class MediaList extends PureComponent {
                     {listData?.map((value, i) => (
                         <motion.div
                             style={{ margin: 5 }}
-                            whileHover={{ scale: 1.2, zIndex: 1, delay: 100 }}
+                            whileHover={{ scale: 1.3, zIndex: 1, }}
                             whileTap={{ scale: 0.9 }}
                             onMouseEnter={() => this.handleBoxTrue(value.id)}
                             onMouseLeave={() => this.handleBoxFalse(value.id)}  >
@@ -67,12 +64,12 @@ class MediaList extends PureComponent {
 
 
                 </Grid>
-                  {listData?.length > 0 &&
-                        <Footer />
-                    }
+                {listData?.length > 0 &&
+                    <Footer />
+                }
             </div>
         )
     }
 }
 
-export default withStyles(styles)(withRouter(MediaList))
+export default withStyles(styles)(MediaList)

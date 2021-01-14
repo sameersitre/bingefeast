@@ -12,25 +12,30 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Hidden from '@material-ui/core/Hidden';
-import Chip from '@material-ui/core/Chip';
-import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import InputBase from '@material-ui/core/InputBase';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
-import Dialog from '@material-ui/core/Dialog';
 import SearchIcon from '@material-ui/icons/Search';
 import MenuIcon from '@material-ui/icons/Menu';
-import AndroidIcon from '@material-ui/icons/Android';
-import AppleIcon from '@material-ui/icons/Apple';
-import FilterListIcon from '@material-ui/icons/FilterList';
+import MenuItem from '@material-ui/core/MenuItem';
+import Menu from '@material-ui/core/Menu';
+import AccountCircle from '@material-ui/icons/AccountCircle';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+
+import Authentication from '../authentication/Authentication'
 import MobileMenu from './MobileMenu';
-import { refreshDashboard, filterMovieData, searchTextAction, userInfoAction } from '../../containers/actions/userActions';
+import Filter from './filter'
+
+import {
+  refreshDashboard, filterMovieData, searchTextAction,
+  userInfoAction, userProfileAction
+} from '../../containers/actions/userActions';
 import getGeolocation from '../../services/location'
 import countryCode from '../../services/countryCode'
 import apiCall from '../../services/apiCall';
 import { getInfo } from '../../services/apiURL'
+import { Avatar } from '@material-ui/core';
 const styles = theme => ({
   grow: {
     flexGrow: 1,
@@ -78,8 +83,6 @@ const styles = theme => ({
       width: 150,
     },
   },
-
-
   root: {
     display: 'flex',
     justifyContent: 'flex-end',
@@ -96,23 +99,31 @@ const styles = theme => ({
 
 class Appbar extends PureComponent {
   state = {
-    setDialog: false,
+    isDialogOpen: false,
     barColor: false,
     searchText: '',
     drawerOpen: false,
+    userPhotoURL: '',
     allGenres: this.props.user.Genres.genres,
     selectedGenres: [],
     allGenresEnabled: false,
     updateOnce: true,
     restrictDisplay: false,
-    userInfo: []
+    userInfo: [],
+    auth: false,
+    anchorEl_userMenu: null
   }
 
   async componentDidMount() {
-    await getGeolocation()
+    // await getGeolocation()
+    // console.group(
+    //   "%cWell this is embarassing; You might be getting what you are looking for :) .\nThanks for seeing my work!",
+    //   "background-color: #2937FF ; color: #ffffff ; font-size:14px ; font-weight: bold ; padding: 4px ;"
+    // );
     let locationInfo = await countryCode()
     let params = {
       ip: locationInfo.ip,
+      type: "webapp",
       region: locationInfo.region,
       colocation: locationInfo.colocation,
       accessDate: new Date(),
@@ -129,99 +140,67 @@ class Appbar extends PureComponent {
         }
         await apiCall(getInfo, userDetails)
       }
-    }, 10000);
+    }, 15000);
     this.props.userInfoAction(params)
-
-    this.setState({ userInfo: locationInfo })
-    window.addEventListener('resize', this.onResize, false);
+    this.props.userProfileAction(localStorage.userProfile ?
+      JSON.parse(localStorage.userProfile) :
+      null)
+    this.setState({
+      userInfo: locationInfo,
+    })
   }
 
-  onResize = () => {
-    if ((window.innerWidth > window.innerHeight) && navigator.userAgent.indexOf('Mobile') > -1) {
-      this.setState({ restrictDisplay: true })
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (nextProps.user.user_profile) {
+      return {
+        userPhotoURL: nextProps.user.user_profile.photoURL
+      }
     }
-    else {
-      this.setState({ restrictDisplay: false })
-    }
+    else return null
   }
-
-  handleClickOpen = () => {
-    this.setState({ setDialog: true })
-  };
-
-  handleClose = () => {
-    this.setState({ setDialog: false })
-  };
-
   handleChange = (event) => {
     this.setState({ searchText: event.target.value })
   }
 
-  handleKeyPress = async (event) => {
-    if (event.key === 'Enter' && this.state.searchText.length !== 0) {
-      window.scrollTo(0, 0)
-      this.props.searchTextAction(this.state.searchText)
-      this.props.history.push('/search/page1')
+  handleKeyUp = () => {
+    if (this.state.searchText.length > 1) {
+      let timedAssignText = this.state.searchText
+      setTimeout(() => {
+        if (timedAssignText === this.state.searchText) {
+          this.getData()
+        }
+      }, 1300);
     }
   }
 
-  handleDelete = (chipToDelete) => {
-
-    var filtered = this.state.selectedGenres.filter(function (el) { return el.id !== chipToDelete.id; });
-    var allGenres = this.state.allGenres
-
-    allGenres.push(chipToDelete)
-    this.setState({ allGenres: allGenres, selectedGenres: filtered })
-    if (this.state.selectedGenres.length === 0) {
-      this.props.refreshDashboard(false)
-    }
-  }
-
-  handleAdd = (chipToadd) => {
-    var filtered = this.state.allGenres.filter(function (el) { return el.id !== chipToadd.id; });
-    var selectedGenres = this.state.selectedGenres
-
-    selectedGenres.push(chipToadd)
-    this.setState({ selectedGenres: selectedGenres, allGenres: filtered })
-    this.props.refreshDashboard(true)
-  }
-
-  handleClear = () => {
-    var selectedGenres = this.state.selectedGenres
-    var allGenres = this.state.allGenres
-    selectedGenres.filter((el) => allGenres.push(el))
-    this.setState({ allGenres: allGenres, selectedGenres: [] })
-    this.props.filterMovieData("")
-    this.props.refreshDashboard(false)
-  }
-
-  filterIconClick = () => {
-    this.setState({
-      allGenresEnabled: !this.state.allGenresEnabled
-    })
-  }
-
-  filterClick = () => {
-    this.setState({
-      allGenresEnabled: false
-    })
-    let data = this.state.selectedGenres
-    let genreArray = [];
-    for (let i = 0; i < data.length; i++) {
-      genreArray.push(data[i].id)
-    }
-    let genreString = genreArray.join("%2C");
-    this.props.filterMovieData(genreString)
-    this.props.history.push("/filter/page1")
+  getData = () => {
+    this.props.searchTextAction(this.state.searchText)
+    this.props.history.push('/search/page1')
   }
 
   drawerSwitch = (toogle) => {
     this.setState({ drawerOpen: toogle })
   }
 
+  handleuserMenu = (event) => {
+    this.setState({ anchorEl_userMenu: event.currentTarget, });
+  };
+
+  handleuserMenuClose = () => {
+    this.setState({ anchorEl_userMenu: null });
+  };
+
+  signInClick = () => {
+    this.setState({ isDialogOpen: true, anchorEl_userMenu: null });
+  }
+
+  signUpClick = () => {
+    this.setState({ isDialogOpen: true, anchorEl_userMenu: null });
+  }
+  //ben awad
   render() {
     const { classes } = this.props;
-    const { selectedGenres, userInfo } = this.state
+    const { userInfo, auth, drawerOpen, userPhotoURL, isDialogOpen, anchorEl_userMenu } = this.state
     return (
 
       <AppBar
@@ -233,51 +212,22 @@ class Appbar extends PureComponent {
           backgroundColor: 'none'
         }
         }>
-        <SwipeableDrawer anchor='left' open={this.state.drawerOpen}
+        <SwipeableDrawer anchor='left' open={drawerOpen}
           onClose={() => this.drawerSwitch(false)}
           onOpen={() => this.drawerSwitch(true)}
         >
           <MobileMenu drawerClose={() => this.drawerSwitch(false)} />
         </SwipeableDrawer>
 
-        <Dialog
-          fullScreen
-          disableBackdropClick
-          disableEscapeKeyDown
-          style={{ width: '85%', height: '85%', margin: 'auto' }}
-        >
-          <div style={{
-            width: '100%', height: '100%', color: '#FFFFFF', backgroundColor: '#1B1A20',
-            display: 'flex', flexDirection: 'column', justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-            <Typography variant="h6"   >
-              For best experience,
-          </Typography>
-            <Typography variant="h6"   >
-              please go back to portrait mode or use the app.
-          </Typography>
-            <IconButton color="inherit" width={50} height={50}
-              href={`https://play.google.com/store/apps/details?id=com.bingefeast`} target="_blank"
-            // onClick={() => this.handleAnalytics("Play store clicked")}
-            >
-              <AndroidIcon />
-            </IconButton>
-
-            <IconButton color="inherit"
-            // href={`http://itunes.apple.com/lb/app/truecaller-caller-id-number/id448142450?mt=8`} target="_blank"
-            // onClick={() => this.handleDialogOpen('Coming Soon!', 'Will be availabe soon on App Store.')}
-            >
-              <AppleIcon />
-            </IconButton>
-          </div>
-
-        </Dialog>
+        <Authentication
+          isDialogOpen={isDialogOpen}
+          setDialogClose={() => this.setState({ isDialogOpen: false })}
+        />
 
         <Toolbar>
-
           <Hidden xsDown>
-            <IconButton component={Link} to='/all/page1'  >
+            <IconButton component={Link} to='/all/page1'
+              onClick={() => this.setState({ searchText: '' })}  >
               <Typography className={classes.title} variant="h6" noWrap  >
                 BingeFeast
             </Typography>
@@ -286,7 +236,7 @@ class Appbar extends PureComponent {
             </Typography>
             </IconButton>
 
-            <IconButton  >
+            <IconButton onClick={() => this.setState({ searchText: '' })} >
               <Typography className={classes.title} variant="subtitle2"
                 component={Link}
                 style={{ color: window.location.pathname.indexOf(`/movies/page`) > -1 && '#E46E36' }}
@@ -296,7 +246,7 @@ class Appbar extends PureComponent {
             </Typography>
             </IconButton>
 
-            <IconButton  >
+            <IconButton onClick={() => this.setState({ searchText: '' })} >
               <Typography className={classes.title}
                 style={{ color: window.location.pathname.indexOf(`/tvshows/page`) > -1 && '#E46E36' }}
                 variant="subtitle2"
@@ -307,7 +257,7 @@ class Appbar extends PureComponent {
             </Typography>
             </IconButton>
 
-            <IconButton  >
+            <IconButton onClick={() => this.setState({ searchText: '' })} >
               <Typography className={classes.title} variant="subtitle2"
                 style={{ color: window.location.pathname.indexOf(`/upcoming/page`) > -1 && '#E46E36' }}
                 component={Link}
@@ -339,89 +289,51 @@ class Appbar extends PureComponent {
                 root: classes.inputRoot,
                 input: classes.inputInput,
               }}
-
+              onKeyUp={this.handleKeyUp}
               value={this.state.searchText}
               onChange={this.handleChange}
-              onKeyPress={this.handleKeyPress}
               inputProps={{ 'aria-label': 'search' }}
             />
           </div>
-
-          {/* FILTER */}
           <div className={classes.grow} />
 
-          <div style={{ display: 'flex', flexDirection: 'column', position: 'relative', }} >
-            <Paper className={classes.root}>
-              <Chip
-                size="small"
-                clickable
-                icon={<FilterListIcon style={{ marginRight: -12 }} />}
-                className={classes.chip}
-                style={{ display: 'flex', marginLeft: 5 }}
-                onClick={() => this.filterIconClick()}
-              />
-              {selectedGenres.map(data => {
-                let icon;
-                return (
-                  <Chip
-                    size="small" key={data.id}
-                    icon={icon} label={data.name}
-                    onDelete={() => this.handleDelete(data)}
-                    className={classes.chip}
-                  />
-                );
-              })}
+          {auth && (
+            <div>
+              <IconButton
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                // onClick={this.handleuserMenu}
+                onClick={this.signInClick}
+                color="inherit"
 
-              {selectedGenres.length > 0
-                ?
-
-                <div>
-                  <Chip
-                    size="small" clickable label='CLEAR'
-                    className={classes.chip}
-                    style={{ borderTopRightRadius: 5, borderBottomRightRadius: 5 }}
-                    onClick={() => this.handleClear()}
-                  />
-
-                  <Chip
-                    size="small" clickable label='FILTER'
-                    className={classes.chip}
-                    style={{ borderTopLeftRadius: 5, borderBottomLeftRadius: 5 }}
-                    onClick={() => this.filterClick()}
-                  />
-                </div>
-                : null
-              }
-            </Paper>
-
-            {this.state.allGenresEnabled
-              ?
-              <Paper variant="outlined"
-                elevation={3}
-                style={{
-                  position: 'absolute', justifyContent: 'space-evenly',
-                  flexWrap: 'wrap', backgroundColor: '#5E5E5E', width: 250,
-                  borderRadius: 11, padding: 5, top: 40, right: 0
-                }} >
-                {this.state.allGenres && this.state.allGenres.map(data => {
-                  let icon;
-                  return (
-                    <Chip
-                      size="small" key={data.id}
-                      icon={icon} label={data.name}
-                      onClick={() => this.handleAdd(data)}
-                      style={{ margin: 3, padding: 0.2, }}
-                      className={classes.chip}
-                    />
-                  );
-                })}
-              </Paper>
-              : null}
+              >
+                {userPhotoURL ? <Avatar src={userPhotoURL} alt="" /> : <AccountCircle />}
+              </IconButton>
+              <Menu
+                id="menu-appbar"
+                anchorEl={anchorEl_userMenu}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={anchorEl_userMenu}
+                onClose={this.handleuserMenuClose}
+              >
+                <MenuItem onClick={this.signInClick}>Login</MenuItem>
+              </Menu>
+            </div>
+          )}
+          {/* <div className={classes.grow} /> */}
+          <div>
+            <Filter />
           </div>
-
-
         </Toolbar>
-
       </AppBar>
 
     );
@@ -433,4 +345,4 @@ const mapStateToProps = state => ({
   user: state.user
 });
 
-export default withStyles(styles)(withRouter(connect(mapStateToProps, { refreshDashboard, filterMovieData, searchTextAction, userInfoAction })(Appbar)));
+export default withStyles(styles)(withRouter(connect(mapStateToProps, { refreshDashboard, filterMovieData, searchTextAction, userInfoAction, userProfileAction })(Appbar)));
